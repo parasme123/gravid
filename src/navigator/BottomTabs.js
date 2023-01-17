@@ -9,6 +9,11 @@ import Webinar from '../screens/Webinar';
 import WebinarDetail from '../screens/WebinarDetail';
 import Library from '../screens/Library';
 import Profile from '../screens/Profile';
+import ProfileEdit from '../screens/ProfileEdit';
+import Referral from '../screens/Referral';
+import HealthTracker from '../screens/HealthTracker';
+import TermCondition from '../screens/TermCondition';
+import PrivacyPolicy from '../screens/PrivacyPolicy';
 
 import { svgs } from '@common';
 const Tab = createBottomTabNavigator();
@@ -42,8 +47,8 @@ function HealthTrackerTab() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen
-        name="HomeScreen"
-        component={Home}
+        name="healthTracker"
+        component={HealthTracker}
       // options={{ title: 'Welcome' }}
       />
     </Stack.Navigator>
@@ -52,7 +57,11 @@ function HealthTrackerTab() {
 function ProfileTab() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="ProfileScreen" component={Profile} />
+      <Stack.Screen name="profileScreen" component={Profile} />
+      <Stack.Screen name="profileEdit" component={ProfileEdit} />
+      <Stack.Screen name="referral" component={Referral} />
+      <Stack.Screen name="termCondition" component={TermCondition} />
+      <Stack.Screen name="privacyPolicy" component={PrivacyPolicy} />
     </Stack.Navigator>
   )
 }

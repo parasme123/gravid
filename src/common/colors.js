@@ -9,4 +9,5 @@ export default colors = {
   grayLight: "#F8F8F8",
 
   inputPlaceHolder: "#6D7A90",
+  activeDot: "#0FCF23"
 }

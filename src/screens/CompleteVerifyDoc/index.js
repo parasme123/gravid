@@ -14,12 +14,25 @@ import styles from './styles';
 
 const CompleteVerifyDoc = (props) => {
   const [term, setTerm] = useState(false)
+  const [aboutSelected, setAboutSelected] = useState([])
   const handleTerm = () => {
     setTerm(!term)
   }
+
   const handleSignUp = () => {
     props.navigation.navigate("signup")
   }
+
+  const selectCat = (item) => {
+    let newSelected = [...aboutSelected]
+    if (newSelected.includes(item)) {
+      setAboutSelected(newSelected.filter((data) => data != item))
+    } else {
+      newSelected.push(item)
+      setAboutSelected(newSelected)
+    }
+  }
+
   return (
     <View style={styles.container}>
       <ScrollView>
@@ -28,7 +41,14 @@ const CompleteVerifyDoc = (props) => {
         </View>
         <View style={styles.mainView}>
           <View style={{ flexDirection: "row" }}>
-            <TouchableOpacity style={styles.btn}>
+            <TouchableOpacity style={styles.btn} onPress={() => selectCat("zumba")}>
+              {
+                aboutSelected.includes("zumba") ? (
+                  <View style={styles.selectedView}>
+                    {svgs.selectedClick(colors.themeColor, 12, 10)}
+                  </View>
+                ) : null
+              }
               <View style={styles.imgView}>
                 <Image style={styles.btnImg} source={require('../../assets/images/zumba.png')} />
               </View>
@@ -36,7 +56,14 @@ const CompleteVerifyDoc = (props) => {
                 <Text style={styles.btnTxt}>Zumba</Text>
               </LinearGradient>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.btn}>
+            <TouchableOpacity style={styles.btn} onPress={() => selectCat("paediatrics")}>
+              {
+                aboutSelected.includes("paediatrics") ? (
+                  <View style={styles.selectedView}>
+                    {svgs.selectedClick(colors.themeColor, 12, 10)}
+                  </View>
+                ) : null
+              }
               <View style={styles.imgView}>
                 <Image style={styles.btnImg} source={require('../../assets/images/pedeitric.png')} />
               </View>
@@ -46,7 +73,14 @@ const CompleteVerifyDoc = (props) => {
             </TouchableOpacity>
           </View>
           <View style={{ flexDirection: "row" }}>
-            <TouchableOpacity style={styles.btn}>
+            <TouchableOpacity style={styles.btn} onPress={() => selectCat("gynaecology")}>
+              {
+                aboutSelected.includes("gynaecology") ? (
+                  <View style={styles.selectedView}>
+                    {svgs.selectedClick(colors.themeColor, 12, 10)}
+                  </View>
+                ) : null
+              }
               <View style={styles.imgView}>
                 <Image style={styles.btnImg} source={require('../../assets/images/Obstetrics-Gynaecology.png')} />
               </View>
@@ -54,7 +88,14 @@ const CompleteVerifyDoc = (props) => {
                 <Text style={styles.btnTxt}>Gynaecology</Text>
               </LinearGradient>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.btn}>
+            <TouchableOpacity style={styles.btn} onPress={() => selectCat("yoga")}>
+              {
+                aboutSelected.includes("yoga") ? (
+                  <View style={styles.selectedView}>
+                    {svgs.selectedClick(colors.themeColor, 12, 10)}
+                  </View>
+                ) : null
+              }
               <View style={styles.imgView}>
                 <Image style={styles.btnImg} source={require('../../assets/images/Yoga.png')} />
               </View>
@@ -64,7 +105,14 @@ const CompleteVerifyDoc = (props) => {
             </TouchableOpacity>
           </View>
           <View style={{ flexDirection: "row" }}>
-            <TouchableOpacity style={styles.btn}>
+            <TouchableOpacity style={styles.btn} onPress={() => selectCat("meditation")}>
+              {
+                aboutSelected.includes("meditation") ? (
+                  <View style={styles.selectedView}>
+                    {svgs.selectedClick(colors.themeColor, 12, 10)}
+                  </View>
+                ) : null
+              }
               <View style={styles.imgView}>
                 <Image style={styles.btnImg} source={require('../../assets/images/shutterstock.png')} />
               </View>
@@ -72,7 +120,14 @@ const CompleteVerifyDoc = (props) => {
                 <Text style={styles.btnTxt}>Meditation</Text>
               </LinearGradient>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.btn}>
+            <TouchableOpacity style={styles.btn} onPress={() => selectCat("aerobics")}>
+              {
+                aboutSelected.includes("aerobics") ? (
+                  <View style={styles.selectedView}>
+                    {svgs.selectedClick(colors.themeColor, 12, 10)}
+                  </View>
+                ) : null
+              }
               <View style={styles.imgView}>
                 <Image style={styles.btnImg} source={require('../../assets/images/Aerobic-Exercises.png')} />
               </View>

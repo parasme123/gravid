@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   blogTitleTime: {
-    fontFamily: fonts.OptimaRegular,
+    fontFamily: fonts.OptimaRoman,
     color: "#808080",
     fontSize: 16,
     lineHeight: 18,
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
   },
   issueDes: {
     flex: 3,
-    fontFamily: fonts.OptimaRegular,
+    fontFamily: fonts.OptimaRoman,
     color: "#929397",
     fontSize: 11,
     lineHeight: 18,

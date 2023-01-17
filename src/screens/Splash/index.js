@@ -12,7 +12,7 @@ import { ImageBackground, Image, SafeAreaView, ScrollView, StatusBar, Text, useC
 const Home = (props) => {
   useEffect(() => {
     setTimeout(() => {
-      props.navigation.replace("bottomTabs")
+      props.navigation.replace("introduction")
     }, 2000);
   }, [])
   return (

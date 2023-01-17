@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     borderRadius: 13
   },
   paidTypeTxt: {
-    fontFamily: fonts.OptimaRegular,
+    fontFamily: fonts.OptimaRoman,
     color: colors.black,
     fontSize: 10,
   },
@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   viewAllTxt: {
-    fontFamily: fonts.OptimaRegular,
+    fontFamily: fonts.OptimaRoman,
     color: colors.black,
     fontSize: 10,
   },
@@ -208,7 +208,7 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
   isFree: {
-    fontFamily: fonts.OptimaRegular,
+    fontFamily: fonts.OptimaRoman,
     color: colors.black,
     fontSize: 10,
   },
@@ -221,7 +221,7 @@ const styles = StyleSheet.create({
   },
   issueDes: {
     marginTop: 5,
-    fontFamily: fonts.OptimaRegular,
+    fontFamily: fonts.OptimaRoman,
     color: colors.gray,
     fontSize: 13,
     lineHeight: 16
@@ -255,7 +255,7 @@ const styles = StyleSheet.create({
     // justifyContent: "center"
   },
   bkmrkBtnTxt: {
-    fontFamily: fonts.OptimaRegular,
+    fontFamily: fonts.OptimaRoman,
     color: colors.gray,
     fontSize: 12,
     lineHeight: 17,
@@ -329,7 +329,7 @@ const styles = StyleSheet.create({
     textAlign: "center"
   },
   offDes: {
-    fontFamily: fonts.OptimaRegular,
+    fontFamily: fonts.OptimaRoman,
     color: colors.gray,
     fontSize: 18,
     lineHeight: 24,

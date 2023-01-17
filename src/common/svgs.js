@@ -346,3 +346,119 @@ export const editProfile = (color, width, height) => {
     </Svg>
   )
 }
+
+export const activeDot = (color, width, height) => {
+  return (
+    <Svg xmlns="http://www.w3.org/2000/svg" width={width} height={height} viewBox="0 0 8 8">
+      <Circle id="Ellipse_25" data-name="Ellipse 25" cx="4" cy="4" r="4" fill={color} />
+    </Svg>
+  )
+}
+
+export const camera = (color, width, height) => {
+  return (
+    <Svg xmlns="http://www.w3.org/2000/svg" width={width} height={height} viewBox="0 0 10 10">
+      <G id="camera_digital_photo_photography_picture_record_video_icon_123229_1_" data-name="camera_digital_photo_photography_picture_record_video_icon_123229 (1)" transform="translate(-0.373 -0.373)">
+        <G id="Layer_2" data-name="Layer 2" transform="translate(1.114 1.769)">
+          <Path id="Path_201" data-name="Path 201" d="M10.536,12.209H3.983A.983.983,0,0,1,3,11.226V7.294a.983.983,0,0,1,.983-.983H5.366l.141-.567A.983.983,0,0,1,6.46,5h1.6a.983.983,0,0,1,.954.744l.141.567h1.383a.983.983,0,0,1,.983.983v3.932A.983.983,0,0,1,10.536,12.209ZM3.983,6.966a.328.328,0,0,0-.328.328v3.932a.328.328,0,0,0,.328.328h6.553a.328.328,0,0,0,.328-.328V7.294a.328.328,0,0,0-.328-.328H8.9a.328.328,0,0,1-.328-.249l-.2-.816a.328.328,0,0,0-.328-.246H6.46a.328.328,0,0,0-.328.246l-.183.816a.328.328,0,0,1-.328.249Z" transform="translate(-3 -5)" fill={color} />
+          <Path id="Path_202" data-name="Path 202" d="M12.638,16.277a1.638,1.638,0,1,1,1.638-1.638A1.638,1.638,0,0,1,12.638,16.277Zm0-2.621a.983.983,0,1,0,.983.983A.983.983,0,0,0,12.638,13.655Z" transform="translate(-8.379 -10.379)" fill={color} />
+          <Path id="Path_203" data-name="Path 203" d="M22.655,13.655h-.328a.328.328,0,0,1,0-.655h.328a.328.328,0,0,1,0,.655Z" transform="translate(-15.774 -10.379)" fill={color} />
+        </G>
+        <G id="frame" transform="translate(0 0)">
+          <Rect id="Rectangle_172" data-name="Rectangle 172" width="10" height="10" transform="translate(0.374 0.373)" fill="none" />
+        </G>
+      </G>
+    </Svg>
+  )
+}
+
+export const yogo = (color, width, height) => {
+  return (
+    <Svg xmlns="http://www.w3.org/2000/svg" width={width} height={height} viewBox="0 0 15.534 18.641">
+      <G id="yoga_icon_126356" transform="translate(-589.583 -223.294)">
+        <G id="Group_199" data-name="Group 199" transform="translate(-1.615 3.262)">
+          <Path id="document_category_icon_149943" d="M5.844,5.967a.518.518,0,0,0-.518.518V19.948a.518.518,0,0,0,.518.518H16.2a.518.518,0,0,0,.518-.518V6.485a.518.518,0,0,0-.518-.518Zm0-1.036H16.2a1.553,1.553,0,0,1,1.553,1.553V19.948A1.553,1.553,0,0,1,16.2,21.5H5.844a1.553,1.553,0,0,1-1.553-1.553V6.485A1.553,1.553,0,0,1,5.844,4.932ZM7.916,3.9a.518.518,0,1,1,0-1.036H18.272a1.491,1.491,0,0,1,1.553,1.424V17.877a.518.518,0,0,1-1.036,0V4.285a.47.47,0,0,0-.518-.388ZM7.4,8.556h7.249a.518.518,0,0,1,0,1.036H7.4a.518.518,0,0,1,0-1.036Zm0,4.142h7.249a.518.518,0,0,1,0,1.036H7.4a.518.518,0,1,1,0-1.036Zm0,4.142h7.249a.518.518,0,0,1,0,1.036H7.4a.518.518,0,0,1,0-1.036Z" transform="translate(586.907 217.172)" fill={color} />
+        </G>
+      </G>
+    </Svg>
+  )
+}
+
+export const facebook = () => {
+  return (
+    <Svg xmlns="http://www.w3.org/2000/svg" width="28.784" height="28.784" viewBox="0 0 28.784 28.784">
+      <G id="facebook-svgrepo-com_1_" data-name="facebook-svgrepo-com (1)" transform="translate(0 0)">
+        <Path id="Path_63" data-name="Path 63" d="M14.392,0A14.392,14.392,0,1,1,0,14.392,14.392,14.392,0,0,1,14.392,0Z" transform="translate(0 0)" fill="#3b5998" />
+        <Path id="Path_64" data-name="Path 64" d="M114.5,75.287h1.855v-2.74h-2.18v.01c-2.642.094-3.183,1.579-3.231,3.138h-.005v1.368h-1.8v2.683h1.8v7.192h2.711V79.747h2.221l.429-2.683h-2.649v-.827A.884.884,0,0,1,114.5,75.287Z" transform="translate(-98.353 -65.379)" fill="#fff" />
+      </G>
+    </Svg>
+  )
+}
+
+export const whatsapp = () => {
+  return (
+    <Svg xmlns="http://www.w3.org/2000/svg" width="28.214" height="28.214" viewBox="0 0 28.214 28.214">
+      <G id="whatsapp-svgrepo-com" transform="translate(0 0)">
+        <Path id="Path_65" data-name="Path 65" d="M24.082,4.132A14.107,14.107,0,0,0,2.418,22.005L.038,27.558a.479.479,0,0,0,.1.517.479.479,0,0,0,.535.093l5.31-2.528A14.107,14.107,0,0,0,28.214,14.107,14.015,14.015,0,0,0,24.082,4.132Z" transform="translate(0 0)" fill="#20a83e" />
+        <Ellipse id="Ellipse_67" data-name="Ellipse 67" cx="11.756" cy="11.756" rx="11.756" ry="11.756" transform="translate(2.351 2.351)" fill="#e5e5e5" />
+        <Ellipse id="Ellipse_68" data-name="Ellipse 68" cx="10.345" cy="10.345" rx="10.345" ry="10.345" transform="translate(3.762 3.762)" fill="#fff" />
+        <Path id="Path_66" data-name="Path 66" d="M133.6,129.879l-.423-2.29a.47.47,0,0,0-.37-.376l-3.325-.665a.47.47,0,0,0-.425.129l-1.351,1.351a8.445,8.445,0,0,1-4.651-4.659l1.346-1.347a.47.47,0,0,0,.129-.425l-.665-3.325a.47.47,0,0,0-.376-.37l-2.29-.423a.47.47,0,0,0-.19,0,3.282,3.282,0,0,0-1.6.881,3.566,3.566,0,0,0-.84,3.209,14.2,14.2,0,0,0,3.488,7.418l.028.028A14.2,14.2,0,0,0,129.5,132.5a5.262,5.262,0,0,0,.818.067,3.184,3.184,0,0,0,3.273-2.5A.468.468,0,0,0,133.6,129.879Z" transform="translate(-111.975 -110.998)" fill="#20a83e" />
+        <Path id="Path_67" data-name="Path 67" d="M131.264,138.242a5.262,5.262,0,0,1-.818-.067,14.2,14.2,0,0,1-7.416-3.486l-.028-.028a14.2,14.2,0,0,1-3.488-7.418,3.733,3.733,0,0,1,.567-2.893,3.291,3.291,0,0,0-.667.514,3.566,3.566,0,0,0-.84,3.209,14.2,14.2,0,0,0,3.488,7.418l.028.028a14.2,14.2,0,0,0,7.416,3.486,5.262,5.262,0,0,0,.818.067,3.14,3.14,0,0,0,2.693-1.253A3.537,3.537,0,0,1,131.264,138.242Z" transform="translate(-111.977 -117.499)" fill="#189433" />
+      </G>
+    </Svg>
+  )
+}
+
+export const instagram = () => {
+  return (
+    <Svg xmlns="http://www.w3.org/2000/svg" id="XMLID_13_" width="29.084" height="29.084" viewBox="0 0 29.084 29.084">
+      <Defs>
+        <LinearGradient id="linear-gradient" x1="0.5" y1="0.008" x2="0.5" y2="0.998" gradientUnits="objectBoundingBox">
+          <Stop offset="0" stop-color="#e09b3d" />
+          <Stop offset="0.3" stop-color="#c74c4d" />
+          <Stop offset="0.6" stop-color="#c21975" />
+          <Stop offset="1" stop-color="#7024c4" />
+        </LinearGradient>
+        <LinearGradient id="linear-gradient-2" y1="-0.451" y2="1.462" />
+        <LinearGradient id="linear-gradient-3" y1="-1.396" y2="6.586" />
+      </Defs>
+      <Path id="XMLID_17_" d="M20.42,0H8.664A8.674,8.674,0,0,0,0,8.664V20.42a8.674,8.674,0,0,0,8.664,8.664H20.42a8.674,8.674,0,0,0,8.664-8.664V8.664A8.674,8.674,0,0,0,20.42,0Zm5.738,20.42a5.738,5.738,0,0,1-5.738,5.738H8.664A5.738,5.738,0,0,1,2.926,20.42V8.664A5.738,5.738,0,0,1,8.664,2.926H20.42a5.738,5.738,0,0,1,5.738,5.738V20.42Z" fill="#CE6349" />
+      <Path id="XMLID_81_" d="M140.522,133a7.522,7.522,0,1,0,7.522,7.522A7.531,7.531,0,0,0,140.522,133Zm0,12.118a4.6,4.6,0,1,1,4.6-4.6A4.6,4.6,0,0,1,140.522,145.118Z" transform="translate(-125.98 -125.98)" fill="#CE6349" />
+      <Ellipse id="XMLID_83_" cx="1.802" cy="1.802" rx="1.802" ry="1.802" transform="translate(20.276 5.274)" fill="#CE6349" />
+    </Svg>
+  )
+}
+
+export const linkdin = () => {
+  return (
+    <Svg xmlns="http://www.w3.org/2000/svg" width="28.992" height="28.992" viewBox="0 0 28.992 28.992">
+      <G id="linkedin-svgrepo-com" transform="translate(0 0)">
+        <Ellipse id="Ellipse_69" data-name="Ellipse 69" cx="14.496" cy="14.496" rx="14.496" ry="14.496" transform="translate(0 0)" fill="#007ab9" />
+        <G id="Group_20" data-name="Group 20" transform="translate(6.994 6.194)">
+          <Path id="Path_68" data-name="Path 68" d="M43.231,33.437v5.976H39.766V33.838c0-1.4-.5-2.356-1.755-2.356a1.9,1.9,0,0,0-1.777,1.267,2.372,2.372,0,0,0-.115.844v5.82H32.654s.047-9.444,0-10.421h3.465v1.477c-.007.012-.017.023-.023.034h.023v-.034a3.44,3.44,0,0,1,3.123-1.721c2.28,0,3.989,1.489,3.989,4.69Zm-14.2-9.468a1.806,1.806,0,1,0-.045,3.6h.022a1.806,1.806,0,1,0,.023-3.6ZM27.274,39.414h3.464V28.992H27.274Z" transform="translate(-27.068 -23.969)" fill="#f1f2f2" />
+        </G>
+      </G>
+    </Svg>
+  )
+}
+
+export const twitter = () => {
+  return (
+    <Svg xmlns="http://www.w3.org/2000/svg" width="29.177" height="29.177" viewBox="0 0 29.177 29.177">
+      <G id="twitter-svgrepo-com_1_" data-name="twitter-svgrepo-com (1)" transform="translate(-0.001)">
+        <Circle id="Ellipse_70" data-name="Ellipse 70" cx="14.588" cy="14.588" r="14.588" transform="translate(0.001 0)" fill="#55acee" />
+        <G id="Group_21" data-name="Group 21" transform="translate(6.529 8.849)">
+          <Path id="Path_69" data-name="Path 69" d="M42.1,35.663a6.957,6.957,0,0,1-2,.548,3.5,3.5,0,0,0,1.534-1.929,6.98,6.98,0,0,1-2.214.846,3.49,3.49,0,0,0-5.942,3.181,9.9,9.9,0,0,1-7.188-3.644,3.491,3.491,0,0,0,1.079,4.656,3.462,3.462,0,0,1-1.579-.437c0,.015,0,.03,0,.044a3.489,3.489,0,0,0,2.8,3.419,3.5,3.5,0,0,1-1.575.06,3.491,3.491,0,0,0,3.257,2.422A7.039,7.039,0,0,1,25.1,46.274a9.917,9.917,0,0,0,15.266-8.355c0-.151,0-.3-.01-.451a7.071,7.071,0,0,0,1.74-1.8Z" transform="translate(-25.103 -34.028)" fill="#f1f2f2" />
+        </G>
+      </G>
+    </Svg>
+  )
+}
+
+export const selectedClick = (color, width, height) => {
+  return (
+    <Svg xmlns="http://www.w3.org/2000/svg" width={width} height={height} viewBox="0 0 12.235 9.187">
+      <Path id="right-svgrepo-com_1_" data-name="right-svgrepo-com (1)" d="M10.617,29.972l1.618,1.618L4.666,39.159,0,34.493l1.618-1.618,3.048,3.048Z" transform="translate(0 -29.972)" fill={color} />
+    </Svg>
+  )
+}

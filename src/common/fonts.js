@@ -10,6 +10,5 @@ export default Fonts = {
   OptimaItalic: "OptimaLTPro-Italic",
   OptimaMedium: "OptimaLTPro-Medium",
   OptimaMediumItalic: "OptimaLTPro-MediumItalic",
-  OptimaRoman: "OptimaLTPro-Roman",
-  OptimaRegular: "Optima Regular"
+  OptimaRoman: "OptimaLTPro-Roman"
 }

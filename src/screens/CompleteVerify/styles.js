@@ -71,6 +71,15 @@ const styles = StyleSheet.create({
     color: colors.black,
     fontSize: 16
   },
+  selectedView: {
+    position: "absolute",
+    top: -6,
+    right: -6,
+    backgroundColor: colors.white,
+    paddingHorizontal: 6,
+    paddingVertical: 4,
+    borderRadius:5,
+  }
 });
 
 export default styles;

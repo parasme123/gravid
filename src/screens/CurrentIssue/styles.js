@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   bkmrkBtnTxt: {
-    fontFamily: fonts.OptimaRegular,
+    fontFamily: fonts.OptimaRoman,
     color: colors.black,
     fontSize: 10,
     lineHeight: 17,
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
   },
   issueDes: {
     marginTop: 8,
-    fontFamily: fonts.OptimaRegular,
+    fontFamily: fonts.OptimaRoman,
     color: colors.gray,
     fontSize: 13,
     lineHeight: 16

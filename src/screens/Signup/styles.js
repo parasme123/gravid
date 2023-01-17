@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     marginLeft: 12,
     paddingVertical: 5,
     borderBottomColor: colors.grayRegular,
-    fontFamily: fonts.OptimaRegular,
+    fontFamily: fonts.OptimaRoman,
     color: colors.inputPlaceHolder,
     fontSize: 18,
   },
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     marginTop: 10
   },
   termConditionTxt: {
-    fontFamily: fonts.OptimaRegular,
+    fontFamily: fonts.OptimaRoman,
     color: colors.inputPlaceHolder,
     fontSize: 15,
     marginLeft: 12,
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     color: colors.themeColor,
   },
   alreadyAct:{
-    fontFamily: fonts.OptimaRegular,
+    fontFamily: fonts.OptimaRoman,
     color: colors.inputPlaceHolder,
     fontSize: 16,
     textAlign:"center",

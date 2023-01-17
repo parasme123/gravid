@@ -13,7 +13,7 @@ import Modal from "react-native-modal";
 import styles from './styles';
 
 const Home = (props) => {
-  const [modalVisible, setModalVisible] = useState(true);
+  const [modalVisible, setModalVisible] = useState(false);
   const [textinputVal, setTextinputVal] = useState("Gravid Digital 1 Year")
   const [price, setPrice] = useState("1800")
   const [type, setType] = useState("Select")
@@ -44,7 +44,7 @@ const Home = (props) => {
 
   const renderItemIssue = ({ item }) => {
     return (
-      <TouchableOpacity style={styles.currenIssueView}>
+      <TouchableOpacity style={styles.currenIssueView} onPress={!item?.isFree ? () => setModalVisible(true) : null}>
         <View style={styles.leftView}>
           <View style={styles.isFreeView}>
             <Text style={styles.isFree}>{item?.isFree ? "Free" : "Paid"}</Text>

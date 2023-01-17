@@ -13,7 +13,7 @@ import Modal from "react-native-modal";
 import styles from './styles';
 
 const Webinar = (props) => {
-  const [modalVisible, setModalVisible] = useState(true);
+  const [modalVisible, setModalVisible] = useState(false);
   const [textinputVal, setTextinputVal] = useState("Gravid Digital 1 Year")
   const [price, setPrice] = useState("1800")
   const [type, setType] = useState("live")
@@ -70,13 +70,13 @@ const Webinar = (props) => {
 
   const renderItemNewsLetter = ({ item }) => {
     return (
-      <TouchableOpacity style={styles.NewsLetterView} onPress={handleWebinarDetail}>
+      <TouchableOpacity style={styles.NewsLetterView} onPress={item.isFree ? () => handleWebinarDetail() : () => setModalVisible(true)}>
         <Image source={item.img} style={styles.newsImg} />
         {
           type == "live" ? (
             <>
               <View style={styles.paidType}>
-                <Text style={styles.paidTypeTxt}>Free</Text>
+                <Text style={styles.paidTypeTxt}>{item.isFree ? "Free" : "Paid"}</Text>
               </View>
               <View style={styles.wifiCon}>
                 {svgs.webinar(colors.black, 12, 12)}
@@ -168,6 +168,24 @@ const Webinar = (props) => {
           <Image style={styles.endImg} source={require('../../assets/images/home-end.png')} />
         </View>
       </ScrollView>
+      <Modal
+        isVisible={modalVisible}
+        onBackdropPress={() => setModalVisible(false)}
+        onBackButtonPress={() => setModalVisible(false)}
+      >
+        <View style={{ backgroundColor: "white", borderRadius: 10, marginHorizontal: 20 }}>
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <View style={{ alignItems: "center", marginHorizontal: 20, marginTop: 10 }}>
+              <Image source={require('../../assets/images/GRAVID_O.png')} style={{ height: 104, width: 104 }} />
+              <Text style={styles.offHadding}>To Access Paid Features you need to pay</Text>
+              <Text style={styles.offDes}>$10</Text>
+            </View>
+            <TouchableOpacity style={styles.submitBtn}>
+              <Text style={styles.submitBtnTxt}>Make Payment</Text>
+            </TouchableOpacity>
+          </ScrollView>
+        </View>
+      </Modal>
     </View>
 
   );

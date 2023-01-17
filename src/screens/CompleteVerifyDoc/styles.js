@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 12,
   },
   termConditionTxt: {
-    fontFamily: fonts.OptimaRegular,
+    fontFamily: fonts.OptimaRoman,
     color: colors.inputPlaceHolder,
     fontSize: 15,
     marginLeft: 12,
@@ -94,6 +94,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingBottom: 6
   },
+  selectedView: {
+    position: "absolute",
+    top: -4,
+    right: 14,
+    backgroundColor: colors.white,
+    paddingHorizontal: 6,
+    paddingVertical: 4,
+    borderRadius:5,
+    zIndex:999
+  }
 });
 
 export default styles;
