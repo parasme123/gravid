@@ -132,7 +132,7 @@ const EditProfile = ({ navigation }) => {
                 <View style={{ flex: 3 }} />
             </View>
             <View style={styles.radiusView} />
-            <ScrollView style={{ paddingHorizontal: 16 }}>
+            <ScrollView style={{ paddingHorizontal: 16 }} showsVerticalScrollIndicator={false}>
                 <Image source={showdpimage?.path ? { uri: showdpimage?.path } : require('../../assets/images/user_icons.png')}
                     style={styles.profileimg} />
                 <TouchableOpacity style={styles.cameraman} onPress={() => DPSuggestion()}>

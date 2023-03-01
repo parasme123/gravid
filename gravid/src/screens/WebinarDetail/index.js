@@ -50,7 +50,7 @@ const WebinarDetail = ({ props, route }) => {
         <View style={{ flex: 3 }} />
       </View>
       <View style={styles.radiusView} />
-      <ScrollView nestedScrollEnabled={true}>
+      <ScrollView nestedScrollEnabled={true} showsVerticalScrollIndicator={false}>
         <View style={{ marginHorizontal: 20 }}>
           <Image source={{ uri: imageurl + delail?.image }} style={{ width: "100%", height: 200 }} />
           <Text style={styles.webinarTitle}>{delail?.title}</Text>

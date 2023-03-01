@@ -41,31 +41,21 @@ const Blogs = (props) => {
         }
       })
   }
-  const DATA = [
-    {
-      id: "1",
-      title: "Gravid Digest India",
-      des: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, eius mollitia suscipit, quisquam doloremque distinctio perferendis et doloribus unde architecto optio laboriosam porro adipisci sapiente officiis nemo accusamus ad praesentium? Esse minima nisi et. Dolore perferendis, enim praesentium omnis, iste doloremque quia officia optio deserunt molestiae voluptates soluta architecto tempora.",
-      img: require('../../assets/images/blogs.png')
-    },
-    {
-      id: "2",
-      title: "Gravid Digest India",
-      des: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, eius mollitia suscipit, quisquam doloremque distinctio perferendis et doloribus unde architecto optio laboriosam porro adipisci sapiente officiis nemo accusamus ad praesentium? Esse minima nisi et. Dolore perferendis, enim praesentium omnis, iste doloremque quia officia optio deserunt molestiae voluptates soluta architecto tempora.",
-      img: require('../../assets/images/blogs.png')
-    },
-  ];
 
   const renderItemNewsLetter = ({ item }) => {
     return (
-      <View key={item.id} style={styles.NewsLetterView}>
+      <TouchableOpacity
+        key={item.id}
+        style={styles.NewsLetterView}
+        onPress={() => props.navigation.navigate("RecentBlogsDetail")}
+      >
         <Text style={styles.blogTitleTime}>Gravid Digest India | May-June 2022</Text>
         <Text style={styles.issuetitle}>{item.title}</Text>
         <View style={styles.newsleftView}>
           <Text style={styles.issueDes}>{item.description}</Text>
           <Image source={{ uri: imageurl + item.image }} style={styles.newsImg} />
         </View>
-      </View>
+      </TouchableOpacity>
     );
   };
 

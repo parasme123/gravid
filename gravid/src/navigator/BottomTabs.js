@@ -9,7 +9,7 @@ import Webinar from '../screens/Webinar';
 import WebinarDetail from '../screens/WebinarDetail';
 import Library from '../screens/Library';
 import { svgs } from '@common';
-import ParentingTV from '../screens/ParentingTV ';
+import ParentingTV from '../screens/ParentingTV';
 import Video_Library from '../screens/Video_Library';
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();

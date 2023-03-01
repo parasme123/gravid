@@ -97,7 +97,7 @@ const Library = (props) => {
         <View style={{ flex: 3 }} />
       </View>
       <View style={styles.radiusView} />
-      <ScrollView nestedScrollEnabled={true}>
+      <ScrollView nestedScrollEnabled={true} showsVerticalScrollIndicator={false}>
         <View style={styles.tabView}>
           <TouchableOpacity style={type == "bookmark" ? styles.WebinarActiveBtn : styles.WebinarInactiveBtn} onPress={() => handleWebinarType("bookmark")}>
             {

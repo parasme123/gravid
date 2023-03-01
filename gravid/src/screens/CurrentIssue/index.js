@@ -41,10 +41,12 @@ const CurrentIssue = (props) => {
   }
   const renderItemNewsLetter = ({ item }) => {
     return (
-      <View key={item.id} style={styles.NewsLetterView}>
-        <TouchableOpacity>
-          <Image source={{ uri: imageurl + item.image }} style={styles.newsImg} />
-        </TouchableOpacity>
+      <TouchableOpacity 
+      key={item.id} 
+      style={styles.NewsLetterView}
+      onPress={() => props.navigation.navigate("RecentIssuesDetail")}
+      >
+        <Image source={{ uri: imageurl + item.image }} style={styles.newsImg} />
         <View style={styles.newsleftView}>
           <Text style={styles.issuetitle} numberOfLines={2}>{item.title}</Text>
           <Text style={styles.issueDes} numberOfLines={2}>{item.description}</Text>
@@ -65,7 +67,7 @@ const CurrentIssue = (props) => {
             </TouchableOpacity>
           </View>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   };
 

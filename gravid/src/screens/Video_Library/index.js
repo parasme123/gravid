@@ -28,10 +28,10 @@ const Video_Library = (props) => {
     }
     const renderItemvideo = ({ item }) => {
         return (
-            <View style={styles.NewsLetterView2}>
-                <TouchableOpacity>
-                    <Image source={{ uri: imageurl + item.image }} style={styles.newsImg} />
-                </TouchableOpacity>
+            <TouchableOpacity
+                onPress={() => props.navigation.navigate("VideosDetails")}
+                style={styles.NewsLetterView2}>
+                <Image source={{ uri: imageurl + item.image }} style={styles.newsImg} />
                 <View style={styles.newsleftView}>
                     <View style={styles.bookanddo}>
                         <TouchableOpacity style={styles.bkmrkBtn}>
@@ -50,7 +50,7 @@ const Video_Library = (props) => {
                     <Text style={styles.issuetitle} numberOfLines={2}>{item.title}</Text>
                     <Text style={styles.issueDes} numberOfLines={2}>{item.description}</Text>
                 </View>
-            </View>
+            </TouchableOpacity>
         );
     };
     return (
@@ -63,13 +63,13 @@ const Video_Library = (props) => {
                 <View style={{ flex: 1, }} />
             </View>
             <View style={styles.borderview} />
-                <FlatList
-                    data={videolist}
-                   
-                    numColumns={2}
-                    renderItem={renderItemvideo}
-                    keyExtractor={(item) => item.id}
-                />
+            <FlatList
+                data={videolist}
+
+                numColumns={2}
+                renderItem={renderItemvideo}
+                keyExtractor={(item) => item.id}
+            />
             {/* </View> */}
         </View>
     )

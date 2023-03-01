@@ -15,13 +15,19 @@ const styles = StyleSheet.create({
     flexDirection: "row"
   },
   signupImg: {
-    width: 54,
-    height: 54, resizeMode: 'contain'
+    width: 30,
+    height: 30,
+    resizeMode: 'contain',
+    borderRadius: 15
   },
   headingText: {
     marginLeft: 13
   },
-  discount: { height: 100, width: 100, borderRadius: 20 },
+  discount: {
+    height: 100,
+    width: 100,
+    borderRadius: 20
+  },
   hello: {
     fontFamily: fonts.OptimaBold,
     color: colors.grayRegular,
@@ -29,8 +35,10 @@ const styles = StyleSheet.create({
     // marginBottom: 20,
   },
   bookanddo: {
-    flexDirection: "row", justifyContent: "space-between",
-    width: 200, alignSelf: 'center'
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: 200,
+    alignSelf: 'center'
   },
   userName: {
     fontSize: 20,
@@ -60,18 +68,27 @@ const styles = StyleSheet.create({
     // marginTop: 20,
   },
   gravidimg: {
-    height: 80, width: 80, resizeMode: 'contain',
-    alignSelf: 'center', marginRight: "40%", marginTop: 10,
+    height: 80,
+    width: 80,
+    resizeMode: 'contain',
+    alignSelf: 'center',
+    marginRight: "40%",
+    marginTop: 10,
   },
   yearlydis: {
     fontSize: 14,
-    color: colors.black, marginLeft: 20,
-    fontFamily: fonts.OptimaBlack, marginTop: 10,
+    color: colors.black,
+    marginLeft: 20,
+    fontFamily: fonts.OptimaBlack,
+    marginTop: 10,
   },
   destxt: {
-    fontSize: 12, marginTop: 5,
-    color: colors.gray, marginHorizontal: 20,
-    fontFamily: fonts.OptimaDemiBold, lineHeight: 16,
+    fontSize: 12,
+    marginTop: 5,
+    color: colors.gray,
+    marginHorizontal: 20,
+    fontFamily: fonts.OptimaDemiBold,
+    lineHeight: 16,
   },
   subscribeBtn: {
     width: 125,
@@ -139,7 +156,9 @@ const styles = StyleSheet.create({
     lineHeight: 17,
     color: colors.black,
     fontFamily: fonts.OptimaBold,
-    fontSize: 13, width: 200, alignSelf: 'center',
+    fontSize: 13,
+    width: 200,
+    alignSelf: 'center',
   },
   issueDes: {
     fontSize: 10,

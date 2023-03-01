@@ -15,7 +15,7 @@ const List_of_Docters = ({ navigation }) => {
                 <View style={{ flex: 3 }} />
             </View>
             <View style={styles.radiusView} />
-            <ScrollView style={{ paddingHorizontal: 16 }}>
+            <ScrollView style={{ paddingHorizontal: 16 }} showsVerticalScrollIndicator={false}>
 
             </ScrollView>
         </View>

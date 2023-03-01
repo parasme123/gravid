@@ -14,7 +14,7 @@ const Privacy_Policy = ({ navigation }) => {
                 <View style={{ flex: 3 }} />
             </View>
             <View style={styles.radiusView} />
-            <ScrollView style={{ paddingHorizontal: 16 }}>
+            <ScrollView style={{ paddingHorizontal: 16 }} showsVerticalScrollIndicator={false}>
                 <Text style={styles.termstxt}>
                     A terms and conditions agreement outlines the rules{'\n'}
                     that your website or mobile app users must follow.{'\n'}

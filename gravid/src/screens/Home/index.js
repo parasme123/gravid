@@ -21,7 +21,7 @@ import RenderHtml from 'react-native-render-html';
 
 const Home = (props, { route }) => {
   const [userData, setUserData] = useState({})
-  const [userProfile, setUserProfile] = useState()
+  const [userProfile, setUserProfile] = useState({})
   const [modalVisible, setModalVisible] = useState(false);
   const [textinputVal, setTextinputVal] = useState("Gravid Digital 1 Year")
   const [price, setPrice] = useState("1800")
@@ -74,8 +74,8 @@ const Home = (props, { route }) => {
       })
   }
 
-  const renderslider = ({ item }) => (
-    <View>
+  const renderslider = ({ item, index }) => (
+    <TouchableOpacity onPress={index == 1 ? () => setModalVisible(true) : null}>
       <Image style={styles.subscribeOfferImg}
         source={{ uri: imageurl + item.image }}
       />
@@ -88,25 +88,25 @@ const Home = (props, { route }) => {
           <Text style={styles.subscribeBtnTxt}>SUBSCRIBE</Text>
         </TouchableOpacity>
       </ImageBackground> */}
-    </View>
+    </TouchableOpacity>
   )
   const renderItemIssue = ({ item, index }) => {
     return (
-      <View style={[styles.currenIssueView, index == 0 ? { marginLeft: 15 } : null]}>
+      <TouchableOpacity
+        style={[styles.currenIssueView, index == 0 ? { marginLeft: 15 } : null]}
+        onPress={() => props.navigation.navigate("RecentIssuesDetail")}
+      >
         <View style={styles.leftView}>
           <View style={styles.isFreeView}>
             <Text style={styles.isFree}>{item.payment_type}</Text>
           </View>
           <Text style={styles.issuetitle} numberOfLines={2}>{item.title}</Text>
-          {/* <RenderHtml
+          <RenderHtml
             contentWidth={100}
             source={{ html: item.description }}
-          /> */}
-          <Text style={styles.issueDes} numberOfLines={2} >
-            {item.description}
+          />
 
-
-          </Text>
+          {/* <Text style={styles.issueDes} numberOfLines={2} > {item.description} </Text> */}
           <TouchableOpacity style={[styles.bkmrkBtn, { marginTop: 10 }]}>
             <View style={styles.bkmrkIcn}>
               {svgs.bookmark("", 8, 8)}
@@ -114,19 +114,18 @@ const Home = (props, { route }) => {
             <Text style={styles.bkmrkBtnTxt}>Bookmark</Text>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity>
-          <Image source={{ uri: imageurl + item.image }} style={styles.issueImg} />
-        </TouchableOpacity>
-      </View>
+        <Image source={{ uri: imageurl + item.image }} style={styles.issueImg} />
+      </TouchableOpacity>
     );
   };
 
   const renderItemNewsLetter = ({ item, index }) => {
     return (
-      <View style={[styles.NewsLetterView, index == 0 ? { marginLeft: 15 } : null]}>
-        <TouchableOpacity>
-          <Image source={{ uri: imageurl + item.image }} style={styles.newsImg} />
-        </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => props.navigation.navigate("RecentBlogsDetail")}
+        style={[styles.NewsLetterView, index == 0 ? { marginLeft: 15 } : null]}
+      >
+        <Image source={{ uri: imageurl + item.image }} style={styles.newsImg} />
         <View style={styles.newsleftView}>
           <View style={styles.bookanddo}>
             <TouchableOpacity style={styles.bkmrkBtn}>
@@ -145,15 +144,15 @@ const Home = (props, { route }) => {
           <Text style={styles.issuetitle} numberOfLines={2}>{item.title}</Text>
           <Text style={styles.issueDes} numberOfLines={2}>{item.description}</Text>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   };
   const renderItemvideo = ({ item, index }) => {
     return (
-      <View style={[styles.NewsLetterView2, index == 0 ? { marginLeft: 15 } : null]}>
-        <TouchableOpacity>
-          <Image source={{ uri: imageurl + item.image }} style={styles.newsImg} />
-        </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => props.navigation.navigate("VideosDetails")}
+        style={[styles.NewsLetterView2, index == 0 ? { marginLeft: 15 } : null]}>
+        <Image source={{ uri: imageurl + item.image }} style={styles.newsImg} />
         <View style={styles.newsleftView}>
           <View style={styles.bookanddo}>
             <TouchableOpacity style={styles.bkmrkBtn}>
@@ -172,7 +171,7 @@ const Home = (props, { route }) => {
           <Text style={styles.issuetitle} numberOfLines={2}>{item.title}</Text>
           <Text style={styles.issueDes} numberOfLines={2}>{item.description}</Text>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   };
 
@@ -180,9 +179,9 @@ const Home = (props, { route }) => {
     <View style={styles.container}>
       <ScrollView nestedScrollEnabled={true} showsVerticalScrollIndicator={false}>
         <View style={styles.child}>
-          <TouchableOpacity activeOpacity={0.5}
+          <TouchableOpacity
             onPress={() => { props.navigation.navigate('Profile') }}>
-            <Image style={styles.signupImg} source={userData?.profile ? { uri: imageurl + userData?.profile } : require('../../assets/images/user_icons.png')} />
+            <Image style={styles.signupImg} source={userData?.profile ? { uri: imageurl + userData?.profile } : require('../../assets/images/profileicon.png')} />
           </TouchableOpacity>
           <View style={styles.headingText}>
             {/* <Text style={styles.hello}>{userData?.fname}</Text> */}
@@ -278,8 +277,8 @@ const Home = (props, { route }) => {
 
         <Modal
           isVisible={modalVisible}
-        // onBackdropPress={() => setModalVisible(false)}
-        // onBackButtonPress={() => setModalVisible(false)}
+          onBackdropPress={() => setModalVisible(false)}
+          onBackButtonPress={() => setModalVisible(false)}
         >
           <View style={{ backgroundColor: "white", borderRadius: 10 }}>
             <ScrollView showsVerticalScrollIndicator={false}>

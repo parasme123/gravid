@@ -120,7 +120,7 @@ const OtpVerify = (props) => {
   }
   return (
     <View style={styles.container}>
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.child}>
           {signType === 'signup' ?
             <Image style={styles.signupImg} source={require('../../assets/images/otpimage.png')} />

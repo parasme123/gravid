@@ -32,7 +32,7 @@ const Referral = ({ navigation }) => {
                 <View style={{ flex: 3 }} />
             </View>
             <View style={styles.radiusView} />
-            <ScrollView style={{ paddingHorizontal: 16 }}>
+            <ScrollView style={{ paddingHorizontal: 16 }} showsVerticalScrollIndicator={false}>
                 <Text style={styles.Colleaguestxt}>You and Colleagues Will get</Text>
                 <Text style={styles.Colleaguestxt2}>Refer a Friend to get 100 referral points</Text>
                 <Image source={require('../../assets/images/refferral.png')}

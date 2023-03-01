@@ -54,8 +54,8 @@ const styles = StyleSheet.create({
   newsImg: {
     width: width / 2 - 21,
     height: 170,
-    borderRadius: 5,
-
+    borderTopRightRadius: 5,
+    borderTopLeftRadius: 5
   },
   bkmrkBtn: {
     flexDirection: "row",
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
     color: colors.gray,
     fontSize: 10,
     // lineHeight: 16,
-  
+
   },
 
 });

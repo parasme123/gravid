@@ -111,7 +111,7 @@ const Signup = (props) => {
 
   return (
     <View style={styles.container}>
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.child}>
           <Image style={styles.signupImg} source={require('../../assets/images/signup.png')} />
         </View>
@@ -119,7 +119,7 @@ const Signup = (props) => {
           <Text style={styles.welcmTxt}>Create your account</Text>
           <View style={{ width: '96%', flexDirection: "row", alignItems:"center", marginBottom:4 }}>
             <View style={{width:"8%", alignSelf:"flex-start", marginTop:12}}>
-              {svgs.userIcon(colors.grayRegular, 20)}
+              <Image style={styles.managementImage} source={require('../../assets/images/management.png')}/>
             </View>
             <View style={{width:"92%"}}>
               <SelectList
@@ -167,7 +167,7 @@ const Signup = (props) => {
             />
           </View>
           <View style={styles.formInputView}>
-            {svgs.email(colors.grayRegular, 20, 16)}
+          <Image style={styles.managementImage} source={require('../../assets/images/location.png')}/>
             <TextInput
               placeholder="City"
               style={styles.signupInput}

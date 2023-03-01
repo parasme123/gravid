@@ -15,6 +15,9 @@ import Referral from '../screens/Referral';
 import TermsCondition from '../screens/Terms&Condition';
 import Privacy_Policy from '../screens/Privacy_Policy';
 import List_of_Docters from '../screens/List_of_Doctors';
+import RecentBlogsDetail from '../screens/RecentBlogsDetail';
+import VideosDetails from '../screens/VideosDetails';
+import RecentIssuesDetail from '../screens/RecentIssuesDetail';
 const RootStack = createNativeStackNavigator();
 
 const Navigators = () => {
@@ -37,6 +40,9 @@ const Navigators = () => {
       <RootStack.Screen name="TermsCondition" component={TermsCondition} options={{ headerShown: false }} />
       <RootStack.Screen name="Privacy_Policy" component={Privacy_Policy} options={{ headerShown: false }} />
       <RootStack.Screen name="List_of_Docters" component={List_of_Docters} options={{ headerShown: false }} />
+      <RootStack.Screen name="RecentBlogsDetail" component={RecentBlogsDetail} options={{ headerShown: false }} />
+      <RootStack.Screen name="VideosDetails" component={VideosDetails} options={{ headerShown: false }} />
+      <RootStack.Screen name="RecentIssuesDetail" component={RecentIssuesDetail} options={{ headerShown: false }} />
 
     </RootStack.Navigator>
   );

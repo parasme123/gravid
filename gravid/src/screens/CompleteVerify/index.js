@@ -57,7 +57,7 @@ const CompleteVerify = (props) => {
   )
   return (
     <View style={styles.container}>
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.haddingView}>
           <Text style={styles.haddingTxt}>Tell us a bit about you!</Text>
         </View>

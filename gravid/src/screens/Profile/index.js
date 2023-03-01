@@ -87,7 +87,7 @@ const Profile = ({ navigation }) => {
         <View style={{ flex: 3 }} />
       </View>
       <View style={styles.radiusView} />
-      <ScrollView nestedScrollEnabled={true}>
+      <ScrollView nestedScrollEnabled={true} showsVerticalScrollIndicator={false}>
         <View style={{ marginHorizontal: 20 }}>
           <TouchableOpacity style={styles.editview} onPress={() => { navigation.navigate('EditProfile') }}>
             {svgs.editProfile(colors.black, 16, 14)}

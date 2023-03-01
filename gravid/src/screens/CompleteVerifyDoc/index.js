@@ -70,7 +70,7 @@ const CompleteVerifyDoc = (props) => {
   )
   return (
     <View style={styles.container}>
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.haddingView}>
           <Text style={styles.haddingTxt}>Tell us your Interests !</Text>
         </View>

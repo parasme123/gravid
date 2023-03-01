@@ -60,7 +60,7 @@ const Signin = (props) => {
   // }
   return (
     <View style={styles.container}>
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.child}>
           <Image style={styles.signupImg} source={require('../../assets/images/signup.png')} />
         </View>
