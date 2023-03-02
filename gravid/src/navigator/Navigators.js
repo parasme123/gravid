@@ -18,6 +18,7 @@ import List_of_Docters from '../screens/List_of_Doctors';
 import RecentBlogsDetail from '../screens/RecentBlogsDetail';
 import VideosDetails from '../screens/VideosDetails';
 import RecentIssuesDetail from '../screens/RecentIssuesDetail';
+import ExpertListDetail from '../screens/ExpertListDetail';
 const RootStack = createNativeStackNavigator();
 
 const Navigators = () => {
@@ -43,6 +44,7 @@ const Navigators = () => {
       <RootStack.Screen name="RecentBlogsDetail" component={RecentBlogsDetail} options={{ headerShown: false }} />
       <RootStack.Screen name="VideosDetails" component={VideosDetails} options={{ headerShown: false }} />
       <RootStack.Screen name="RecentIssuesDetail" component={RecentIssuesDetail} options={{ headerShown: false }} />
+      <RootStack.Screen name="ExpertListDetail" component={ExpertListDetail} options={{ headerShown: false }} />
 
     </RootStack.Navigator>
   );

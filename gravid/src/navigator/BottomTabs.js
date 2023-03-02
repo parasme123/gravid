@@ -11,6 +11,7 @@ import Library from '../screens/Library';
 import { svgs } from '@common';
 import ParentingTV from '../screens/ParentingTV';
 import Video_Library from '../screens/Video_Library';
+import ExpertList from '../screens/ExpertList';
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
@@ -39,12 +40,12 @@ function LibraryTab() {
     </Stack.Navigator>
   )
 }
-function HealthTrackerTab() {
+function ExpertListTab() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen
-        name="HomeScreen"
-        component={Home}
+        name="ExpertListScreen"
+        component={ExpertList}
       // options={{ title: 'Welcome' }}
       />
     </Stack.Navigator>
@@ -68,12 +69,11 @@ function BottomTabs() {
             return svgs.webinar(color, 22, 20);
           } else if (route.name === 'Library') {
             return svgs.library(color, 22, 20);
-          } else if (route.name === 'Health Tracker') {
+          } else if (route.name === 'Expert List') {
             return svgs.healthTracker(color, 22, 20);
           } else if (route.name === 'Parenting TV ') {
             return svgs.userIcon(color, 22, 20);
           }
-
         },
         tabBarActiveTintColor: '#FE887E',
         tabBarInactiveTintColor: '#929397',
@@ -82,7 +82,7 @@ function BottomTabs() {
       <Tab.Screen name="Home" options={{ headerShown: false }} component={HomeTab} />
       <Tab.Screen name="Webinar" options={{ headerShown: false }} component={WebinarTab} />
       <Tab.Screen name="Library" options={{ headerShown: false }} component={LibraryTab} />
-      <Tab.Screen name="Health Tracker" options={{ headerShown: false }} component={HealthTrackerTab} />
+      <Tab.Screen name="Expert List" options={{ headerShown: false }} component={ExpertListTab} />
       <Tab.Screen name="Parenting TV " options={{ headerShown: false }} component={ParentingTVtab} />
     </Tab.Navigator>
   );

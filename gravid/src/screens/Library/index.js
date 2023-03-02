@@ -11,58 +11,33 @@ import { ImageBackground, Image, SafeAreaView, ScrollView, StatusBar, Text, useC
 import { svgs, colors } from '@common';
 import Modal from "react-native-modal";
 import styles from './styles';
+import Apis from '../../Services/apis';
+import { useIsFocused } from '@react-navigation/native';
 
 const Library = (props) => {
+  const isFocused = useIsFocused();
   const [modalVisible, setModalVisible] = useState(true);
   const [textinputVal, setTextinputVal] = useState("Gravid Digital 1 Year")
   const [price, setPrice] = useState("1800")
   const [type, setType] = useState("bookmark")
   const [confirmDeleteModal, setConfirmDeleteModal] = useState(false)
+  const [bookmarkDataList, setBookmarkDataList] = useState([])
 
-  const DATA = [
-    {
-      id: "1",
-      title: "Scary Thing That You Don't Get Enough ",
-      des: "Far far away, behind the word mountains, far from the countries",
-      isFree: true,
-      img: require('../../assets/images/current-issue.png')
-    },
-    {
-      id: "2",
-      title: "Scary Thing That You Don't Get Enough ",
-      des: "Far far away, behind the word mountains, far from the countries",
-      isFree: false,
-      img: require('../../assets/images/current-issue.png')
-    },
-    {
-      id: "3",
-      title: "Scary Thing That You Don't Get Enough ",
-      des: "Far far away, behind the word mountains, far from the countries",
-      isFree: true,
-      img: require('../../assets/images/current-issue.png')
-    },
-    {
-      id: "1",
-      title: "Scary Thing That You Don't Get Enough ",
-      des: "Far far away, behind the word mountains, far from the countries",
-      isFree: true,
-      img: require('../../assets/images/current-issue.png')
-    },
-    {
-      id: "2",
-      title: "Scary Thing That You Don't Get Enough ",
-      des: "Far far away, behind the word mountains, far from the countries",
-      isFree: false,
-      img: require('../../assets/images/current-issue.png')
-    },
-    {
-      id: "3",
-      title: "Scary Thing That You Don't Get Enough ",
-      des: "Far far away, behind the word mountains, far from the countries",
-      isFree: true,
-      img: require('../../assets/images/current-issue.png')
-    },
-  ];
+  useEffect(() => {
+    if (isFocused) {
+      bookmarkList()
+    }
+  }, [isFocused])
+
+  const bookmarkList = () => {
+    Apis.AllBookMark({})
+      .then(async (json) => {
+        console.log('datalistHomePage=====:', JSON.stringify(json));
+        if (json.status == true) {
+          setBookmarkDataList(json.data);
+        }
+      })
+  }
 
   const handleWebinarType = (type) => {
     setType(type)
@@ -74,14 +49,14 @@ const Library = (props) => {
 
   const renderItemNewsLetter = ({ item }) => {
     return (
-      <TouchableOpacity style={styles.NewsLetterView}>
+      <TouchableOpacity style={styles.NewsLetterView} onPress={item.type == "blog" ? () => props.navigation.navigate("RecentBlogsDetail", { item: item.blogs }) : () => props.navigation.navigate("RecentIssuesDetail", { item: item.magzine })}>
         <Image source={item.img} style={styles.newsImg} />
         <TouchableOpacity style={styles.wifiCon} onPress={handleDelete}>
           {svgs.deleteIcon(colors.white, 10, 10)}
         </TouchableOpacity>
         <View style={styles.newsleftView}>
-          <Text style={styles.issuetitle} numberOfLines={2}>{item.title}</Text>
-          <Text style={styles.issueDes} numberOfLines={3}>{item.des}</Text>
+          <Text style={styles.issuetitle} numberOfLines={2}>{item.type == "blog" ? item.blogs.title : item.magzine.title}</Text>
+          <Text style={styles.issueDes} numberOfLines={3}>{item.type == "blog" ? item.blogs.short_description : item.magzine.short_description}</Text>
         </View>
       </TouchableOpacity>
     );
@@ -133,14 +108,17 @@ const Library = (props) => {
             <Text style={type == "video" ? styles.WebinarActiveBtnTxt : styles.WebinarInactiveBtnTxt}>Recorded video</Text>
           </TouchableOpacity>
         </View>
-
-        <FlatList
-          data={DATA}
-          numColumns={2}
-          style={{ paddingLeft: 16, marginTop: 40, flexDirection: "row" }}
-          renderItem={renderItemNewsLetter}
-          keyExtractor={(item) => item.id}
-        />
+        {
+          type == "bookmark" ? (
+            <FlatList
+              data={bookmarkDataList}
+              numColumns={2}
+              style={{ paddingLeft: 16, marginTop: 40, flexDirection: "row" }}
+              renderItem={renderItemNewsLetter}
+              keyExtractor={(item) => item.id}
+            />
+          ) : null
+        }
 
       </ScrollView>
       <Modal

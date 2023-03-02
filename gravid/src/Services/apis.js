@@ -48,6 +48,15 @@ export default class Apis {
   static Updata_Profile = (data) => {
     return Network('POST', 'profile-update', data)
   }
+  static ExpertList = (data) => {
+    return Network('GET', 'expert-list', data)
+  }
+  static AddBookmark = (data) => {
+    return Network('POST', 'bookmark', data)
+  }
+  static AllBookMark = (data) => {
+    return Network('GET', 'bookmark-list', data)
+  }
   static Signout = (data) => {
     return Network('POST', 'user-signout', data)
   }

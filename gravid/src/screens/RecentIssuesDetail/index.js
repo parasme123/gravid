@@ -31,7 +31,7 @@ const RecentIssuesDetail = (props) => {
         <TouchableOpacity style={{ flex: 3 }} onPress={() => props.navigation.goBack()}>
           {svgs.backArrow("black", 24, 24)}
         </TouchableOpacity>
-        <Text style={styles.haddingTxt}>Recent Issues</Text>
+        <Text style={styles.haddingTxt}>Magazine</Text>
         <View style={{ flex: 3 }} />
       </View>
       <View style={styles.radiusView} />

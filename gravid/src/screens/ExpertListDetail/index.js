@@ -7,8 +7,8 @@ import RenderHtml from 'react-native-render-html';
 const { width, height } = Dimensions.get('window')
 import { imageurl } from '../../Services/constants';
 
-const RecentBlogsDetail = (props) => {
-    const BlogDetail = props?.route?.params?.item
+const ExpertListDetail = (props) => {
+    const ExpertDetail = props?.route?.params?.item
     // const [delail, setDetail] = useState();
 
     // useEffect(() => {
@@ -35,24 +35,24 @@ const RecentBlogsDetail = (props) => {
                 <TouchableOpacity style={{ flex: 3 }} onPress={() => props.navigation.goBack()}>
                     {svgs.backArrow("black", 24, 24)}
                 </TouchableOpacity>
-                <Text style={styles.haddingTxt}>Blog</Text>
+                <Text style={styles.haddingTxt}>Expert </Text>
                 <View style={{ flex: 3 }} />
             </View>
             <View style={styles.radiusView} />
             <ScrollView style={{ paddingHorizontal: 16 }} showsVerticalScrollIndicator={false}>
                 <View>
-                    <Image style={styles.ScreenshotImage} source={{ uri: imageurl + BlogDetail.image }} />
-                    <Text style={styles.CONTRIBUTORSTEXT}>{BlogDetail.title}</Text>
-                    <Text style={styles.gravidDigestText}>Gravid Digest India | May-June 2022</Text>
+                    <Image style={styles.ScreenshotImage} source={{ uri: imageurl + ExpertDetail.image }} />
+                    <Text style={styles.CONTRIBUTORSTEXT}>{ExpertDetail.name}</Text>
+                    {/* <Text style={styles.gravidDigestText}>Gravid Digest India | May-June 2022</Text> */}
                 </View>
                 <RenderHtml
                     contentWidth={width}
-                    source={{ html: BlogDetail.description }}
+                    source={{ html: ExpertDetail.description }}
                 />
-                {/* <Text style={styles.loremText}>{BlogDetail.description}</Text> */}
+                {/* <Text style={styles.loremText}>{ExpertDetail.description}</Text> */}
             </ScrollView>
         </View>
     );
 };
 
-export default RecentBlogsDetail;
+export default ExpertListDetail;

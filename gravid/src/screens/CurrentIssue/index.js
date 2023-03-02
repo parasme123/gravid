@@ -50,8 +50,8 @@ const CurrentIssue = (props) => {
       >
         <Image source={{ uri: imageurl + item.image }} style={styles.newsImg} />
         <View style={styles.newsleftView}>
-          <Text style={styles.issuetitle} numberOfLines={2}>{item.title}</Text>
-          <Text style={styles.issueDes} numberOfLines={2}>{item.description}</Text>
+          <Text style={styles.issuetitle}>{item.title}</Text>
+          <Text style={styles.issueDes}>{item.short_description}</Text>
           <View style={styles.downloadmanview}>
             <TouchableOpacity style={styles.bkmrkBtn}>
               <View style={styles.bkmrkIcn}>

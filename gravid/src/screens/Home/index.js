@@ -74,6 +74,21 @@ const Home = (props, { route }) => {
       })
   }
 
+
+  const addBookmark = (bookmarkID, bookmarkType) => {
+    const params = {
+      id: bookmarkID,
+      type: bookmarkType
+    }
+    Apis.AddBookmark(params)
+      .then(async (json) => {
+        console.log('bookmark success=====:', JSON.stringify(json));
+        if (json.status == true) {
+          HomePagedata()
+        }
+      })
+  }
+
   const renderslider = ({ item, index }) => (
     <TouchableOpacity onPress={index == 1 ? () => setModalVisible(true) : null}>
       <Image style={styles.subscribeOfferImg}
@@ -100,14 +115,14 @@ const Home = (props, { route }) => {
           <View style={styles.isFreeView}>
             <Text style={styles.isFree}>{item.payment_type}</Text>
           </View>
-          <Text style={styles.issuetitle} numberOfLines={2}>{item.title}</Text>
+          <Text style={styles.issuetitle}>{item.title}</Text>
           {/* <RenderHtml
             contentWidth={100}
             source={{ html: item.description }}
           /> */}
 
-          <Text style={styles.issueDes} numberOfLines={2} > {item.description} </Text>
-          <TouchableOpacity style={[styles.bkmrkBtn, { marginTop: 10 }]}>
+          <Text style={styles.issueDes}> {item.short_description} </Text>
+          <TouchableOpacity onPress={() => addBookmark(item.id, "magazine")} style={[styles.bkmrkBtn, { marginTop: 10 }]}>
             <View style={styles.bkmrkIcn}>
               {svgs.bookmark("", 8, 8)}
             </View>
@@ -128,7 +143,7 @@ const Home = (props, { route }) => {
         <Image source={{ uri: imageurl + item.image }} style={styles.newsImg} />
         <View style={styles.newsleftView}>
           <View style={styles.bookanddo}>
-            <TouchableOpacity style={styles.bkmrkBtn}>
+            <TouchableOpacity style={styles.bkmrkBtn} onPress={() => addBookmark(item.id, "blog")}>
               <View style={styles.bkmrkIcn}>
                 {svgs.bookmark("", 8, 8)}
               </View>
@@ -141,8 +156,8 @@ const Home = (props, { route }) => {
               <Text style={styles.bkmrkBtnTxt}>Download</Text>
             </TouchableOpacity>
           </View>
-          <Text style={styles.issuetitle} numberOfLines={2}>{item.title}</Text>
-          <Text style={styles.issueDes} numberOfLines={2}>{item.description}</Text>
+          <Text style={styles.issuetitle}>{item.title}</Text>
+          <Text style={styles.issueDes}>{item.short_description}</Text>
         </View>
       </TouchableOpacity>
     );
@@ -168,8 +183,8 @@ const Home = (props, { route }) => {
               <Text style={styles.bkmrkBtnTxt}>Download</Text>
             </TouchableOpacity>
           </View>
-          <Text style={styles.issuetitle} numberOfLines={2}>{item.title}</Text>
-          <Text style={styles.issueDes} numberOfLines={2}>{item.description}</Text>
+          <Text style={styles.issuetitle}>{item.title}</Text>
+          <Text style={styles.issueDes}>{item.short_description}</Text>
         </View>
       </TouchableOpacity>
     );

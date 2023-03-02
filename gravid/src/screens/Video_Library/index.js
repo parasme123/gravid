@@ -47,8 +47,8 @@ const Video_Library = (props) => {
                             <Text style={styles.bkmrkBtnTxt}>Download</Text>
                         </TouchableOpacity>
                     </View>
-                    <Text style={styles.issuetitle} numberOfLines={2}>{item.title}</Text>
-                    <Text style={styles.issueDes} numberOfLines={2}>{item.description}</Text>
+                    <Text style={styles.issuetitle}>{item.title}</Text>
+                    <Text style={styles.issueDes}>{item.short_description}</Text>
                 </View>
             </TouchableOpacity>
         );

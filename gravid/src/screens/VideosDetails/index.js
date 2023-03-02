@@ -15,7 +15,7 @@ const VideosDetails = (props) => {
                 <TouchableOpacity style={{ flex: 3 }} onPress={() => props.navigation.goBack()}>
                     {svgs.backArrow("black", 24, 24)}
                 </TouchableOpacity>
-                <Text style={styles.haddingTxt}>Videos</Text>
+                <Text style={styles.haddingTxt}>Video</Text>
                 <View style={{ flex: 3 }} />
             </View>
             <View style={styles.radiusView} />

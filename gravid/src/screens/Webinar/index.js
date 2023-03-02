@@ -104,8 +104,8 @@ const Webinar = (props) => {
               <Text style={styles.bkmrkBtnTxt}>5 min.</Text>
             </View>
           </View>
-          <Text style={styles.issuetitle} numberOfLines={2}>{item.title}</Text>
-          <Text style={styles.issueDes} numberOfLines={2}>{item.description}</Text>
+          <Text style={styles.issuetitle}>{item.title}</Text>
+          <Text style={styles.issueDes}>{item.short_description}</Text>
         </View>
       </TouchableOpacity>
     );

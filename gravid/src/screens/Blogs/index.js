@@ -52,7 +52,7 @@ const Blogs = (props) => {
         <Text style={styles.blogTitleTime}>Gravid Digest India | May-June 2022</Text>
         <Text style={styles.issuetitle}>{item.title}</Text>
         <View style={styles.newsleftView}>
-          <Text style={styles.issueDes} numberOfLines={10}>{item.description}</Text>
+          <Text style={styles.issueDes}>{item.short_description}</Text>
           <Image source={{ uri: imageurl + item.image }} style={styles.newsImg} />
         </View>
       </TouchableOpacity>
