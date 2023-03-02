@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Dimensions } from 'react-native';
 import { fonts, colors } from "@common";
-// const { width } = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -66,6 +66,11 @@ const styles = StyleSheet.create({
         color:'#000000',
         fontWeight:'bold',
         fontSize:17,
+    },
+    pdf: {
+        flex:1,
+        width:Dimensions.get('window').width,
+        height:500,
     }
 })
 export default styles;
