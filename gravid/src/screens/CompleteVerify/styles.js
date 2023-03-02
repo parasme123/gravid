@@ -72,13 +72,19 @@ const styles = StyleSheet.create({
     fontSize: 16
   },
   rightimg: {
-    height: 15, width: 18, borderRadius: 10,
+    height: 15,
+    width: 18,
     resizeMode: 'contain',
-    position: 'absolute', top: 2, right: 5
   },
   rightbg: {
-    height: 20, width: 30,
-    position: 'absolute', top: 0, right: 23
+    height: 30,
+    width: 30,
+    position: 'absolute',
+    top: 0,
+    right: 23,
+    borderRadius: 10,
+    justifyContent: "center",
+    alignItems: "center"
   },
 });
 

@@ -26,6 +26,7 @@ export const Network = (method, endpoint, data = {}) => {
         console.log('---method :', method);
         console.log('---endpoint :', endpoint);
         console.log('---payload :', data);
+        console.log('---URL :', `${base_url}${endpoint}`)
         const headers = {
           "Accept": "application/json",
           "content-type": "application/json",
@@ -42,7 +43,8 @@ export const Network = (method, endpoint, data = {}) => {
           console.log('---response :', response.data);
         })
           .catch(error => {
-            var json = JSON.parse(error.response.request._response)
+            console.log('---error :', error);
+            var json = JSON.parse(error?.response?.request._response)
             resolve(json)
           });
         // if (method == "POST") {

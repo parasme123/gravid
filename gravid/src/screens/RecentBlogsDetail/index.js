@@ -1,13 +1,38 @@
 import React from 'react';
-import { Text, View ,TouchableOpacity,ScrollView, Image} from 'react-native';
+import { Text, View, TouchableOpacity, ScrollView, Image, Dimensions } from 'react-native';
 import styles from './style';
 import { svgs, colors } from '@common';
+import Apis from '../../Services/apis';
+import RenderHtml from 'react-native-render-html';
+const { width, height } = Dimensions.get('window')
+import { imageurl } from '../../Services/constants';
 
-const RecentBlogsDetail = ({navigation}) => {
+const RecentBlogsDetail = (props) => {
+    const BlogDetail = props?.route?.params?.item
+    // const [delail, setDetail] = useState();
+
+    // useEffect(() => {
+    //     HomePagedata();
+    // }, [])
+
+    // const HomePagedata = () => {
+    //     const params = {
+    //         id: BlogDetail.id,
+    //         type: 1
+    //     }
+    //     Apis.HomeListsDetails(params)
+    //         .then(async (json) => {
+    //             console.log('Detail=====:', JSON.stringify(json))
+    //             if (json.status == true) {
+    //                 setDetail(json.data)
+    //             }
+    //         })
+    // }
+
     return (
         <View style={styles.container}>
             <View style={styles.haddingView}>
-                <TouchableOpacity style={{ flex: 3 }} onPress={() => navigation.goBack()}>
+                <TouchableOpacity style={{ flex: 3 }} onPress={() => props.navigation.goBack()}>
                     {svgs.backArrow("black", 24, 24)}
                 </TouchableOpacity>
                 <Text style={styles.haddingTxt}>Recent Blogs</Text>
@@ -15,12 +40,16 @@ const RecentBlogsDetail = ({navigation}) => {
             </View>
             <View style={styles.radiusView} />
             <ScrollView style={{ paddingHorizontal: 16 }} showsVerticalScrollIndicator={false}>
-              <View>
-                <Image style={styles.ScreenshotImage} source={require('../../assets/images/recentBlogsListImage.png')}/>
-                <Text style={styles.CONTRIBUTORSTEXT}>CONTRIBUTORS</Text>
-                <Text style={styles.gravidDigestText}>Gravid Digest India | May-June 2022</Text>
-              </View>
-             <Text style={styles.loremText}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, eius mollitia suscipit, quisquam doloremque distinctio perferendis et doloribus undearchitect ooptio laboriosam porro adipisci sapiente officiis nemo accusamus ad praesentium? Esse minima nisi et. Dolore perferendis, enim praesentium omnis, iste doloremque quia officia optio deserunt molestiae voluptates soluta architecto tempora.</Text>
+                <View>
+                    <Image style={styles.ScreenshotImage} source={{ uri: imageurl + BlogDetail.image }} />
+                    <Text style={styles.CONTRIBUTORSTEXT}>{BlogDetail.title}</Text>
+                    <Text style={styles.gravidDigestText}>Gravid Digest India | May-June 2022</Text>
+                </View>
+                <RenderHtml
+                    contentWidth={width}
+                    source={{ html: BlogDetail.description }}
+                />
+                {/* <Text style={styles.loremText}>{BlogDetail.description}</Text> */}
             </ScrollView>
         </View>
     );

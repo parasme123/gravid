@@ -7,21 +7,25 @@
  */
 
 import React, { useEffect, useState } from 'react';
-import { ImageBackground, Image, SafeAreaView, ScrollView, StatusBar, Text, useColorScheme, View, TouchableOpacity, TextInput, FlatList } from 'react-native';
+import { ImageBackground, Image, SafeAreaView, ScrollView, StatusBar, Text, useColorScheme, View, TouchableOpacity, TextInput, FlatList, Dimensions } from 'react-native';
 import Modal from "react-native-modal";
 import { svgs, colors } from '@common';
 import styles from './styles';
 import Swiper from 'react-native-swiper';
 import Apis from '../../Services/apis';
 import { imageurl } from '../../Services/constants';
+import RenderHtml from 'react-native-render-html';
+const { width, height } = Dimensions.get('window')
+
 // const imageurl = "https://rasatva.apponedemo.top/gravid/"
-const WebinarDetail = ({ props, route }) => {
-  const paid = route.params.paid
+const WebinarDetail = (props) => {
+  const paid = props.route.params.paid
   const [modalVisible, setModalVisible] = useState(false);
-  const [delail, setDetail] = useState("");
+  const [delail, setDetail] = useState();
 
   useEffect(() => {
-    if (paid == "Paid") {
+    console.log("paid", paid);
+    if (paid.payment_type == "Paid") {
       setModalVisible(true)
     };
     HomePagedata();
@@ -29,7 +33,7 @@ const WebinarDetail = ({ props, route }) => {
 
   const HomePagedata = () => {
     const params = {
-      id: '1'
+      id: paid.id
     }
     Apis.webinar_detail(params)
       .then(async (json) => {
@@ -54,13 +58,17 @@ const WebinarDetail = ({ props, route }) => {
         <View style={{ marginHorizontal: 20 }}>
           <Image source={{ uri: imageurl + delail?.image }} style={{ width: "100%", height: 200 }} />
           <Text style={styles.webinarTitle}>{delail?.title}</Text>
-          <Text style={styles.webinarDes}>{delail?.description}</Text>
+          {/* <Text style={styles.webinarDes}>{delail?.description}</Text> */}
+          <RenderHtml
+            contentWidth={width}
+            source={{ html: delail?.description }}
+          />
 
           <TouchableOpacity style={styles.joinWebinarBtn} onPress={() => { setModalVisible(true) }}>
             <Text style={styles.joinWebinarBtnTxt}>Join Webinar</Text>
           </TouchableOpacity>
         </View>
-        <View>
+        {/* <View>
           <Swiper style={{ height: 330 }}
             activeDotStyle={{ backgroundColor: 'transparent', }}
             dotStyle={{ backgroundColor: 'transparent', }}
@@ -87,13 +95,13 @@ const WebinarDetail = ({ props, route }) => {
               </View>
             </ImageBackground>
           </Swiper>
-        </View>
+        </View> */}
 
       </ScrollView>
       <Modal
         isVisible={modalVisible}
-      // onBackdropPress={() => setModalVisible(true)}  
-      // onBackButtonPress={() => setModalVisible(false)}
+        onBackdropPress={() => setModalVisible(false)}
+        onBackButtonPress={() => setModalVisible(false)}
       >
         <View style={{ backgroundColor: "white", borderRadius: 10, marginHorizontal: 25 }}>
           <ScrollView showsVerticalScrollIndicator={false}>

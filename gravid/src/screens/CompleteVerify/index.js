@@ -13,19 +13,25 @@ import styles from './styles';
 import Apis from '../../Services/apis';
 import { imageurl } from '../../Services/constants';
 // const imageurl = "https://rasatva.apponedemo.top/gravid/"
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const CompleteVerify = (props) => {
-  const handleSubmit = () => {
+  const [momlist, setMomList] = useState([])
+  const [righticon, setRighIcon] = useState('0')
+
+  const handleSubmit = async () => {
     props.navigation.navigate("BottomTabs")
   }
-  const [momlist, setMomList] = useState([])
+
   useEffect(() => {
     CategoryApi()
   }, [])
-  const [righticon, setRighIcon] = useState('0')
-  const selectArrow = (index) => {
+
+  const selectArrow = async (index, item) => {
+    await AsyncStorage.setItem('catID', JSON.stringify(item.id))
     setRighIcon(index)
   }
+
   const CategoryApi = () => {
     const params = {
 
@@ -42,17 +48,21 @@ const CompleteVerify = (props) => {
 
   const renderItem = ({ item, index }) => (
     <View>
-      <TouchableOpacity onPress={() => { selectArrow(index) }} style={[styles.btn]}>
+      <TouchableOpacity onPress={() => { selectArrow(index, item) }} style={[styles.btn]}>
         <View style={styles.imgView}>
           <Image style={styles.btnImg} source={{ uri: imageurl + item.image }} />
         </View>
         <Text style={styles.btnTxt}>{item.title}</Text>
       </TouchableOpacity>
-      <ImageBackground style={styles.rightbg}
-        source={righticon == index ? require('../../assets/images/Rectangle.png') : null}>
-        <Image style={styles.rightimg}
-          source={righticon == index ? require('../../assets/images/rightsvg.png') : null} />
-      </ImageBackground>
+      {
+        righticon == index ? (
+          <ImageBackground style={styles.rightbg}
+            source={require('../../assets/images/Rectangle.png')}>
+            <Image style={styles.rightimg}
+              source={require('../../assets/images/rightsvg.png')} />
+          </ImageBackground>
+        ) : null
+      }
     </View>
   )
   return (

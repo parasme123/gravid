@@ -1,5 +1,5 @@
 import { Network } from './network'
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 //Network will recieve 4 Arguments
 // "method(type of request)",
@@ -8,7 +8,6 @@ import { Network } from './network'
 // See the main function at ./network.js
 
 export default class Apis {
-
   static signup = (data) => {
     return Network('POST', 'register', data)
   }
@@ -27,8 +26,9 @@ export default class Apis {
   static CategoryApi = (data) => {
     return Network('GET', 'category-list', data)
   }
-  static HomePagedata = (data) => {
-    return Network('GET', 'home-data', data)
+  static HomePagedata = async (data) => {
+    const localData = await AsyncStorage.getItem('catID')
+    return Network('GET', 'home-data?category_id=' + JSON.parse(localData), data)
   }
   static Welcomescreendata = (data) => {
     return Network('GET', 'welcome-screen-data', data)
@@ -40,7 +40,10 @@ export default class Apis {
     return Network('GET', 'webinar-list?type=recorded', data)
   }
   static webinar_detail = (data) => {
-    return Network('GET', 'webinar-detail?id=1', data)
+    return Network('GET', 'webinar-detail?id=' + data.id, data)
+  }
+  static HomeListsDetails = (data) => {
+    return Network('GET', 'home-list-details?type=' + data.type + '&id=' + data.id, data)
   }
   static Updata_Profile = (data) => {
     return Network('POST', 'profile-update', data)

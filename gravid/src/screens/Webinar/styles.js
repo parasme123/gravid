@@ -274,7 +274,7 @@ const styles = StyleSheet.create({
   },
   endView: {
     marginHorizontal: 24,
-    marginVertical: 20,
+    marginVertical: 40,
     // marginTop:20,
     height: 125,
     bottom: 30

@@ -47,12 +47,12 @@ const Blogs = (props) => {
       <TouchableOpacity
         key={item.id}
         style={styles.NewsLetterView}
-        onPress={() => props.navigation.navigate("RecentBlogsDetail")}
+        onPress={() => props.navigation.navigate("RecentBlogsDetail", { item })}
       >
         <Text style={styles.blogTitleTime}>Gravid Digest India | May-June 2022</Text>
         <Text style={styles.issuetitle}>{item.title}</Text>
         <View style={styles.newsleftView}>
-          <Text style={styles.issueDes}>{item.description}</Text>
+          <Text style={styles.issueDes} numberOfLines={10}>{item.description}</Text>
           <Image source={{ uri: imageurl + item.image }} style={styles.newsImg} />
         </View>
       </TouchableOpacity>

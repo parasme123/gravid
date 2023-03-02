@@ -26,7 +26,7 @@ const Webinar = (props) => {
   }
 
   const handleWebinarDetail = (item) => {
-    props.navigation.navigate("webinarDetail", { paid: item.payment_type })
+    props.navigation.navigate("webinarDetail", { paid: item })
   }
 
   const DATA = [
@@ -81,20 +81,18 @@ const Webinar = (props) => {
   }
   const LiverenderItem = ({ item }) => {
     return (
-      <View style={styles.NewsLetterView} >
-        <TouchableOpacity onPress={() => handleWebinarDetail(item)}>
-          <Image source={{ uri: imageurl + item.image }} style={styles.newsImg} />
-        </TouchableOpacity>
+      <TouchableOpacity onPress={() => handleWebinarDetail(item)} style={styles.NewsLetterView} >
+        <Image source={{ uri: imageurl + item.image }} style={styles.newsImg} />
         {/* {
           type == "live" ? (
             <> */}
-              <View style={styles.paidType}>
-                <Text style={styles.paidTypeTxt}>{item.payment_type}</Text>
-              </View>
-              <View style={styles.wifiCon}>
-                {svgs.webinar(colors.black, 12, 12)}
-              </View>
-            {/* </>
+        <View style={styles.paidType}>
+          <Text style={styles.paidTypeTxt}>{item.payment_type}</Text>
+        </View>
+        <View style={styles.wifiCon}>
+          {svgs.webinar(colors.black, 12, 12)}
+        </View>
+        {/* </>
           ) : null
         } */}
         <View style={styles.newsleftView}>
@@ -107,9 +105,9 @@ const Webinar = (props) => {
             </View>
           </View>
           <Text style={styles.issuetitle} numberOfLines={2}>{item.title}</Text>
-          <Text style={styles.issueDes} >{item.description}</Text>
+          <Text style={styles.issueDes} numberOfLines={2}>{item.description}</Text>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   };
 
@@ -218,7 +216,7 @@ const Webinar = (props) => {
 
 
 
-        <View style={styles.pregnantBack2} >
+        {/* <View style={styles.pregnantBack2} >
           <Swiper style={{ height: 300 }}
             activeDotStyle={{ backgroundColor: 'transparent', }}
             dotStyle={{ backgroundColor: 'transparent', }}
@@ -247,16 +245,16 @@ const Webinar = (props) => {
               </View>
             </ImageBackground>
           </Swiper>
-        </View>
+        </View> */}
 
-        <FlatList
+        {/* <FlatList
           data={DATA}
           style={{ paddingLeft: 16, bottom: 40 }}
           renderItem={renderItemIssue}
           keyExtractor={(item) => item.id}
           showsHorizontalScrollIndicator={false}
           horizontal
-        />
+        /> */}
         <View style={styles.endView} >
           <Swiper style={{}}
             activeDotStyle={{ backgroundColor: 'transparent', }}

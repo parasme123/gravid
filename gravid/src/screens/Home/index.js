@@ -63,7 +63,7 @@ const Home = (props, { route }) => {
     }
     Apis.HomePagedata(params)
       .then(async (json) => {
-        // console.log('datalistHomePage=====:', JSON.stringify(json));
+        console.log('datalistHomePage=====:', JSON.stringify(json));
         if (json.status == true) {
           setBlogsList(json.data.blog.data);
           setSliderList(json.data.sliders.data)
@@ -94,19 +94,19 @@ const Home = (props, { route }) => {
     return (
       <TouchableOpacity
         style={[styles.currenIssueView, index == 0 ? { marginLeft: 15 } : null]}
-        onPress={() => props.navigation.navigate("RecentIssuesDetail")}
+        onPress={() => props.navigation.navigate("RecentIssuesDetail", { item })}
       >
         <View style={styles.leftView}>
           <View style={styles.isFreeView}>
             <Text style={styles.isFree}>{item.payment_type}</Text>
           </View>
           <Text style={styles.issuetitle} numberOfLines={2}>{item.title}</Text>
-          <RenderHtml
+          {/* <RenderHtml
             contentWidth={100}
             source={{ html: item.description }}
-          />
+          /> */}
 
-          {/* <Text style={styles.issueDes} numberOfLines={2} > {item.description} </Text> */}
+          <Text style={styles.issueDes} numberOfLines={2} > {item.description} </Text>
           <TouchableOpacity style={[styles.bkmrkBtn, { marginTop: 10 }]}>
             <View style={styles.bkmrkIcn}>
               {svgs.bookmark("", 8, 8)}
@@ -122,7 +122,7 @@ const Home = (props, { route }) => {
   const renderItemNewsLetter = ({ item, index }) => {
     return (
       <TouchableOpacity
-        onPress={() => props.navigation.navigate("RecentBlogsDetail")}
+        onPress={() => props.navigation.navigate("RecentBlogsDetail", { item })}
         style={[styles.NewsLetterView, index == 0 ? { marginLeft: 15 } : null]}
       >
         <Image source={{ uri: imageurl + item.image }} style={styles.newsImg} />
@@ -150,7 +150,7 @@ const Home = (props, { route }) => {
   const renderItemvideo = ({ item, index }) => {
     return (
       <TouchableOpacity
-        onPress={() => props.navigation.navigate("VideosDetails")}
+        onPress={() => props.navigation.navigate("VideosDetails", { item })}
         style={[styles.NewsLetterView2, index == 0 ? { marginLeft: 15 } : null]}>
         <Image source={{ uri: imageurl + item.image }} style={styles.newsImg} />
         <View style={styles.newsleftView}>

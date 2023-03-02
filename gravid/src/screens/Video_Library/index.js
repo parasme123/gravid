@@ -29,7 +29,7 @@ const Video_Library = (props) => {
     const renderItemvideo = ({ item }) => {
         return (
             <TouchableOpacity
-                onPress={() => props.navigation.navigate("VideosDetails")}
+                onPress={() => props.navigation.navigate("VideosDetails", { item })}
                 style={styles.NewsLetterView2}>
                 <Image source={{ uri: imageurl + item.image }} style={styles.newsImg} />
                 <View style={styles.newsleftView}>

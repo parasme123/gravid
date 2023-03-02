@@ -17,12 +17,12 @@ import { imageurl } from '../../Services/constants';
 
 const CurrentIssue = (props) => {
   const [term, setTerm] = useState(false)
+  const [issuelist, setIssueList] = useState([])
+
   const handleTerm = () => {
     setTerm(!term)
   }
 
-
-  const [issuelist, setIssueList] = useState([])
   useEffect(() => {
     HomePagedata()
   }, [])
@@ -37,14 +37,16 @@ const CurrentIssue = (props) => {
         if (json.status == true) {
           setIssueList(json.data.issuelist.data);
         }
+      }).catch((err) => {
+        console.log("IssuesList err : ", err);
       })
   }
   const renderItemNewsLetter = ({ item }) => {
     return (
-      <TouchableOpacity 
-      key={item.id} 
-      style={styles.NewsLetterView}
-      onPress={() => props.navigation.navigate("RecentIssuesDetail")}
+      <TouchableOpacity
+        key={item.id}
+        style={styles.NewsLetterView}
+        onPress={() => props.navigation.navigate("RecentIssuesDetail", { item })}
       >
         <Image source={{ uri: imageurl + item.image }} style={styles.newsImg} />
         <View style={styles.newsleftView}>
