@@ -1,17 +1,19 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text, View, TouchableOpacity, ScrollView, Image } from 'react-native';
 import styles from './style';
 import { svgs, colors } from '@common';
 import { imageurl } from '../../Services/constants';
 import Pdf from 'react-native-pdf';
 import RazorpayCheckout from 'react-native-razorpay';
+import Apis from '../../Services/apis';
 
 const RecentIssuesDetail = (props) => {
-  const recentIssueDetail = props?.route?.params?.item;
+  let recentIssueDetail = props?.route?.params?.item;
+  const [magazineDetail, setMagazineDetail] = useState({})
 
-  // useEffect(() => {
-  //   HomePagedata();
-  // }, [])
+  useEffect(() => {
+    setMagazineDetail(recentIssueDetail);
+  }, [recentIssueDetail])
 
   // const HomePagedata = () => {
   //   const params = {
@@ -27,6 +29,51 @@ const RecentIssuesDetail = (props) => {
   //     })
   // }
 
+  const handleRazorpay = () => {
+    var options = {
+      description: 'Credits towards consultation',
+      image: imageurl + "uploads/setting/41142.png",
+      currency: 'INR',
+      key: 'rzp_test_hFsfNBkztof8dv', // Your api key
+      amount: parseFloat(magazineDetail.amount) * 100,
+      name: 'Gravid',
+      // prefill: {
+      //   email: '',
+      //   contact: '',
+      //   name: ''
+      // },
+      theme: { color: '#F37254' }
+    }
+    RazorpayCheckout.open(options).then((data) => {
+      // handle success
+      console.log(`Success: ${data.razorpay_payment_id}`);
+      handleUpdatePayment(data.razorpay_payment_id)
+    }).catch((error) => {
+      // handle failure
+      console.log("error", JSON.stringify(error));
+      // alert(`Error: ${error.code} | ${error.description}`);
+    });
+  }
+
+  const handleUpdatePayment = (paymentID) => {
+    const params = {
+      type: 1,
+      type_id: magazineDetail.id,
+      pay_id: paymentID,
+      currency: "INR",
+      amount: parseFloat(magazineDetail.amount),
+      rozerpay_status: "success"
+    }
+    Apis.updatePayment(params)
+      .then(async (json) => {
+        console.log('datalistHomePage=====:', JSON.stringify(json));
+        if (json.status == true) {
+          alert("Payment Success")
+          setMagazineDetail({ ...magazineDetail, check_payment: json.data });
+        }
+      })
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.haddingView}>
@@ -38,45 +85,10 @@ const RecentIssuesDetail = (props) => {
       </View>
       <View style={styles.radiusView} />
       {
-        recentIssueDetail.payment_type == "Paid" ? (
-          <ScrollView style={{ paddingHorizontal: 16 }} showsVerticalScrollIndicator={false}>
-            <View>
-              <Image style={styles.ScreenshotImage} source={{ uri: imageurl + recentIssueDetail.image }} />
-              <Text style={styles.gravidTitleText}>{recentIssueDetail.title}</Text>
-              <Text style={styles.novemberText}>November-December 2022</Text>
-            </View>
-            <TouchableOpacity style={styles.buyIssuesButton} onPress={() => {
-              var options = {
-                description: 'Credits towards consultation',
-                image: imageurl + "uploads/setting/41142.png",
-                currency: 'INR',
-                key: 'rzp_live_BlaEnmZv0WaFAe', // Your api key
-                amount: parseFloat(recentIssueDetail.amount) * 100,
-                name: 'Gravid',
-                // prefill: {
-                //   email: '',
-                //   contact: '',
-                //   name: ''
-                // },
-                theme: { color: '#F37254' }
-              }
-              RazorpayCheckout.open(options).then((data) => {
-                // handle success
-                alert(`Success: ${data.razorpay_payment_id}`);
-              }).catch((error) => {
-                // handle failure
-                console.log("error", JSON.stringify(error));
-                // alert(`Error: ${error.code} | ${error.description}`);
-              });
-            }}>
-              <Text style={styles.buyIssuesText}>Buy Issues for {recentIssueDetail.amount}</Text>
-            </TouchableOpacity>
-
-          </ScrollView>
-        ) : (
+        magazineDetail.payment_type != "Paid" || magazineDetail?.check_payment?.id ? (
           <Pdf
             trustAllCerts={false}
-            source={{ uri: imageurl + recentIssueDetail.file, cache: true }}
+            source={{ uri: imageurl + magazineDetail.file, cache: true }}
             onLoadComplete={(numberOfPages, filePath) => {
               console.log(`Number of pages: ${numberOfPages}`);
             }}
@@ -90,6 +102,18 @@ const RecentIssuesDetail = (props) => {
               console.log(`Link pressed: ${uri}`);
             }}
             style={styles.pdf} />
+        ) : (
+          <ScrollView style={{ paddingHorizontal: 16 }} showsVerticalScrollIndicator={false}>
+            <View>
+              <Image style={styles.ScreenshotImage} source={{ uri: imageurl + magazineDetail.image }} />
+              <Text style={styles.gravidTitleText}>{magazineDetail.title}</Text>
+              <Text style={styles.novemberText}>{magazineDetail.short_description}</Text>
+            </View>
+            <TouchableOpacity style={styles.buyIssuesButton} onPress={handleRazorpay}>
+              <Text style={styles.buyIssuesText}>Buy Issues for {magazineDetail.amount}</Text>
+            </TouchableOpacity>
+
+          </ScrollView>
         )
       }
     </View>

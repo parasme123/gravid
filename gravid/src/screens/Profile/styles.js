@@ -36,7 +36,10 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   profileimg: {
-    width: 126, height: 126, resizeMode: 'contain'
+    width: 126,
+    height: 126,
+    resizeMode: 'contain',
+    borderRadius: 70
   },
   radiusView: {
     paddingTop: 40,

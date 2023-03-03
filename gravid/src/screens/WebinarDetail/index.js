@@ -7,7 +7,7 @@
  */
 
 import React, { useEffect, useState } from 'react';
-import { ImageBackground, Image, SafeAreaView, ScrollView, StatusBar, Text, useColorScheme, View, TouchableOpacity, TextInput, FlatList, Dimensions } from 'react-native';
+import { ImageBackground, Image, SafeAreaView, ScrollView, StatusBar, Text, useColorScheme, View, TouchableOpacity, TextInput, FlatList, Dimensions, Linking } from 'react-native';
 import Modal from "react-native-modal";
 import { svgs, colors } from '@common';
 import styles from './styles';
@@ -16,6 +16,7 @@ import Apis from '../../Services/apis';
 import { imageurl } from '../../Services/constants';
 import RenderHtml from 'react-native-render-html';
 const { width, height } = Dimensions.get('window')
+import RazorpayCheckout from 'react-native-razorpay';
 
 // const imageurl = "https://rasatva.apponedemo.top/gravid/"
 const WebinarDetail = (props) => {
@@ -24,10 +25,10 @@ const WebinarDetail = (props) => {
   const [delail, setDetail] = useState();
 
   useEffect(() => {
-    console.log("paid", paid);
-    if (paid.payment_type == "Paid") {
-      setModalVisible(true)
-    };
+    // console.log("paid", paid);
+    // if (paid.payment_type == "Paid") {
+    //   setModalVisible(true)
+    // };
     HomePagedata();
   }, [])
 
@@ -42,6 +43,57 @@ const WebinarDetail = (props) => {
           setDetail(json.data)
         }
       })
+  }
+
+  const handleRazorpay = () => {
+    var options = {
+      description: 'Credits towards consultation',
+      image: imageurl + "uploads/setting/41142.png",
+      currency: 'INR',
+      key: 'rzp_test_hFsfNBkztof8dv', // Your api key
+      amount: parseFloat(delail?.amount) * 100,
+      name: 'Gravid',
+      // prefill: {
+      //   email: '',
+      //   contact: '',
+      //   name: ''
+      // },
+      theme: { color: '#F37254' }
+    }
+    RazorpayCheckout.open(options).then((data) => {
+      // handle success
+      setModalVisible(false)
+      console.log(`Success: ${data.razorpay_payment_id}`);
+      handleUpdatePayment(data.razorpay_payment_id)
+    }).catch((error) => {
+      // handle failure
+      setModalVisible(false)
+      console.log("error", JSON.stringify(error));
+      // alert(`Error: ${error.code} | ${error.description}`);
+    });
+  }
+
+  const handleUpdatePayment = (paymentID) => {
+    const params = {
+      type: 2,
+      type_id: delail?.id,
+      pay_id: paymentID,
+      currency: "INR",
+      amount: parseFloat(delail?.amount),
+      rozerpay_status: "success"
+    }
+    Apis.updatePayment(params)
+      .then(async (json) => {
+        console.log('datalistHomePage=====:', JSON.stringify(json));
+        if (json.status == true) {
+          HomePagedata()
+          alert("Payment Success")
+        }
+      })
+  }
+
+  const handleJoinWebinar = async () => {
+    await Linking.openURL("https://meet.google.com/crx-zbws-jad");
   }
 
   return (
@@ -63,10 +115,17 @@ const WebinarDetail = (props) => {
             contentWidth={width}
             source={{ html: delail?.description }}
           />
-
-          <TouchableOpacity style={styles.joinWebinarBtn} onPress={() => { setModalVisible(true) }}>
-            <Text style={styles.joinWebinarBtnTxt}>Join Webinar</Text>
-          </TouchableOpacity>
+          {
+            delail?.check_payment?.id || delail?.payment_type == "Free" ? (
+              <TouchableOpacity style={styles.joinWebinarBtn} onPress={handleJoinWebinar}>
+                <Text style={styles.joinWebinarBtnTxt}>Get Link</Text>
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity style={styles.joinWebinarBtn} onPress={() => { setModalVisible(true) }}>
+                <Text style={styles.joinWebinarBtnTxt}>Join Webinar</Text>
+              </TouchableOpacity>
+            )
+          }
         </View>
         {/* <View>
           <Swiper style={{ height: 330 }}
@@ -108,9 +167,9 @@ const WebinarDetail = (props) => {
             <View style={{ alignItems: "center", marginHorizontal: 20, marginTop: 10 }}>
               <Image source={require('../../assets/images/GRAVID_O.png')} style={{ height: 104, width: 104 }} />
               <Text style={styles.offHadding}>To Access Paid Features{'\n'} you need to pay</Text>
-              <Text style={styles.offDes}>$10</Text>
+              <Text style={styles.offDes}>{delail?.amount}</Text>
             </View>
-            <TouchableOpacity style={styles.submitBtn} onPress={() => { setModalVisible(false) }}>
+            <TouchableOpacity style={styles.submitBtn} onPress={handleRazorpay}>
               <Text style={styles.submitBtnTxt}>Make Payment</Text>
             </TouchableOpacity>
           </ScrollView>

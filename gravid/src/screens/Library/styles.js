@@ -104,8 +104,8 @@ const styles = StyleSheet.create({
     borderRadius: 13
   },
   wifiCon: {
-    top: 5,
-    right: 5,
+    top: 0,
+    right: 0,
     borderRadius: 13,
     paddingVertical: 5,
     position: "absolute",
@@ -248,9 +248,9 @@ const styles = StyleSheet.create({
     // borderWidth:1
   },
   newsImg: {
-    width: width / 2,
-    height: width / 2.4,
-    resizeMode: 'stretch',
+    width: width / 3,
+    height: 200,
+    resizeMode: 'contain',
     // height: 160, width: 210,
   },
   bkmrkBtn: {

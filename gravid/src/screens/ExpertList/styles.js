@@ -79,6 +79,7 @@ const styles = StyleSheet.create({
     height: 200,
     marginTop: 5,
     resizeMode:"contain",    // width: "100%",
+    alignSelf:"center"
   },
   endView: {
     marginHorizontal: 24,

@@ -44,10 +44,10 @@ const ExpertList = (props) => {
         onPress={() => props.navigation.navigate("ExpertListDetail", { item })}
       >
         {/* <Text style={styles.blogTitleTime}>{item.name}</Text> */}
-        <Image source={{ uri: imageurl + item.image }} style={styles.newsImg} />
+        <Image source={{ uri: imageurl + item.file }} style={styles.newsImg} />
         <Text style={styles.issuetitle}>{item.name}</Text>
         <View style={styles.newsleftView}>
-          <Text style={styles.issueDes} numberOfLines={5}>{item.description}</Text>
+          <Text style={styles.issueDes} numberOfLines={5}>{item.short_description}</Text>
         </View>
       </TouchableOpacity>
     );

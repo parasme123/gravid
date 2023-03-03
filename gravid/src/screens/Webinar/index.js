@@ -15,11 +15,15 @@ import Swiper from 'react-native-swiper';
 import Apis from '../../Services/apis';
 import { imageurl } from '../../Services/constants';
 // const imageurl = "https://rasatva.apponedemo.top/gravid/"
+import { useIsFocused } from '@react-navigation/native';
 
 const Webinar = (props) => {
+  const isFocused = useIsFocused();
   // const [modalVisible, setModalVisible] = useState(true);
   // const [textinputVal, setTextinputVal] = useState("Gravid Digital 1 Year")
   // const [price, setPrice] = useState("1800")
+  const [webinarrecoded, setWebinarRecoded] = useState([])
+  const [webinarLive, setWebinarListApi] = useState([])
   const [type, setType] = useState("live")
   const handleWebinarType = (type) => {
     setType(type)
@@ -29,30 +33,12 @@ const Webinar = (props) => {
     props.navigation.navigate("webinarDetail", { paid: item })
   }
 
-  const DATA = [
-    {
-      id: "1",
-      title: "Scary Thing That You Don't Get Enough Sleep",
-      des: "Far far away, behind the word mountains, far from the countries...",
-      freetxt: 'Free',
-      img: require('../../assets/images/current-issue.png')
-    },
-    {
-      id: "2",
-      title: "Scary Thing That You Don't Get Enough Sleep",
-      des: "Far far away, behind the word mountains, far from the countries...",
-      freetxt: "Paid",
-      img: require('../../assets/images/current-issue.png')
-    },
-
-  ];
-
   useEffect(() => {
-    HomePagedata();
-    recoder();
-  }, [])
-  const [webinarrecoded, setWebinarRecoded] = useState([])
-  const [webinarLive, setWebinarListApi] = useState([])
+    if (isFocused) {
+      HomePagedata();
+      recoder();
+    }
+  }, [isFocused])
 
   const HomePagedata = () => {
     const params = {
@@ -96,14 +82,14 @@ const Webinar = (props) => {
           ) : null
         } */}
         <View style={styles.newsleftView}>
-          <View style={{ flexDirection: "row", justifyContent: "space-between", paddingHorizontal: 5 }}>
+          {/* <View style={{ flexDirection: "row", justifyContent: "space-between", paddingHorizontal: 5 }}>
             <View style={styles.bkmrkBtn}>
               <View style={styles.bkmrkIcn}>
                 {svgs.clock(colors.gray, 12, 12)}
               </View>
               <Text style={styles.bkmrkBtnTxt}>5 min.</Text>
             </View>
-          </View>
+          </View> */}
           <Text style={styles.issuetitle}>{item.title}</Text>
           <Text style={styles.issueDes}>{item.short_description}</Text>
         </View>

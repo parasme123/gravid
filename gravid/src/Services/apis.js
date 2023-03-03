@@ -46,7 +46,7 @@ export default class Apis {
     return Network('GET', 'home-list-details?type=' + data.type + '&id=' + data.id, data)
   }
   static Updata_Profile = (data) => {
-    return Network('POST', 'profile-update', data)
+    return Network('POST', 'profile-update', data, true)
   }
   static ExpertList = (data) => {
     return Network('GET', 'expert-list', data)
@@ -56,6 +56,9 @@ export default class Apis {
   }
   static AllBookMark = (data) => {
     return Network('GET', 'bookmark-list', data)
+  }
+  static updatePayment = (data) => {
+    return Network('POST', 'payment-update', data)
   }
   static Signout = (data) => {
     return Network('POST', 'user-signout', data)

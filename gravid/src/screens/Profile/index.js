@@ -14,8 +14,10 @@ import styles from './styles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Apis from '../../Services/apis';
 import { useIsFocused } from "@react-navigation/native";
+import { imageurl } from '../../Services/constants';
+
 const Profile = ({ navigation }) => {
-  // const isFocused = useIsFocused();
+  const isFocused = useIsFocused();
   const [userData, setUserData] = useState()
   const [userProfile, setUserProfile] = useState()
   const data = [
@@ -25,29 +27,34 @@ const Profile = ({ navigation }) => {
     { img: require('../../assets/images/termi_con.png'), titel: 'Terms & Conditions', navigation: 'TermsCondition' },
     { img: require('../../assets/images/policy_icon.png'), titel: 'Privacy Policy', navigation: 'Privacy_Policy' },
   ]
-  useEffect(async () => {
-    try {
-      const userProfile = await AsyncStorage.getItem('userProfile');
-      console.log('userProfile+++++++++++++++', userProfile);
-      if (userProfile !== null) {
-        var newVal = JSON.parse(userProfile);
-        setUserProfile(newVal)
+  useEffect(() => {
+    async function setProfileData() {
+      try {
+        const userProfile = await AsyncStorage.getItem('userProfile');
+        console.log('userProfile+++++++++++++++', userProfile);
+        if (userProfile !== null) {
+          var newVal = JSON.parse(userProfile);
+          setUserProfile(newVal)
+        }
+      } catch (error) {
+        // Error retrieving data
       }
-    } catch (error) {
-      // Error retrieving data
+      try {
+        const jsondata = await AsyncStorage.getItem('valuedata');
+        console.log('jsondata+++++++++++++++', jsondata);
+        if (jsondata !== null) {
+          var newVal = JSON.parse(jsondata);
+          setUserData(newVal)
+        }
+      } catch (error) {
+        // Error retrieving data
+      }
     }
-    try {
-      const jsondata = await AsyncStorage.getItem('valuedata');
-      console.log('jsondata+++++++++++++++', jsondata);
-      if (jsondata !== null) {
-        var newVal = JSON.parse(jsondata);
-        setUserData(newVal)
-      }
-    } catch (error) {
-      // Error retrieving data
+    if (isFocused) {
+      setProfileData()
     }
 
-  }, [navigation])
+  }, [isFocused])
 
   const LogOut = () => {
     const params = {
@@ -58,7 +65,8 @@ const Profile = ({ navigation }) => {
         console.log('Logout==========', json);
         if (json.message == "user logout successfully") {
           try {
-            await AsyncStorage.setItem("valuedata", JSON.stringify(null))
+            await AsyncStorage.removeItem("valuedata")
+            await AsyncStorage.removeItem("userProfile")
           } catch (e) {
             // saving error
           }
@@ -94,7 +102,7 @@ const Profile = ({ navigation }) => {
             <Text style={styles.edittext}>Edit</Text>
           </TouchableOpacity>
           <View style={styles.profileHeader}>
-            <Image source={userProfile ? { uri: userProfile } : require('../../assets/images/profile.png')}
+            <Image source={userData?.profile ? { uri: imageurl + userData?.profile } : require('../../assets/images/profile.png')}
               style={styles.profileimg} />
             <Text style={styles.userName}>{userData?.name ? userData?.name : userData?.fname} {userData?.lname}</Text>
           </View>

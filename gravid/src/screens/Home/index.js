@@ -17,9 +17,12 @@ import AppIntroSlider from 'react-native-app-intro-slider';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { imageurl } from '../../Services/constants';
 // const imageurl = "https://rasatva.apponedemo.top/gravid/"
+import { useIsFocused } from '@react-navigation/native';
 import RenderHtml from 'react-native-render-html';
+import Toast from 'react-native-simple-toast';
 
 const Home = (props, { route }) => {
+  const isFocused = useIsFocused();
   const [userData, setUserData] = useState({})
   const [userProfile, setUserProfile] = useState({})
   const [modalVisible, setModalVisible] = useState(false);
@@ -34,8 +37,14 @@ const Home = (props, { route }) => {
   const [btmSlider, setBtmSlider] = useState([])
   const [showslider, setShowSlider] = useState(true)
 
-  React.useEffect(async () => {
-    HomePagedata();
+  React.useEffect(() => {
+    if (isFocused) {
+      HomePagedata();
+      setProfileAndHomeData();
+    }
+  }, [isFocused])
+
+  const setProfileAndHomeData = async () => {
     try {
       const jsondata = await AsyncStorage.getItem('valuedata');
       if (jsondata !== null) {
@@ -55,7 +64,7 @@ const Home = (props, { route }) => {
     } catch (error) {
       // Error retrieving data
     }
-  }, [])
+  }
 
   const HomePagedata = () => {
     const params = {
@@ -84,6 +93,7 @@ const Home = (props, { route }) => {
       .then(async (json) => {
         console.log('bookmark success=====:', JSON.stringify(json));
         if (json.status == true) {
+          Toast.show(json.message, Toast.LONG);
           HomePagedata()
         }
       })

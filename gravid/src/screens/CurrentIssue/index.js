@@ -14,8 +14,10 @@ import styles from './styles';
 import Apis from '../../Services/apis';
 import { imageurl } from '../../Services/constants';
 // const imageurl = "https://rasatva.apponedemo.top/gravid/"
+import { useIsFocused } from '@react-navigation/native';
 
 const CurrentIssue = (props) => {
+  const isFocused = useIsFocused();
   const [term, setTerm] = useState(false)
   const [issuelist, setIssueList] = useState([])
 
@@ -24,8 +26,11 @@ const CurrentIssue = (props) => {
   }
 
   useEffect(() => {
-    HomePagedata()
-  }, [])
+    if (isFocused) {
+      setIssueList([])
+      HomePagedata()
+    }
+  }, [isFocused])
 
   const HomePagedata = () => {
     const params = {

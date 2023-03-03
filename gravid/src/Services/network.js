@@ -8,7 +8,7 @@ import React, { useRef, useEffect, useState } from 'react';
 // XMLHttpRequest = GLOBAL.originalXMLHttpRequest ?
 //   GLOBAL.originalXMLHttpRequest : GLOBAL.XMLHttpRequest;
 //Main method for network calls using axios
-export const Network = (method, endpoint, data = {}) => {
+export const Network = (method, endpoint, data = {}, isFile = false) => {
   var Token = ''
   return fetch = new Promise(async (resolve, reject) => {
     try {
@@ -29,10 +29,10 @@ export const Network = (method, endpoint, data = {}) => {
         console.log('---URL :', `${base_url}${endpoint}`)
         const headers = {
           "Accept": "application/json",
-          "content-type": "application/json",
+          "content-type": isFile ? "multipart/form-data" : "application/json",
           'Authorization': 'Bearer ' + Token
         }
-
+        console.log("headers", headers);
         axios({
           method,
           headers,

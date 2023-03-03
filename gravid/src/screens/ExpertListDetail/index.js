@@ -41,7 +41,7 @@ const ExpertListDetail = (props) => {
             <View style={styles.radiusView} />
             <ScrollView style={{ paddingHorizontal: 16 }} showsVerticalScrollIndicator={false}>
                 <View>
-                    <Image style={styles.ScreenshotImage} source={{ uri: imageurl + ExpertDetail.image }} />
+                    <Image style={styles.ScreenshotImage} source={{ uri: imageurl + ExpertDetail.file }} />
                     <Text style={styles.CONTRIBUTORSTEXT}>{ExpertDetail.name}</Text>
                     {/* <Text style={styles.gravidDigestText}>Gravid Digest India | May-June 2022</Text> */}
                 </View>

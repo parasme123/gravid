@@ -13,6 +13,8 @@ import Modal from "react-native-modal";
 import styles from './styles';
 import Apis from '../../Services/apis';
 import { useIsFocused } from '@react-navigation/native';
+import { imageurl } from '../../Services/constants';
+import Toast from 'react-native-simple-toast';
 
 const Library = (props) => {
   const isFocused = useIsFocused();
@@ -22,6 +24,7 @@ const Library = (props) => {
   const [type, setType] = useState("bookmark")
   const [confirmDeleteModal, setConfirmDeleteModal] = useState(false)
   const [bookmarkDataList, setBookmarkDataList] = useState([])
+  const [removeBookmarkParams, setRemoveBookmarkParams] = useState({})
 
   useEffect(() => {
     if (isFocused) {
@@ -43,15 +46,28 @@ const Library = (props) => {
     setType(type)
   }
 
-  const handleDelete = () => {
+  const handleDelete = (type, id) => {
+    setRemoveBookmarkParams({ type, id })
     setConfirmDeleteModal(true)
+  }
+
+  const deleteBookmark = () => {
+    Apis.AddBookmark(removeBookmarkParams)
+      .then(async (json) => {
+        console.log('bookmark success=====:', JSON.stringify(json));
+        if (json.status == true) {
+          setConfirmDeleteModal(false)
+          Toast.show(json.message, Toast.LONG);
+          bookmarkList()
+        }
+      })
   }
 
   const renderItemNewsLetter = ({ item }) => {
     return (
       <TouchableOpacity style={styles.NewsLetterView} onPress={item.type == "blog" ? () => props.navigation.navigate("RecentBlogsDetail", { item: item.blogs }) : () => props.navigation.navigate("RecentIssuesDetail", { item: item.magzine })}>
-        <Image source={item.img} style={styles.newsImg} />
-        <TouchableOpacity style={styles.wifiCon} onPress={handleDelete}>
+        <Image source={item.type == "blog" ? { uri: imageurl + item.blogs.image } : { uri: imageurl + item.magzine.image }} style={styles.newsImg} />
+        <TouchableOpacity style={styles.wifiCon} onPress={() => handleDelete(item.type, item.type == "blog" ? item.blogs.id : item.magzine.id)}>
           {svgs.deleteIcon(colors.white, 10, 10)}
         </TouchableOpacity>
         <View style={styles.newsleftView}>
@@ -135,7 +151,7 @@ const Library = (props) => {
               <TouchableOpacity style={styles.cancelBtn} onPress={() => setConfirmDeleteModal(false)}>
                 <Text style={styles.cancelBtnTxt}>No</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.submitBtn} onPress={() => setConfirmDeleteModal(false)}>
+              <TouchableOpacity style={styles.submitBtn} onPress={deleteBookmark}>
                 <Text style={styles.submitBtnTxt}>Yes</Text>
               </TouchableOpacity>
             </View>

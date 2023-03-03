@@ -43,7 +43,7 @@ const RecentBlogsDetail = (props) => {
                 <View>
                     <Image style={styles.ScreenshotImage} source={{ uri: imageurl + BlogDetail.image }} />
                     <Text style={styles.CONTRIBUTORSTEXT}>{BlogDetail.title}</Text>
-                    <Text style={styles.gravidDigestText}>Gravid Digest India | May-June 2022</Text>
+                    <Text style={styles.gravidDigestText}>{BlogDetail.short_description}</Text>
                 </View>
                 <RenderHtml
                     contentWidth={width}

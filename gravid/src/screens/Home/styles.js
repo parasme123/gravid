@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
     fontFamily: fonts.OptimaBold,
     fontSize: 13,
     width: 200,
-    alignSelf: 'center',
+    // alignSelf: 'center',
   },
   issueDes: {
     fontSize: 10,
@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
     color: colors.gray,
     fontFamily: fonts.OptimaBold,
     width: 190,
-    alignSelf: 'center',
+    // alignSelf: 'center',
   },
   issueImg: {
     width: width / 3,

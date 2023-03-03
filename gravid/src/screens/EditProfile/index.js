@@ -9,15 +9,25 @@ import Apis from "../../Services/apis";
 import Toast from 'react-native-simple-toast';
 import { TSpan } from "react-native-svg";
 import { imageurl } from "../../Services/constants";
+import { useIsFocused } from "@react-navigation/native";
 
-const EditProfile = ({ navigation }) => {
+const EditProfile = (props) => {
+    const { navigation } = props;
+    const isFocused = useIsFocused();
     const [fname, setFName] = useState("")
     const [lname, setLname] = useState("")
     const [mail, setMail] = useState('')
     const [showdpimage, setShowdpimage] = useState({})
     const [userData, setUserData] = useState({})
     const [userProfile, setUserProfile] = useState({})
-    useEffect(async () => {
+    useEffect(() => {
+        if (isFocused) {
+            setUserProfileData();
+        }
+
+    }, [isFocused])
+
+    const setUserProfileData = async () => {
         try {
             const userProfile = await AsyncStorage.getItem('userProfile');
             console.log('userProfile+++++++++++++++', userProfile);
@@ -39,8 +49,8 @@ const EditProfile = ({ navigation }) => {
         } catch (error) {
             // Error retrieving data
         }
+    }
 
-    }, [navigation])
     const editprofile = async () => {
         // try {
         //     await AsyncStorage.setItem("userProfile", JSON.stringify(showdpimage))
@@ -62,29 +72,31 @@ const EditProfile = ({ navigation }) => {
         //     Toast.show("Please select DP Image ", Toast.LONG)
         // }
         else {
-            const params = {
-                fname: userData?.name,
-                lname: userData?.lname,
-                email: userData?.email,
-            }
+            // const params = {
+            //     fname: userData?.name,
+            //     lname: userData?.lname,
+            //     email: userData?.email,
+            // }
+            let formdata = new FormData();
+            formdata.append("fname", userData?.name)
+            formdata.append("lname", userData?.lname)
+            formdata.append("email", userData?.email)
             if (showdpimage?.mime && showdpimage?.mime != "") {
                 let fileName = showdpimage?.path?.split("/");
-                params.imgfile = {
-                    uri: showdpimage.path, 
+                let imgfile = {
+                    uri: showdpimage.path,
                     name: fileName[fileName.length - 1],
                     type: showdpimage.mime
                 }
+                formdata.append("imgfile", imgfile)
             }
-            console.log("params", params);
-            Apis.Updata_Profile(params)
+            // console.log("params", params);
+            Apis.Updata_Profile(formdata)
                 .then(async (json) => {
                     console.log('Updata_Profile ====== ', json.data);
                     if (json.status == true) {
-                        try {
-                            await AsyncStorage.setItem("valuedata", JSON.stringify(json.data))
-                        } catch (e) {
-                            // saving error
-                        }
+                        Toast.show("Profile Updated successfully", Toast.LONG)
+                        await AsyncStorage.setItem("valuedata", JSON.stringify(json.data))
                         navigation.navigate("Profile")
                     } else (json)(
                         Toast.show(json.message, Toast.LONG)
