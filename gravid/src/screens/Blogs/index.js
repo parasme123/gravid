@@ -6,10 +6,9 @@
  * @flow strict-local
  */
 
-import React, { useEffect, useState, useRef } from 'react';
-import { ImageBackground, Image, SafeAreaView, ScrollView, StatusBar, Text, useColorScheme, View, TouchableOpacity, TextInput, FlatList } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
-import { svgs, colors } from '@common';
+import React, { useEffect, useState } from 'react';
+import { Image, ScrollView, Text, View, TouchableOpacity, FlatList, ActivityIndicator } from 'react-native';
+import { svgs } from '@common';
 import styles from './styles';
 import Swiper from 'react-native-swiper';
 import Apis from '../../Services/apis';
@@ -20,6 +19,7 @@ const Blogs = (props) => {
   const adsense = props?.route?.params?.adsense;
   const [blogslist, setBlogsList] = useState([])
   const [btmSlider, setBtmSlider] = useState([])
+  const [isLoader, setIsLoader] = useState(false)
 
   useEffect(() => {
     HomePagedata()
@@ -30,15 +30,17 @@ const Blogs = (props) => {
   }, [adsense])
 
   const HomePagedata = () => {
-    const params = {
-
-    }
-    Apis.HomePagedata(params)
+    setIsLoader(true)
+    Apis.HomePagedata({})
       .then(async (json) => {
         console.log('Blogs=====:', JSON.stringify(json));
         if (json.status == true) {
           setBlogsList(json.data.blog.data);
         }
+        setIsLoader(false)
+      }).catch((error) => {
+        console.log("HomePagedata", error);
+        setIsLoader(false)
       })
   }
 
@@ -49,7 +51,7 @@ const Blogs = (props) => {
         style={styles.NewsLetterView}
         onPress={() => props.navigation.navigate("RecentBlogsDetail", { item })}
       >
-        <Text style={styles.blogTitleTime}>Gravid Digest India | May-June 2022</Text>
+        {/* <Text style={styles.blogTitleTime}>Gravid Digest India | May-June 2022</Text> */}
         <Text style={styles.issuetitle}>{item.title}</Text>
         <View style={styles.newsleftView}>
           <Text style={styles.issueDes}>{item.short_description}</Text>
@@ -70,41 +72,44 @@ const Blogs = (props) => {
         <View style={{ flex: 1, }} />
       </View>
       <View style={styles.manflatlistview}>
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <FlatList
-            data={blogslist}
-            renderItem={renderItemNewsLetter}
-            keyExtractor={(item) => item.id}
-            showsVerticalScrollIndicator={false}
-          />
-          <View style={styles.endView} >
-            <Swiper style={{}}
-              activeDotStyle={{ backgroundColor: 'transparent', }}
-              dotStyle={{ backgroundColor: 'transparent', }}
-            // autoplay={true}
-            >
-              {
-                btmSlider?.map((item) => {
-                  return (
-                    <Image key={item.id} style={styles.endImg} source={{ uri: imageurl + item.image }} />
-                  )
-                })
-              }
+        {
+          isLoader ? (
+            <View style={{ marginTop: 300 }}>
+              <ActivityIndicator size="large" />
+            </View>
+          ) : (
+            <FlatList
+              data={blogslist}
+              renderItem={renderItemNewsLetter}
+              keyExtractor={(item) => item.id}
+              showsVerticalScrollIndicator={false}
+              ListFooterComponent={() => {
+                return (
+                  <View style={styles.endView}>
+                    <Swiper
+                      activeDotStyle={{ backgroundColor: 'transparent', }}
+                      dotStyle={{ backgroundColor: 'transparent', }}
+                      autoplay={true}
+                    >
+                      {
+                        btmSlider?.map((item) => {
+                          return (
+                            <Image key={item.id} style={styles.endImg} source={{ uri: imageurl + item.image }} />
+                          )
+                        })
+                      }
 
-              {/* <Image style={styles.endImg} source={require('../../assets/images/home-end.png')} />
-              <Image style={styles.endImg} source={require('../../assets/images/home-end.png')} />
-              <Image style={styles.endImg} source={require('../../assets/images/home-end.png')} />
-              <Image style={styles.endImg} source={require('../../assets/images/home-end.png')} /> */}
-            </Swiper>
-          </View>
-          {/* <FlatList
-            data={blogslist}
-            renderItem={renderItemNewsLetter}
-            keyExtractor={(item) => item.id}
-            showsVerticalScrollIndicator={false}
-          /> */}
-          <View style={{ height: 90 }} />
-        </ScrollView>
+                      {/* <Image style={styles.endImg} source={require('../../assets/images/home-end.png')} />
+                  <Image style={styles.endImg} source={require('../../assets/images/home-end.png')} />
+                  <Image style={styles.endImg} source={require('../../assets/images/home-end.png')} />
+                  <Image style={styles.endImg} source={require('../../assets/images/home-end.png')} /> */}
+                    </Swiper>
+                  </View>
+                )
+              }}
+            />
+          )
+        }
       </View>
 
     </View>

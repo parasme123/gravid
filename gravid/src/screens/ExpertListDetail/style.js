@@ -28,49 +28,55 @@ const styles = StyleSheet.create({
         backgroundColor: "white",
         marginTop: -30,
     },
-    // backicon: {
-    //     height: 32, width: 32, resizeMode: 'contain'
-    // },
-    // termstxt: {
-    //     fontSize: 15, lineHeight: 25, color: colors.black,
-    //     fontWeight: '500'
-    // },
-    ScreenshotImage:{
-        // resizeMode:"contain",
-        width:'100%',
-        height:230,
-        borderRadius:20,
-        resizeMode:"cover"
-        // alignSelf:'center'
+    ScreenshotImage: {
+        width: "100%",
+        height: 230,
+        borderRadius: 20,
+        resizeMode: "contain",
+        alignSelf:'center'
     },
-    CONTRIBUTORSTEXT:{
-        marginTop:25,
-        color:'#262626',
-        fontSize:17,
-        fontWeight:'bold'
+    CONTRIBUTORSTEXT: {
+        marginTop: 25,
+        color: '#262626',
+        fontSize: 17,
+        fontWeight: 'bold'
     },
-    gravidDigestText:{
-        fontSize:16,
-        color:'#808080',
-        marginTop:5
+    gravidDigestText: {
+        fontSize: 16,
+        color: '#808080',
+        marginTop: 5
     },
-    buyIssuesButton:{
-        backgroundColor:'#FE887E',
-        borderRadius:5,
-        alignItems:'center',
-        justifyContent:'center',
-        marginTop:60,
-        height:43
+    buyIssuesButton: {
+        backgroundColor: '#FE887E',
+        borderRadius: 5,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 60,
+        height: 43
     },
-    buyIssuesText:{
-        color:'#000000',
-        fontWeight:'bold',
-        fontSize:17,
+    buyIssuesText: {
+        color: '#000000',
+        fontWeight: 'bold',
+        fontSize: 17,
     },
-    loremText:{
-        marginTop:30,
-        lineHeight:18,
-        color:'#929397'
+    loremText: {
+        marginTop: 30,
+        lineHeight: 18,
+        color: '#929397'
+    },
+    bookNowBtn: {
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: colors.themeColor,
+        paddingVertical: 12,
+        marginBottom: 24,
+        borderRadius: 6
+    },
+    bookNowBtnTxt: {
+        fontFamily: fonts.OptimaBold,
+        color: colors.black,
+        fontSize: 18,
     }
 })
 export default styles;

@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
-import { Image, Text, View, TouchableOpacity, FlatList, } from 'react-native';
+import { Image, Text, View, TouchableOpacity, FlatList, ActivityIndicator } from 'react-native';
 import { svgs, colors } from '@common';
 import styles from './styles';
 import Apis from '../../Services/apis';
@@ -9,21 +9,24 @@ import { imageurl } from '../../Services/constants';
 
 const Video_Library = (props) => {
     const [videolist, setVideoList] = useState([])
+    const [isLoader, setIsLoader] = useState(false)
 
     useEffect(() => {
         HomePagedata()
     }, [])
 
     const HomePagedata = () => {
-        const params = {
-
-        }
-        Apis.HomePagedata(params)
+        setIsLoader(true)
+        Apis.HomePagedata({})
             .then(async (json) => {
                 console.log('Video_Library=====:', JSON.stringify(json));
                 if (json.status == true) {
                     setVideoList(json.data.expVedios.data);
                 }
+                setIsLoader(false)
+            }).catch((error) => {
+                console.log("Video_Library", error);
+                setIsLoader(false)
             })
     }
     const renderItemvideo = ({ item }) => {
@@ -63,13 +66,20 @@ const Video_Library = (props) => {
                 <View style={{ flex: 1, }} />
             </View>
             <View style={styles.borderview} />
-            <FlatList
-                data={videolist}
-
-                numColumns={2}
-                renderItem={renderItemvideo}
-                keyExtractor={(item) => item.id}
-            />
+            {
+                isLoader ? (
+                    <View style={{ marginTop: 300 }}>
+                        <ActivityIndicator size="large" />
+                    </View>
+                ) : (
+                    <FlatList
+                        data={videolist}
+                        numColumns={2}
+                        renderItem={renderItemvideo}
+                        keyExtractor={(item) => item.id}
+                    />
+                )
+            }
             {/* </View> */}
         </View>
     )

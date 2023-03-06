@@ -268,21 +268,17 @@ const styles = StyleSheet.create({
     marginLeft: 4
   },
   bkmrkIcn: {
-    // backgroundColor: colors.white,
-    // padding: 6,
     borderRadius: 100
   },
   endView: {
     marginHorizontal: 24,
     marginVertical: 40,
-    // marginTop:20,
-    height: 125,
-    bottom: 30
   },
   endImg: {
     width: "100%",
-    height: 122,
-    borderRadius: 10
+    height: 180,
+    borderRadius: 10,
+    resizeMode:"contain"
   },
   modalMainView: {
     marginHorizontal: 24,

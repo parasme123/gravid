@@ -6,8 +6,8 @@
  * @flow strict-local
  */
 
-import React, { useEffect, useState } from 'react';
-import { ImageBackground, Image, SafeAreaView, ScrollView, StatusBar, Text, useColorScheme, View, TouchableOpacity, TextInput, FlatList, LogBox } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Image, ScrollView, Text, View, TouchableOpacity, TextInput, FlatList, ActivityIndicator } from 'react-native';
 import { svgs, colors } from '@common';
 import Modal from "react-native-modal";
 import styles from './styles';
@@ -18,13 +18,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { imageurl } from '../../Services/constants';
 // const imageurl = "https://rasatva.apponedemo.top/gravid/"
 import { useIsFocused } from '@react-navigation/native';
-import RenderHtml from 'react-native-render-html';
 import Toast from 'react-native-simple-toast';
 
 const Home = (props, { route }) => {
   const isFocused = useIsFocused();
   const [userData, setUserData] = useState({})
-  const [userProfile, setUserProfile] = useState({})
   const [modalVisible, setModalVisible] = useState(false);
   const [textinputVal, setTextinputVal] = useState("Gravid Digital 1 Year")
   const [price, setPrice] = useState("1800")
@@ -34,15 +32,28 @@ const Home = (props, { route }) => {
   const [issuelist, setIssueList] = useState([])
   const [blogslist, setBlogsList] = useState([])
   const [videolist, setVideoList] = useState([])
+  const [searchTxt, setSearchTxt] = useState("")
+  const [issuelistSearch, setIssueListSearch] = useState([])
+  const [blogslistSearch, setBlogsListSearch] = useState([])
+  const [videolistSearch, setVideoListSearch] = useState([])
   const [btmSlider, setBtmSlider] = useState([])
   const [showslider, setShowSlider] = useState(true)
+  const [isLoader, setIsLoader] = useState(false)
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (isFocused) {
       HomePagedata();
       setProfileAndHomeData();
     }
   }, [isFocused])
+
+  useEffect(() => {
+    if (searchTxt && searchTxt != "") {
+      setIssueListSearch(issuelist.filter((item) => item.title.toLowerCase().includes(searchTxt.toLowerCase())))
+      setBlogsListSearch(blogslist.filter((item) => item.title.toLowerCase().includes(searchTxt.toLowerCase())))
+      setVideoListSearch(videolist.filter((item) => item.title.toLowerCase().includes(searchTxt.toLowerCase())))
+    }
+  }, [searchTxt])
 
   const setProfileAndHomeData = async () => {
     try {
@@ -54,23 +65,11 @@ const Home = (props, { route }) => {
     } catch (error) {
       // Error retrieving data
     }
-    try {
-      const userProfile = await AsyncStorage.getItem('userProfile');
-      console.log('userProfile+++++++++++++++', userProfile);
-      if (userProfile !== null) {
-        var newVal = JSON.parse(userProfile);
-        setUserProfile(newVal)
-      }
-    } catch (error) {
-      // Error retrieving data
-    }
   }
 
   const HomePagedata = () => {
-    const params = {
-
-    }
-    Apis.HomePagedata(params)
+    setIsLoader(true);
+    Apis.HomePagedata({})
       .then(async (json) => {
         console.log('datalistHomePage=====:', JSON.stringify(json));
         if (json.status == true) {
@@ -80,6 +79,10 @@ const Home = (props, { route }) => {
           setIssueList(json.data.issuelist.data);
           setBtmSlider(json.data.other_sliders.data);
         }
+        setIsLoader(false);
+      }).catch((error) => {
+        console.log("error", error);
+        setIsLoader(false);
       })
   }
 
@@ -118,7 +121,7 @@ const Home = (props, { route }) => {
   const renderItemIssue = ({ item, index }) => {
     return (
       <TouchableOpacity
-        style={[styles.currenIssueView, index == 0 ? { marginLeft: 15 } : null]}
+        style={[styles.currenIssueView, { alignItems: "center" }, index == 0 ? { marginLeft: 15 } : null]}
         onPress={() => props.navigation.navigate("RecentIssuesDetail", { item })}
       >
         <View style={styles.leftView}>
@@ -159,12 +162,12 @@ const Home = (props, { route }) => {
               </View>
               <Text style={styles.bkmrkBtnTxt}>Bookmark</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.bkmrkBtn}>
+            {/* <TouchableOpacity style={styles.bkmrkBtn}>
               <View style={styles.bkmrkIcn}>
                 {svgs.download("", 12, 12)}
               </View>
               <Text style={styles.bkmrkBtnTxt}>Download</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
           <Text style={styles.issuetitle}>{item.title}</Text>
           <Text style={styles.issueDes}>{item.short_description}</Text>
@@ -186,12 +189,12 @@ const Home = (props, { route }) => {
               </View>
               <Text style={styles.bkmrkBtnTxt}>Bookmark</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.bkmrkBtn}>
+            {/* <TouchableOpacity style={styles.bkmrkBtn}>
               <View style={styles.bkmrkIcn}>
                 {svgs.download("", 12, 12)}
               </View>
               <Text style={styles.bkmrkBtnTxt}>Download</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
           <Text style={styles.issuetitle}>{item.title}</Text>
           <Text style={styles.issueDes}>{item.short_description}</Text>
@@ -199,6 +202,14 @@ const Home = (props, { route }) => {
       </TouchableOpacity>
     );
   };
+
+  if (isLoader) {
+    return (
+      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+        <ActivityIndicator size="large" />
+      </View>
+    )
+  }
 
   return (
     <View style={styles.container}>
@@ -219,6 +230,8 @@ const Home = (props, { route }) => {
           <TextInput
             placeholder='Search'
             style={styles.searchBox}
+            value={searchTxt}
+            onChangeText={setSearchTxt}
           />
         </View>
         <View style={[styles.subscribeOfferImg, { marginTop: 20 }]}>
@@ -243,7 +256,7 @@ const Home = (props, { route }) => {
           </TouchableOpacity>
         </View>
         <FlatList
-          data={issuelist}
+          data={searchTxt && searchTxt != "" ? issuelistSearch : issuelist}
           renderItem={renderItemIssue}
           keyExtractor={(item) => item.id}
           showsHorizontalScrollIndicator={false}
@@ -256,7 +269,7 @@ const Home = (props, { route }) => {
           </TouchableOpacity>
         </View>
         <FlatList
-          data={blogslist}
+          data={searchTxt && searchTxt != "" ? blogslistSearch : blogslist}
           // style={{ paddingLeft: 24 }}
           renderItem={renderItemNewsLetter}
           keyExtractor={(item) => item.id}
@@ -272,7 +285,7 @@ const Home = (props, { route }) => {
         </View>
         {/* <View style={{ paddingHorizontal: 10 }}> */}
         <FlatList
-          data={videolist}
+          data={searchTxt && searchTxt != "" ? videolistSearch : videolist}
           // style={{ paddingLeft: 14 }}
           renderItem={renderItemvideo}
           keyExtractor={(item) => item.id}

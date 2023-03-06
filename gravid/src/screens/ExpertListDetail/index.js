@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, TouchableOpacity, ScrollView, Image, Dimensions } from 'react-native';
+import { Text, View, TouchableOpacity, ScrollView, Image, Dimensions, Linking } from 'react-native';
 import styles from './style';
 import { svgs, colors } from '@common';
 import Apis from '../../Services/apis';
@@ -40,15 +40,16 @@ const ExpertListDetail = (props) => {
             </View>
             <View style={styles.radiusView} />
             <ScrollView style={{ paddingHorizontal: 16 }} showsVerticalScrollIndicator={false}>
-                <View>
-                    <Image style={styles.ScreenshotImage} source={{ uri: imageurl + ExpertDetail.file }} />
-                    <Text style={styles.CONTRIBUTORSTEXT}>{ExpertDetail.name}</Text>
-                    {/* <Text style={styles.gravidDigestText}>Gravid Digest India | May-June 2022</Text> */}
-                </View>
+                <Image style={styles.ScreenshotImage} source={{ uri: imageurl + ExpertDetail.file }} />
+                {/* <Text style={styles.gravidDigestText}>Gravid Digest India | May-June 2022</Text> */}
+                <Text style={styles.CONTRIBUTORSTEXT}>{ExpertDetail.name}</Text>
                 <RenderHtml
                     contentWidth={width}
                     source={{ html: ExpertDetail.description }}
                 />
+                <TouchableOpacity style={styles.bookNowBtn} onPress={() => Linking.openURL("https://ginee.digital/gravidnew/consultation/")}>
+                    <Text style={styles.bookNowBtnTxt}>Book Now</Text>
+                </TouchableOpacity>
                 {/* <Text style={styles.loremText}>{ExpertDetail.description}</Text> */}
             </ScrollView>
         </View>

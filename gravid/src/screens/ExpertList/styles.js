@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
   },
   newsImg: {
     // flex: 2,
-    width: 145,
+    width: "100%",
     height: 200,
     marginTop: 5,
     resizeMode:"contain",    // width: "100%",

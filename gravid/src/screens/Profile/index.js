@@ -23,7 +23,7 @@ const Profile = ({ navigation }) => {
   const data = [
     { img: require('../../assets/images/profileicon.png'), titel: 'My Account', navigation: 'EditProfile' },
     { img: require('../../assets/images/Referral.png'), titel: 'Referral', navigation: 'Referral' },
-    { img: require('../../assets/images/List.png'), titel: 'List of Experts', navigation: 'List_of_Docters' },
+    { img: require('../../assets/images/List.png'), titel: 'List of Experts', navigation: 'Expert List' },
     { img: require('../../assets/images/termi_con.png'), titel: 'Terms & Conditions', navigation: 'TermsCondition' },
     { img: require('../../assets/images/policy_icon.png'), titel: 'Privacy Policy', navigation: 'Privacy_Policy' },
   ]

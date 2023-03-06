@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, TouchableOpacity, ScrollView, Image } from 'react-native';
+import { Text, View, TouchableOpacity, ScrollView, Image, ActivityIndicator } from 'react-native';
 import styles from './style';
 import { svgs, colors } from '@common';
 import { imageurl } from '../../Services/constants';
@@ -10,6 +10,7 @@ import Apis from '../../Services/apis';
 const RecentIssuesDetail = (props) => {
   let recentIssueDetail = props?.route?.params?.item;
   const [magazineDetail, setMagazineDetail] = useState({})
+  const [isLoader, setIsLoader] = useState(false)
 
   useEffect(() => {
     setMagazineDetail(recentIssueDetail);
@@ -56,6 +57,7 @@ const RecentIssuesDetail = (props) => {
   }
 
   const handleUpdatePayment = (paymentID) => {
+    setIsLoader(true)
     const params = {
       type: 1,
       type_id: magazineDetail.id,
@@ -71,6 +73,10 @@ const RecentIssuesDetail = (props) => {
           alert("Payment Success")
           setMagazineDetail({ ...magazineDetail, check_payment: json.data });
         }
+        setIsLoader(false)
+      }).catch((error) => {
+        console.log("error", error);
+        setIsLoader(false)
       })
   }
 
@@ -109,8 +115,18 @@ const RecentIssuesDetail = (props) => {
               <Text style={styles.gravidTitleText}>{magazineDetail.title}</Text>
               <Text style={styles.novemberText}>{magazineDetail.short_description}</Text>
             </View>
-            <TouchableOpacity style={styles.buyIssuesButton} onPress={handleRazorpay}>
-              <Text style={styles.buyIssuesText}>Buy Issues for {magazineDetail.amount}</Text>
+            <TouchableOpacity
+              style={styles.buyIssuesButton}
+              disabled={isLoader}
+              onPress={handleRazorpay}
+            >
+              {
+                isLoader ? (
+                  <ActivityIndicator />
+                ) : (
+                  <Text style={styles.buyIssuesText}>Buy Issues for {magazineDetail.amount}</Text>
+                )
+              }
             </TouchableOpacity>
 
           </ScrollView>

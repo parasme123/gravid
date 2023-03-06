@@ -171,7 +171,8 @@ const styles = StyleSheet.create({
   },
   issueImg: {
     width: width / 3,
-    height: width / 3
+    height: width / 3,
+    resizeMode: "contain"
   },
   NewsLetterView: {
     marginRight: 15,
@@ -203,7 +204,7 @@ const styles = StyleSheet.create({
   bkmrkBtnTxt: {
     fontFamily: fonts.OptimaBold,
     color: colors.black,
-    fontSize: 8,
+    fontSize: 12,
     lineHeight: 17,
     marginLeft: 4,
   },
@@ -221,7 +222,8 @@ const styles = StyleSheet.create({
   endImg: {
     width: "100%",
     height: 180,
-    borderRadius: 10
+    borderRadius: 10,
+    resizeMode:"contain"
   },
   modalMainView: {
     marginHorizontal: 24,

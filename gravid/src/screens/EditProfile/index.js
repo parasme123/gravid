@@ -1,25 +1,21 @@
-import react, { useEffect, useState } from "react";
-import { View, Text, Image, TouchableOpacity, Alert, TextInput } from "react-native";
+import { useEffect, useState } from "react";
+import { View, Text, Image, TouchableOpacity, Alert, TextInput, ActivityIndicator } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import styles from "./styles";
-import { svgs, colors } from '@common';
+import { svgs } from '@common';
 import ImagePicker from 'react-native-image-crop-picker';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Apis from "../../Services/apis";
 import Toast from 'react-native-simple-toast';
-import { TSpan } from "react-native-svg";
 import { imageurl } from "../../Services/constants";
 import { useIsFocused } from "@react-navigation/native";
 
 const EditProfile = (props) => {
     const { navigation } = props;
     const isFocused = useIsFocused();
-    const [fname, setFName] = useState("")
-    const [lname, setLname] = useState("")
-    const [mail, setMail] = useState('')
     const [showdpimage, setShowdpimage] = useState({})
     const [userData, setUserData] = useState({})
-    const [userProfile, setUserProfile] = useState({})
+    const [isLoader, setIsLoader] = useState(false)
     useEffect(() => {
         if (isFocused) {
             setUserProfileData();
@@ -28,16 +24,6 @@ const EditProfile = (props) => {
     }, [isFocused])
 
     const setUserProfileData = async () => {
-        try {
-            const userProfile = await AsyncStorage.getItem('userProfile');
-            console.log('userProfile+++++++++++++++', userProfile);
-            if (userProfile !== null) {
-                var newVal = JSON.parse(userProfile);
-                setUserProfile(newVal)
-            }
-        } catch (error) {
-            // Error retrieving data
-        }
         try {
             const jsondata = await AsyncStorage.getItem('valuedata');
             if (jsondata !== null) {
@@ -67,11 +53,15 @@ const EditProfile = (props) => {
         } else if (userData?.email == '') {
             Toast.show('Enter Email id', Toast.LONG);
             error = true
+        } else if (userData?.mobile == '') {
+            Toast.show('Enter Phone Number', Toast.LONG);
+            error = true
         }
         //  else if (showdpimage == '') {
         //     Toast.show("Please select DP Image ", Toast.LONG)
         // }
         else {
+            setIsLoader(true)
             // const params = {
             //     fname: userData?.name,
             //     lname: userData?.lname,
@@ -81,6 +71,7 @@ const EditProfile = (props) => {
             formdata.append("fname", userData?.name)
             formdata.append("lname", userData?.lname)
             formdata.append("email", userData?.email)
+            formdata.append("mobile", userData?.mobile)
             if (showdpimage?.mime && showdpimage?.mime != "") {
                 let fileName = showdpimage?.path?.split("/");
                 let imgfile = {
@@ -94,13 +85,17 @@ const EditProfile = (props) => {
             Apis.Updata_Profile(formdata)
                 .then(async (json) => {
                     console.log('Updata_Profile ====== ', json.data);
+                    setIsLoader(false)
                     if (json.status == true) {
                         Toast.show("Profile Updated successfully", Toast.LONG)
                         await AsyncStorage.setItem("valuedata", JSON.stringify(json.data))
-                        navigation.navigate("Profile")
+                        setUserProfileData()
                     } else (json)(
                         Toast.show(json.message, Toast.LONG)
                     )
+                }).catch((error) => {
+                    console.log("error", error);
+                    setIsLoader(false)
                 })
         }
     }
@@ -161,7 +156,7 @@ const EditProfile = (props) => {
                         />
                     </View>
                     <View style={styles.formInputView}>
-                        <Image source={require('../../assets/images/mail_icon.png')} style={styles.user_img} />
+                        <Image source={require('../../assets/images/user_icons.png')} style={styles.user_img} />
                         <TextInput
                             // keyboardType='numeric'
                             style={styles.signupInput}
@@ -171,19 +166,42 @@ const EditProfile = (props) => {
                         />
                     </View>
                     <View style={styles.formInputView}>
-                        <Image source={require('../../assets/images/yoga_icon.png')} style={styles.user_img} />
+                        <Image source={require('../../assets/images/mail_icon.png')} style={styles.user_img} />
+                        {/* <Image source={require('../../assets/images/yoga_icon.png')} style={styles.user_img} /> */}
                         <TextInput
                             style={styles.signupInput}
                             keyboardType='email-address'
                             placeholder={'Email Id'}
                             onChangeText={(text) => setUserData({ ...userData, email: text })}
                             value={userData.email}
+                            editable={false}
+                        />
+                    </View>
+                    <View style={styles.formInputView}>
+                        {svgs.mobileIcon(colors.grayRegular, 16, 18)}
+                        {/* <Image source={require('../../assets/images/mail_icon.png')} style={styles.user_img} /> */}
+                        {/* <Image source={require('../../assets/images/yoga_icon.png')} style={styles.user_img} /> */}
+                        <TextInput
+                            style={styles.signupInput}
+                            keyboardType='email-address'
+                            placeholder={'Phone number'}
+                            onChangeText={(text) => setUserData({ ...userData, mobile: text })}
+                            value={userData.mobile}
                         />
                     </View>
                 </View>
-                <TouchableOpacity style={styles.signUpBtn}
-                    onPress={() => editprofile()}>
-                    <Text style={styles.signUpBtnTxt}>SAVE</Text>
+                <TouchableOpacity
+                    style={styles.signUpBtn}
+                    onPress={() => editprofile()}
+                    disabled={isLoader}
+                >
+                    {
+                        isLoader ? (
+                            <ActivityIndicator />
+                        ) : (
+                            <Text style={styles.signUpBtnTxt}>SAVE</Text>
+                        )
+                    }
                 </TouchableOpacity>
             </ScrollView>
         </View >

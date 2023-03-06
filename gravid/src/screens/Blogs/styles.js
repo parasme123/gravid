@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     width: 145,
     height: 118,
     marginTop: 5,
-    resizeMode:"center",    // width: "100%",
+    resizeMode:"contain",    // width: "100%",
   },
   endView: {
     marginHorizontal: 24,

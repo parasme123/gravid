@@ -3,14 +3,10 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import Home from '../screens/Home';
-import CurrentIssue from '../screens/CurrentIssue';
-import Blogs from '../screens/Blogs';
 import Webinar from '../screens/Webinar';
-import WebinarDetail from '../screens/WebinarDetail';
 import Library from '../screens/Library';
 import { svgs } from '@common';
 import ParentingTV from '../screens/ParentingTV';
-import Video_Library from '../screens/Video_Library';
 import ExpertList from '../screens/ExpertList';
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -19,9 +15,6 @@ function HomeTab() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="HomeScreen" component={Home} />
-      <Stack.Screen name="currentIssue" component={CurrentIssue} options={{ tabBarVisible: false }} />
-      <Stack.Screen name="blogs" component={Blogs} options={{ tabBarVisible: false }} />
-      <Stack.Screen name="Video_Library" component={Video_Library} options={{ tabBarVisible: false }} />
     </Stack.Navigator>
   )
 }
@@ -29,7 +22,6 @@ function WebinarTab() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="webinarScreen" component={Webinar} />
-      <Stack.Screen name="webinarDetail" component={WebinarDetail} />
     </Stack.Navigator>
   )
 }

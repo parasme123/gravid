@@ -6,10 +6,9 @@
  * @flow strict-local
  */
 
-import React, { useEffect, useState, useRef } from 'react';
-import { ImageBackground, Image, SafeAreaView, ScrollView, StatusBar, Text, useColorScheme, View, TouchableOpacity, TextInput, FlatList } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
-import { svgs, colors } from '@common';
+import React, { useEffect, useState } from 'react';
+import { Image, Text, View, TouchableOpacity, FlatList, ActivityIndicator } from 'react-native';
+import { svgs } from '@common';
 import styles from './styles';
 import Apis from '../../Services/apis';
 import { imageurl } from '../../Services/constants';
@@ -20,6 +19,7 @@ const CurrentIssue = (props) => {
   const isFocused = useIsFocused();
   const [term, setTerm] = useState(false)
   const [issuelist, setIssueList] = useState([])
+  const [isLoader, setIsLoader] = useState(false)
 
   const handleTerm = () => {
     setTerm(!term)
@@ -33,16 +33,16 @@ const CurrentIssue = (props) => {
   }, [isFocused])
 
   const HomePagedata = () => {
-    const params = {
-
-    }
-    Apis.HomePagedata(params)
+    setIsLoader(true)
+    Apis.HomePagedata({})
       .then(async (json) => {
         console.log('IssuesList;;=====:', JSON.stringify(json));
         if (json.status == true) {
           setIssueList(json.data.issuelist.data);
         }
+        setIsLoader(false)
       }).catch((err) => {
+        setIsLoader(false)
         console.log("IssuesList err : ", err);
       })
   }
@@ -88,15 +88,23 @@ const CurrentIssue = (props) => {
         <View style={{ flex: 1, }} />
       </View>
       <View style={styles.borderview}>
-        <FlatList
-          data={issuelist}
-          numColumns={2}
-          // style={{ paddingLeft: 24 }}
-          renderItem={renderItemNewsLetter}
-          keyExtractor={(item) => item.id}
-          showsVerticalScrollIndicator={false}
+        {
+          isLoader ? (
+            <View style={{ marginTop: 300 }}>
+              <ActivityIndicator size="large" />
+            </View>
+          ) : (
+            <FlatList
+              data={issuelist}
+              numColumns={2}
+              // style={{ paddingLeft: 24 }}
+              renderItem={renderItemNewsLetter}
+              keyExtractor={(item) => item.id}
+              showsVerticalScrollIndicator={false}
 
-        />
+            />
+          )
+        }
       </View>
 
     </View>

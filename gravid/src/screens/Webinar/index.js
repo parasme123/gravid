@@ -7,9 +7,8 @@
  */
 
 import React, { useEffect, useState } from 'react';
-import { ImageBackground, Image, SafeAreaView, ScrollView, StatusBar, Text, useColorScheme, View, TouchableOpacity, TextInput, FlatList } from 'react-native';
+import { Image, ScrollView, Text, View, TouchableOpacity, FlatList, ActivityIndicator } from 'react-native';
 import { svgs, colors } from '@common';
-import Modal from "react-native-modal";
 import styles from './styles';
 import Swiper from 'react-native-swiper';
 import Apis from '../../Services/apis';
@@ -25,6 +24,9 @@ const Webinar = (props) => {
   const [webinarrecoded, setWebinarRecoded] = useState([])
   const [webinarLive, setWebinarListApi] = useState([])
   const [type, setType] = useState("live")
+  const [btmSlider, setBtmSlider] = useState([])
+  const [isLoader, setIsLoader] = useState(false)
+
   const handleWebinarType = (type) => {
     setType(type)
   }
@@ -44,12 +46,18 @@ const Webinar = (props) => {
     const params = {
       type: type == 'live'
     }
+    setIsLoader(true)
     Apis.webinarlistLive(params)
       .then(async (json) => {
         console.log('live=====:', JSON.stringify(json))
         if (json.status == true) {
-          setWebinarListApi(json.data)
+          setWebinarListApi(json.data.webinarList)
+          setBtmSlider(json.data.other_sliders.data);
         }
+        setIsLoader(false)
+      }).catch((error) => {
+        console.log("error", error);
+        setIsLoader(false)
       })
   }
 
@@ -61,7 +69,8 @@ const Webinar = (props) => {
       .then(async (json) => {
         console.log('recorded=====:', JSON.stringify(json))
         if (json.status == true) {
-          setWebinarRecoded(json.data)
+          setWebinarRecoded(json.data.webinarList)
+          setBtmSlider(json.data.other_sliders.data);
         }
       })
   }
@@ -110,7 +119,7 @@ const Webinar = (props) => {
           {svgs.webinar(colors.black, 12, 12)}
         </View>
         <View style={styles.newsleftView}>
-          <View style={{ flexDirection: "row", justifyContent: "space-between", paddingHorizontal: 5 }}>
+          {/* <View style={{ flexDirection: "row", justifyContent: "space-between", paddingHorizontal: 5 }}>
 
             <View style={styles.bkmrkBtn}>
               <View style={styles.bkmrkIcn}>
@@ -118,9 +127,9 @@ const Webinar = (props) => {
               </View>
               <Text style={styles.bkmrkBtnTxt}>5 min.</Text>
             </View>
-          </View>
+          </View> */}
           <Text style={styles.issuetitle} numberOfLines={2}>{item.title}</Text>
-          <Text style={styles.issueDes} >{item.description}</Text>
+          <Text style={styles.issueDes} >{item.short_description}</Text>
         </View>
       </View>
     );
@@ -178,31 +187,36 @@ const Webinar = (props) => {
           </TouchableOpacity>
         </View>
         {
-          type == "live" ?
-            <>
-              <FlatList
-                data={webinarLive}
-                numColumns={2}
-                style={{ paddingLeft: 16, marginTop: 26, flexDirection: "row" }}
-                renderItem={LiverenderItem}
-                keyExtractor={(item) => item.id}
-              />
-            </>
-            :
-            <>
-              <FlatList
-                data={webinarrecoded}
-                numColumns={2}
-                style={{ paddingLeft: 16, marginTop: 26, flexDirection: "row" }}
-                renderItem={recordrenderItem}
-                keyExtractor={(item) => item.id}
-              />
-            </>
-        }
+          isLoader ? (
+            <View style={{ marginTop: 200 }}>
+              <ActivityIndicator size="large" />
+            </View>
+          ) : (
+            <View>
+              {
+                type == "live" ?
+                  <>
+                    <FlatList
+                      data={webinarLive}
+                      numColumns={2}
+                      style={{ paddingLeft: 16, marginTop: 26, flexDirection: "row" }}
+                      renderItem={LiverenderItem}
+                      keyExtractor={(item) => item.id}
+                    />
+                  </>
+                  :
+                  <>
+                    <FlatList
+                      data={webinarrecoded}
+                      numColumns={2}
+                      style={{ paddingLeft: 16, marginTop: 26, flexDirection: "row" }}
+                      renderItem={recordrenderItem}
+                      keyExtractor={(item) => item.id}
+                    />
+                  </>
+              }
 
-
-
-        {/* <View style={styles.pregnantBack2} >
+              {/* <View style={styles.pregnantBack2} >
           <Swiper style={{ height: 300 }}
             activeDotStyle={{ backgroundColor: 'transparent', }}
             dotStyle={{ backgroundColor: 'transparent', }}
@@ -233,7 +247,7 @@ const Webinar = (props) => {
           </Swiper>
         </View> */}
 
-        {/* <FlatList
+              {/* <FlatList
           data={DATA}
           style={{ paddingLeft: 16, bottom: 40 }}
           renderItem={renderItemIssue}
@@ -241,18 +255,28 @@ const Webinar = (props) => {
           showsHorizontalScrollIndicator={false}
           horizontal
         /> */}
-        <View style={styles.endView} >
-          <Swiper style={{}}
-            activeDotStyle={{ backgroundColor: 'transparent', }}
-            dotStyle={{ backgroundColor: 'transparent', }}
-            autoplay={true}
-          >
+              <View style={styles.endView} >
+                <Swiper
+                  activeDotStyle={{ backgroundColor: 'transparent', }}
+                  dotStyle={{ backgroundColor: 'transparent', }}
+                  autoplay={true}
+                >
+                  {
+                    btmSlider?.map((item) => {
+                      return (
+                        <Image key={item.id} style={styles.endImg} source={{ uri: imageurl + item.image }} />
+                      )
+                    })
+                  }
+                  {/* <Image style={styles.endImg} source={require('../../assets/images/home-end.png')} />
             <Image style={styles.endImg} source={require('../../assets/images/home-end.png')} />
             <Image style={styles.endImg} source={require('../../assets/images/home-end.png')} />
-            <Image style={styles.endImg} source={require('../../assets/images/home-end.png')} />
-            <Image style={styles.endImg} source={require('../../assets/images/home-end.png')} />
-          </Swiper>
-        </View>
+            <Image style={styles.endImg} source={require('../../assets/images/home-end.png')} /> */}
+                </Swiper>
+              </View>
+            </View>
+          )
+        }
       </ScrollView>
     </View>
 

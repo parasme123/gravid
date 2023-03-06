@@ -7,7 +7,7 @@
  */
 
 import React, { useEffect, useState } from 'react';
-import { ImageBackground, Image, SafeAreaView, ScrollView, StatusBar, Text, useColorScheme, View, TouchableOpacity, TextInput, FlatList } from 'react-native';
+import { Image, ScrollView, Text, View, TouchableOpacity, FlatList, ActivityIndicator } from 'react-native';
 import { svgs, colors } from '@common';
 import Modal from "react-native-modal";
 import styles from './styles';
@@ -18,13 +18,11 @@ import Toast from 'react-native-simple-toast';
 
 const Library = (props) => {
   const isFocused = useIsFocused();
-  const [modalVisible, setModalVisible] = useState(true);
-  const [textinputVal, setTextinputVal] = useState("Gravid Digital 1 Year")
-  const [price, setPrice] = useState("1800")
   const [type, setType] = useState("bookmark")
   const [confirmDeleteModal, setConfirmDeleteModal] = useState(false)
   const [bookmarkDataList, setBookmarkDataList] = useState([])
   const [removeBookmarkParams, setRemoveBookmarkParams] = useState({})
+  const [isLoader, setIsLoader] = useState(false)
 
   useEffect(() => {
     if (isFocused) {
@@ -33,12 +31,17 @@ const Library = (props) => {
   }, [isFocused])
 
   const bookmarkList = () => {
+    setIsLoader(true)
     Apis.AllBookMark({})
       .then(async (json) => {
         console.log('datalistHomePage=====:', JSON.stringify(json));
         if (json.status == true) {
           setBookmarkDataList(json.data);
         }
+        setIsLoader(false)
+      }).catch((err) => {
+        setIsLoader(false)
+        console.log("Bookmark err : ", err);
       })
   }
 
@@ -125,7 +128,11 @@ const Library = (props) => {
           </TouchableOpacity>
         </View>
         {
-          type == "bookmark" ? (
+          isLoader ? (
+            <View style={{ marginTop: 250 }}>
+              <ActivityIndicator size="large" />
+            </View>
+          ) : type == "bookmark" ? (
             <FlatList
               data={bookmarkDataList}
               numColumns={2}
