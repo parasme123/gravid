@@ -5,6 +5,7 @@ import { svgs, colors } from '@common';
 import { imageurl } from '../../Services/constants';
 import RenderHtml from 'react-native-render-html';
 const { width, height } = Dimensions.get('window')
+import VideoPlayer from 'react-native-video-controls';
 
 const VideosDetails = (props) => {
     const videoDetail = props?.route?.params?.item;
@@ -21,11 +22,20 @@ const VideosDetails = (props) => {
             <View style={styles.radiusView} />
             <ScrollView style={{ paddingHorizontal: 16 }} showsVerticalScrollIndicator={false}>
                 <View>
-                    <ImageBackground source={{ uri: imageurl + videoDetail.image }} style={styles.imageBackgroundImage} >
+                    <VideoPlayer
+                        source={{ uri: imageurl + videoDetail.video, initOptions: ['--codec=avcodec'] }}
+                        // source={{ uri: imageurl + 'public\vedio\Tusshar Kapoor 7th Cut.mov' }}
+                        onPause={() => console.log("pause")}
+                        onPlay={() => console.log("Play")}
+                        navigator={props.navigator}
+                        onError={err => console.log("err", err)}
+                        style={{ width: width - 32, height: 200 }}
+                    />
+                    {/* <ImageBackground source={{ uri: imageurl + videoDetail.image }} style={styles.imageBackgroundImage} >
                         <Image style={styles.playVideoIcons} source={require('../../assets/images/playIcons.png')} />
-                    </ImageBackground>
+                    </ImageBackground> */}
                     <Text style={styles.CONTRIBUTORSTEXT}>{videoDetail.title}</Text>
-                    <Text style={styles.gravidDigestText}>Gravid Digest India | May-June 2022</Text>
+                    <Text style={styles.gravidDigestText}>{videoDetail.short_description}</Text>
                 </View>
                 <RenderHtml
                     contentWidth={width}

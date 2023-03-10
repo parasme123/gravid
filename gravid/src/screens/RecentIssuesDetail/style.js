@@ -35,42 +35,55 @@ const styles = StyleSheet.create({
     //     fontSize: 15, lineHeight: 25, color: colors.black,
     //     fontWeight: '500'
     // },
-    ScreenshotImage:{
-        resizeMode:"contain",
-        width:'100%',
-        height:250,
-        alignSelf:'center'
+    ScreenshotImage: {
+        resizeMode: "contain",
+        width: '100%',
+        height: 250,
+        alignSelf: 'center'
     },
-    gravidTitleText:{
-        textAlign:'center',
-        fontSize:22,
-        marginTop:20,
-        color:'#000000',
-        fontWeight:'bold'
+    gravidTitleText: {
+        textAlign: 'center',
+        fontSize: 22,
+        marginTop: 20,
+        color: '#000000',
+        fontWeight: 'bold'
     },
-    novemberText:{
-        textAlign:'center',
-        fontSize:12,
-        color:'#939393',
-        marginTop:5
+    novemberText: {
+        textAlign: 'center',
+        fontSize: 12,
+        color: '#939393',
+        marginTop: 5
     },
-    buyIssuesButton:{
-        backgroundColor:'#FE887E',
-        borderRadius:5,
-        alignItems:'center',
-        justifyContent:'center',
-        marginTop:60,
-        height:43
+    buyIssuesButton: {
+        backgroundColor: '#FE887E',
+        borderRadius: 5,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 60,
+        height: 43
     },
-    buyIssuesText:{
-        color:'#000000',
-        fontWeight:'bold',
-        fontSize:17,
+    buyIssuesText: {
+        color: '#000000',
+        fontWeight: 'bold',
+        fontSize: 17,
     },
     pdf: {
-        flex:1,
-        width:Dimensions.get('window').width,
-        height:500,
+        flex: 1,
+        width: Dimensions.get('window').width - 48,
+        // height: 100,
+    },
+    downloadBtn: {
+        backgroundColor: colors.themeColor,
+        alignSelf: "flex-end",
+        marginBottom: 24,
+        marginRight: 24,
+        padding: 6,
+        borderRadius: 3
+    },
+    downloadBtnTxt: {
+        fontFamily: fonts.OptimaRegular,
+        color: colors.black,
+        fontSize: 14,
     }
 })
 export default styles;

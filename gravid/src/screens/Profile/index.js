@@ -62,16 +62,20 @@ const Profile = ({ navigation }) => {
     }
     Apis.Signout(params)
       .then(async (json) => {
-        console.log('Logout==========', json);
-        if (json.message == "user logout successfully") {
-          try {
-            await AsyncStorage.removeItem("valuedata")
-            await AsyncStorage.removeItem("userProfile")
-          } catch (e) {
-            // saving error
-          }
-          navigation.navigate('Signin')
-        }
+        // console.log('Logout==========', json);
+        // if (json.message == "user logout successfully") {
+        //   try {
+        await AsyncStorage.removeItem("valuedata")
+        await AsyncStorage.removeItem("userProfile")
+        // } catch (e) {
+        //   // saving error
+        // }
+        navigation.navigate('Signin')
+        // }
+      }).catch(async () => {
+        await AsyncStorage.removeItem("valuedata")
+        await AsyncStorage.removeItem("userProfile")
+        navigation.navigate('Signin')
       })
   }
 

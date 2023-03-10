@@ -7,7 +7,7 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { Image, ScrollView, Text, View, TouchableOpacity, TextInput, FlatList, ActivityIndicator } from 'react-native';
+import { Image, ScrollView, Text, View, TouchableOpacity, TextInput, FlatList, ActivityIndicator, Dimensions } from 'react-native';
 import { svgs, colors } from '@common';
 import Modal from "react-native-modal";
 import styles from './styles';
@@ -19,6 +19,10 @@ import { imageurl } from '../../Services/constants';
 // const imageurl = "https://rasatva.apponedemo.top/gravid/"
 import { useIsFocused } from '@react-navigation/native';
 import Toast from 'react-native-simple-toast';
+// import Carousel from 'react-native-snap-carousel';
+// import Carousel from 'react-native-reanimated-carousel';
+
+const { width } = Dimensions.get('window');
 
 const Home = (props, { route }) => {
   const isFocused = useIsFocused();
@@ -255,6 +259,21 @@ const Home = (props, { route }) => {
             <Text style={styles.viewAllTxt}>View All</Text>
           </TouchableOpacity>
         </View>
+        {/* <View style={{ marginLeft: 24 }}>
+          <Swiper
+            activeDotStyle={{ backgroundColor: 'transparent', }}
+            dotStyle={{ backgroundColor: 'transparent', }}
+            autoplay={true}
+          >
+            {
+              searchTxt && searchTxt != "" ? issuelistSearch?.map((item, index) => {
+                return renderItemIssue({ item, index })
+              }) : issuelist?.map((item, index) => {
+                return renderItemIssue({ item, index })
+              })
+            }
+          </Swiper>
+        </View> */}
         <FlatList
           data={searchTxt && searchTxt != "" ? issuelistSearch : issuelist}
           renderItem={renderItemIssue}
@@ -268,6 +287,25 @@ const Home = (props, { route }) => {
             <Text style={styles.viewAllTxt}>View All</Text>
           </TouchableOpacity>
         </View>
+        {/* <Carousel
+          loop
+          width={width}
+          height={width / 2}
+          autoPlay={true}
+          data={searchTxt && searchTxt != "" ? blogslistSearch : blogslist}
+          scrollAnimationDuration={1000}
+          onSnapToItem={(index) => console.log('current index:', index)}
+          renderItem={renderItemNewsLetter}
+        /> */}
+        {/* <View style={{marginLeft: 24}}>
+        <Carousel
+              // ref={(c) => { this._carousel = c; }}
+              data={searchTxt && searchTxt != "" ? blogslistSearch : blogslist}
+              renderItem={renderItemNewsLetter}
+              sliderWidth={200}
+              itemWidth={150}
+            />
+        </View> */}
         <FlatList
           data={searchTxt && searchTxt != "" ? blogslistSearch : blogslist}
           // style={{ paddingLeft: 24 }}

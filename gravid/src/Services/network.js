@@ -1,7 +1,8 @@
 import NetInfo from "@react-native-community/netinfo";
 import axios from 'axios'
 import { base_url } from './constants'
-import { AsyncStorage } from 'react-native';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useRef, useEffect, useState } from 'react';
 //THIS CODE IS FOR DEBUGGIN NETWORK CALLES IN CHROME DEVTOOLS
 //REMOVE THIS ON PRODUCTION BUILD

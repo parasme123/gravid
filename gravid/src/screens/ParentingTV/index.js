@@ -1,11 +1,12 @@
 import react, { useRef } from "react";
-import { View, Text, TouchableOpacity, } from "react-native";
+import { View, Text, TouchableOpacity, Dimensions } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import styles from "./styles";
 import { svgs, colors } from '@common';
 import VideoPlayer from 'react-native-video-controls';
 import { imageurl } from '../../Services/constants';
 import Video from 'react-native-video';
+const { width } = Dimensions.get('window');
 
 const ParentingTV = (props) => {
     const playerRef = useRef(null)
@@ -27,14 +28,14 @@ const ParentingTV = (props) => {
                 controls
             /> */}
             <VideoPlayer
-                    source={{ uri: 'https://rasatva.apponedemo.top/gravid/public/vedio/Tusshar_Kapoor_7th.mp4', initOptions: ['--codec=avcodec'] }}
-                    // source={{ uri: imageurl + 'public\vedio\Tusshar Kapoor 7th Cut.mov' }}
-                    onPause={() => console.log("pause")}
-                    onPlay={() => console.log("Play")}
-                    navigator={props.navigator}
-                    onError={err => console.log("err", err)}
-                    style={{ width: "100%", height: 100 }}
-                />
+                source={{ uri: 'https://rasatva.apponedemo.top/gravid/public/vedio/Tusshar_Kapoor_7th.mp4', initOptions: ['--codec=avcodec'] }}
+                // source={{ uri: imageurl + 'public\vedio\Tusshar Kapoor 7th Cut.mov' }}
+                onPause={() => console.log("pause")}
+                onPlay={() => console.log("Play")}
+                navigator={props.navigator}
+                onError={err => console.log("err", err)}
+                style={{ width: width, height: 100 }}
+            />
             {/* <ScrollView style={{ paddingHorizontal: 16 }} showsVerticalScrollIndicator={false}>
                 
             </ScrollView> */}

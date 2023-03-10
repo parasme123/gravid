@@ -50,7 +50,7 @@ const WebinarDetail = (props) => {
       description: 'Credits towards consultation',
       image: imageurl + "uploads/setting/41142.png",
       currency: 'INR',
-      key: 'rzp_test_hFsfNBkztof8dv', // Your api key
+      key: 'rzp_test_2dCKxMSjz9CEKT', // Your api key
       amount: parseFloat(delail?.amount) * 100,
       name: 'Gravid',
       // prefill: {
