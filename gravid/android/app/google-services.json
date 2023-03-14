@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1054396465556",
+    "project_id": "gravid-5027b",
+    "storage_bucket": "gravid-5027b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1054396465556:android:d184ac2a9188c87320cf81",
+        "android_client_info": {
+          "package_name": "com.gravid"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1054396465556-0u94j0163g6nacn47056qo4364tjudfd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gravid",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "1054396465556-htcmdc8vlq7borg223rk8el017ib7si1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC0DkbGBpdlVQVC4QI1-N02ZTNqyohqVgY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1054396465556-htcmdc8vlq7borg223rk8el017ib7si1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

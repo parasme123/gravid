@@ -13,6 +13,7 @@ import styles from './styles';
 import Apis from '../../Services/apis';
 import Toast from 'react-native-simple-toast';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import auth from '@react-native-firebase/auth';
 
 const Signin = (props) => {
   const [code, setCode] = useState('+91')
@@ -20,7 +21,7 @@ const Signin = (props) => {
   const [errocode, setErroCode] = useState('Enter country Code')
   const [erronu, setErroNu] = useState('Enter Phone Number')
   const [erronumberlength, setErroNumberLength] = useState('Enter 10 Digit Mobile Number')
-  const LogninApi = () => {
+  const LogninApi = async () => {
     let error = false
     if (code == '') {
       Toast.show(errocode, Toast.LONG)
@@ -39,16 +40,17 @@ const Signin = (props) => {
         .then(async (json) => {
           console.log('LogninApi+++++++++++=====:', JSON.stringify(json));
           if (json.status == true) {
-            try {
-              await AsyncStorage.setItem("valuedata", JSON.stringify(json.data))
-            } catch (e) {
-              // saving error
-            }
-            props.navigation.navigate("otpverify", {
-              User_Id: json.data.id,
-              verifynumber: json.data.mobile,
-              // NUMDERVerify: json.data.mobile,
-            })
+            await auth().signInWithPhoneNumber("+91" + number).then(async (confirmation) => {
+              props.navigation.navigate("otpverify", {
+                User_Id: json.data.id,
+                verifynumber: json.data.mobile,
+                confirmation
+                // NUMDERVerify: json.data.mobile,
+              })
+            }).catch((err) => {
+              console.log("Error : ", err);
+              Toast.show("Something Went wrong", Toast.LONG)
+            });
           } else {
             alert(json.message)
           }

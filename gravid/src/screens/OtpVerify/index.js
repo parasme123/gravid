@@ -22,7 +22,7 @@ const OtpVerify = (props) => {
   // console.log("Idd ========::", route)
   // console.log('user++++++++++++', route)
   // console.log("Mobile Number ========::", route)
-
+  const { confirmation } = route.params;
   const [number, setNumder] = useState(route.params.verifynumber)
   const [loginumber, setLogiNmber] = useState(route.params.NUMDERVerify)
   const [id, setId] = useState(route.params.Temp_Id)
@@ -42,33 +42,38 @@ const OtpVerify = (props) => {
     if (otp == '') {
       Toast.show(errotp, Toast.LONG);
       error = true
-    } else if (otp.length != 4) {
+    } else if (otp.length != 6) {
       Toast.show(errotplength, Toast.LONG);
       error = true
     }
     else {
       const params = {
         temp_id: id,
-        otp: parseInt(otp),
+        otp: 1234,
       };
-      Apis.SignupOtpMatch(params)
-        .then(async (json) => {
-          console.log('OtpMutch========== ;;', JSON.stringify(json.data));
-          if (json.status == true) {
-            try {
-              await AsyncStorage.setItem('accessToken', json.token)
-            } catch (e) {
-              // saving error
-            }
-            if (json.data.user_type == 1) {
-              navigation.navigate("completeVerify")
+      await confirmation.confirm(otp).then(() => {
+        Apis.SignupOtpMatch(params)
+          .then(async (json) => {
+            console.log('OtpMutch========== ;;', JSON.stringify(json.data));
+            if (json.status == true) {
+              await AsyncStorage.setItem("valuedata", JSON.stringify(json.data))
+              try {
+                await AsyncStorage.setItem('accessToken', json.token)
+              } catch (e) {
+                // saving error
+              }
+              if (json.data.user_type == 1) {
+                navigation.navigate("completeVerify")
+              } else {
+                navigation.navigate("CompleteVerifyDoc")
+              }
             } else {
-              navigation.navigate("CompleteVerifyDoc")
+              Toast.show(json.message, Toast.LONG);
             }
-          } else {
-            Toast.show(json.message, Toast.LONG);
-          }
-        })
+          })
+      }).catch((err) => {
+        console.log("error", err);
+      })
     }
   }
 
@@ -77,33 +82,39 @@ const OtpVerify = (props) => {
     if (otp == '') {
       Toast.show(errotp, Toast.LONG);
       error = true
-    } else if (otp.length != 4) {
+    } else if (otp.length != 6) {
       Toast.show(errotplength, Toast.LONG);
       error = true
     }
     else {
       const params = {
         userId: user,
-        otp: parseInt(otp),
+        otp: 1234,
       };
-      Apis.LoginOtp(params)
-        .then(async (json) => {
-          console.log('LoginOtp:::======>', JSON.stringify(json));
-          if (json.status == true) {
-            try {
-              await AsyncStorage.setItem('accessToken', json.token)
-            } catch (e) {
-              // saving error
-            }
-            if (json.data.user_type == 1) {
-              navigation.navigate("completeVerify")
+      confirmation.confirm(otp).then((res) => {
+        Apis.LoginOtp(params)
+          .then(async (json) => {
+            console.log('LoginOtp:::======>', JSON.stringify(json));
+            if (json.status == true) {
+              await AsyncStorage.setItem("valuedata", JSON.stringify(json.data))
+              try {
+                await AsyncStorage.setItem('accessToken', json.token)
+              } catch (e) {
+                // saving error
+              }
+              if (json.data.user_type == 1) {
+                navigation.navigate("completeVerify")
+              } else {
+                navigation.navigate("CompleteVerifyDoc")
+              }
             } else {
-              navigation.navigate("CompleteVerifyDoc")
+              Toast.show(json.message, Toast.LONG);
             }
-          } else {
-            Toast.show(json.message, Toast.LONG);
-          }
-        })
+          })
+      }).catch((err) => {
+        console.log("error", err);
+        Toast.show("Enter Correct Otp", Toast.LONG)
+      })
     }
   }
 
@@ -134,7 +145,7 @@ const OtpVerify = (props) => {
           <Text style={styles.shownumder}>+91 {number}</Text>
           <View style={styles.formInputView}>
             <OTPInputView
-              pinCount={4}
+              pinCount={6}
               autoFocusOnLoad
               style={styles.otpBox}
               onCodeChanged={(text) => setotp(text)}

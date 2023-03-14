@@ -15,6 +15,7 @@ import Toast from 'react-native-simple-toast';
 import { SelectList } from 'react-native-dropdown-select-list'
 import fonts from '../../common/fonts';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import auth from '@react-native-firebase/auth';
 
 const Signup = (props) => {
   const [firstn, setFirstN] = useState('')
@@ -90,17 +91,17 @@ const Signup = (props) => {
         .then(async (json) => {
           console.log('============Signup:', json.data);
           if (json.status == true) {
-            try {
-              await AsyncStorage.setItem("valuedata", JSON.stringify(json.data))
-            } catch (e) {
-              // saving error
-            }
-            props.navigation.navigate("otpverify", {
-              type: 'signup',
-              Temp_Id: json.data.id,
-              verifynumber: json.data.mobile,
-              Country_Code: json.data.country_code
-            })
+            await auth().signInWithPhoneNumber("+91" + number).then(async (confirmation) => {
+              props.navigation.navigate("otpverify", {
+                type: 'signup',
+                Temp_Id: json.data.id,
+                verifynumber: json.data.mobile,
+                Country_Code: json.data.country_code
+              })
+            }).catch((err) => {
+              console.log("Error : ", err);
+              Toast.show("Something Went wrong", Toast.LONG)
+            });
           } else {
             alert(json.message)
           }
@@ -117,13 +118,13 @@ const Signup = (props) => {
         </View>
         <View style={styles.formMainView}>
           <Text style={styles.welcmTxt}>Create your account</Text>
-          <View style={{ width: '96%', flexDirection: "row", alignItems:"center", marginBottom:4 }}>
-            <View style={{width:"8%", alignSelf:"flex-start", marginTop:12}}>
-              <Image style={styles.managementImage} source={require('../../assets/images/management.png')}/>
+          <View style={{ width: '96%', flexDirection: "row", alignItems: "center", marginBottom: 4 }}>
+            <View style={{ width: "8%", alignSelf: "flex-start", marginTop: 12 }}>
+              <Image style={styles.managementImage} source={require('../../assets/images/management.png')} />
             </View>
-            <View style={{width:"92%"}}>
+            <View style={{ width: "92%" }}>
               <SelectList
-                boxStyles={{ borderWidth: 0, borderBottomWidth: 0.4, paddingLeft:10, paddingBottom:6 }}
+                boxStyles={{ borderWidth: 0, borderBottomWidth: 0.4, paddingLeft: 10, paddingBottom: 6 }}
                 inputStyles={styles.dropinput}
                 setSelected={setSelected}
                 data={data}
@@ -167,7 +168,7 @@ const Signup = (props) => {
             />
           </View>
           <View style={styles.formInputView}>
-          <Image style={styles.managementImage} source={require('../../assets/images/location.png')}/>
+            <Image style={styles.managementImage} source={require('../../assets/images/location.png')} />
             <TextInput
               placeholder="City"
               style={styles.signupInput}
