@@ -1,9 +1,10 @@
 import react from "react";
-import { View, Text, Image, TouchableOpacity, ScrollView } from "react-native";
+import { View, Text, Image, TouchableOpacity, ScrollView, Linking } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 // import colors from "../../common/colors";
 import styles from "./styles";
 import { svgs, colors } from '@common';
+import Share from 'react-native-share';
 
 const Referral = ({ navigation }) => {
     const Data = [
@@ -13,6 +14,7 @@ const Referral = ({ navigation }) => {
         { img: require('../../assets/images/linkedin.png'), name: 'Linkedin', color: colors.link },
         { img: require('../../assets/images/twitter.png'), name: 'Twitter', color: colors.twi },
     ]
+
     const renderItem = ({ item, index }) => (
         <TouchableOpacity
             style={styles.touchflat}>
@@ -22,6 +24,28 @@ const Referral = ({ navigation }) => {
             <Text style={[styles.appname, { color: item.color }]}>{item.name}</Text>
         </TouchableOpacity>
     )
+
+    const handleShare = async () => {
+        const shareOptions = {
+            message: "Gravid",
+            title: 'Share file',
+            url: "\n https://gravidparenting.com/",
+            failOnCancel: false,
+        };
+        try {
+            const ShareResponse = await Share.open(shareOptions);
+            console.log('Result =>', ShareResponse);
+            // setResult(JSON.stringify(ShareResponse, null, 2));
+        } catch (error) {
+            console.log('Error =>', error);
+            // setResult('error: '.concat(getErrorString(error)));
+        }
+    }
+
+    const handleOpenWeb = () => {
+        Linking.openURL("https://gravidparenting.com/")
+    }
+
     return (
         <View style={styles.container}>
             <View style={styles.haddingView}>
@@ -33,12 +57,12 @@ const Referral = ({ navigation }) => {
             </View>
             <View style={styles.radiusView} />
             <ScrollView style={{ paddingHorizontal: 16 }} showsVerticalScrollIndicator={false}>
-                <Text style={styles.Colleaguestxt}>You and Colleagues Will get</Text>
+                {/* <Text style={styles.Colleaguestxt}>You and Colleagues Will get</Text> */}
                 <Text style={styles.Colleaguestxt2}>Refer a Friend to get 100 referral points</Text>
                 <Image source={require('../../assets/images/refferral.png')}
                     style={styles.refaricon}
                 />
-                <Text style={styles.Refertxt}>Refer a Colleague</Text>
+                <Text style={styles.Refertxt}>Refer a friend</Text>
                 <View style={styles.reffarborder}>
                     <Text style={styles.abcd}>ABCDEFT1542</Text>
                     <TouchableOpacity activeOpacity={0.6}>
@@ -46,15 +70,18 @@ const Referral = ({ navigation }) => {
                     </TouchableOpacity>
                 </View>
                 <Text style={styles.Invitetxt}>Invite your friends and get buzz points</Text>
-                <View style={styles.flatview}>
+                <TouchableOpacity style={styles.shareBtn} onPress={handleShare}>
+                    <Text style={styles.shareBtnTxt}>Share</Text>
+                </TouchableOpacity>
+                {/* <View style={styles.flatview}>
                     <FlatList
                         data={Data}
                         renderItem={renderItem}
                         horizontal={true}
                     />
-                </View>
+                </View> */}
             </ScrollView>
-            <TouchableOpacity style={styles.wedview} activeOpacity={0.5}>
+            <TouchableOpacity style={styles.wedview} activeOpacity={0.5} onPress={handleOpenWeb}>
                 <Image
                     source={require('../../assets/images/web.png')}
                     style={styles.webicon}

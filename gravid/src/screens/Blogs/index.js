@@ -7,7 +7,7 @@
  */
 
 import React, { useEffect, useState } from 'react';
-import { Image, ScrollView, Text, View, TouchableOpacity, FlatList, ActivityIndicator } from 'react-native';
+import { Image, ScrollView, Text, View, TouchableOpacity, FlatList, ActivityIndicator, Linking } from 'react-native';
 import { svgs } from '@common';
 import styles from './styles';
 import Swiper from 'react-native-swiper';
@@ -61,6 +61,10 @@ const Blogs = (props) => {
     );
   };
 
+  const handleOtherSlider = (url) => {
+    Linking.openURL(url);
+  }
+
   return (
     <View style={styles.container}>
 
@@ -94,7 +98,9 @@ const Blogs = (props) => {
                       {
                         btmSlider?.map((item) => {
                           return (
-                            <Image key={item.id} style={styles.endImg} source={{ uri: imageurl + item.image }} />
+                            <TouchableOpacity key={item.id} onPress={item.slider_url ? () => handleOtherSlider(item.slider_url) : null}>
+                              <Image key={item.id} style={styles.endImg} source={{ uri: imageurl + item.image }} />
+                            </TouchableOpacity>
                           )
                         })
                       }

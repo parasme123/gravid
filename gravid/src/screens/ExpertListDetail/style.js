@@ -29,11 +29,12 @@ const styles = StyleSheet.create({
         marginTop: -30,
     },
     ScreenshotImage: {
-        width: "100%",
-        height: 230,
+        width: 200,
+        height: 200,
         borderRadius: 20,
         resizeMode: "contain",
-        alignSelf:'center'
+        alignSelf: 'center',
+        borderRadius: 100,
     },
     CONTRIBUTORSTEXT: {
         marginTop: 25,

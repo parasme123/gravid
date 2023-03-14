@@ -7,7 +7,7 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { Image, ScrollView, Text, View, TouchableOpacity, TextInput, FlatList, ActivityIndicator, Dimensions } from 'react-native';
+import { Image, ScrollView, Text, View, TouchableOpacity, TextInput, FlatList, ActivityIndicator, Dimensions, Linking } from 'react-native';
 import { svgs, colors } from '@common';
 import Modal from "react-native-modal";
 import styles from './styles';
@@ -207,6 +207,10 @@ const Home = (props, { route }) => {
     );
   };
 
+  const handleOtherSlider = (url) => {
+    Linking.openURL(url);
+  }
+
   if (isLoader) {
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
@@ -340,7 +344,9 @@ const Home = (props, { route }) => {
             {
               btmSlider?.map((item) => {
                 return (
-                  <Image key={item.id} style={styles.endImg} source={{ uri: imageurl + item.image }} />
+                  <TouchableOpacity key={item.id} onPress={item.slider_url ? () => handleOtherSlider(item.slider_url) : null}>
+                    <Image key={item.id} style={styles.endImg} source={{ uri: imageurl + item.image }} />
+                  </TouchableOpacity>
                 )
               })
             }

@@ -167,7 +167,7 @@ const WebinarDetail = (props) => {
             <View style={{ alignItems: "center", marginHorizontal: 20, marginTop: 10 }}>
               <Image source={require('../../assets/images/GRAVID_O.png')} style={{ height: 104, width: 104 }} />
               <Text style={styles.offHadding}>To Access Paid Features{'\n'} you need to pay</Text>
-              <Text style={styles.offDes}>{delail?.amount}</Text>
+              <Text style={styles.offDes}>{"\u20B9"}{delail?.amount}</Text>
             </View>
             <TouchableOpacity style={styles.submitBtn} onPress={handleRazorpay}>
               <Text style={styles.submitBtnTxt}>Make Payment</Text>

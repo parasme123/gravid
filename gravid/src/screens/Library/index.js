@@ -104,7 +104,7 @@ const Library = (props) => {
             }
             <Text style={type == "bookmark" ? styles.WebinarActiveBtnTxt : styles.WebinarInactiveBtnTxt}>Bookmarks</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={type == "download" ? styles.WebinarActiveBtn : styles.WebinarInactiveBtn} onPress={() => handleWebinarType("download")}>
+          {/* <TouchableOpacity style={type == "download" ? styles.WebinarActiveBtn : styles.WebinarInactiveBtn} onPress={() => handleWebinarType("download")}>
             {
               type == "download" ? (
                 <>
@@ -114,7 +114,7 @@ const Library = (props) => {
               ) : null
             }
             <Text style={type == "download" ? styles.WebinarActiveBtnTxt : styles.WebinarInactiveBtnTxt}>Download</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           <TouchableOpacity style={type == "video" ? styles.WebinarActiveBtn : styles.WebinarInactiveBtn} onPress={() => handleWebinarType("video")}>
             {
               type == "video" ? (
@@ -133,13 +133,17 @@ const Library = (props) => {
               <ActivityIndicator size="large" />
             </View>
           ) : type == "bookmark" ? (
-            <FlatList
-              data={bookmarkDataList}
-              numColumns={2}
-              style={{ paddingLeft: 16, marginTop: 40, flexDirection: "row" }}
-              renderItem={renderItemNewsLetter}
-              keyExtractor={(item) => item.id}
-            />
+            bookmarkDataList?.length > 0 ? (
+              <FlatList
+                data={bookmarkDataList}
+                numColumns={2}
+                style={{ paddingLeft: 16, marginTop: 40, flexDirection: "row" }}
+                renderItem={renderItemNewsLetter}
+                keyExtractor={(item) => item.id}
+              />
+            ) : (
+              <Text style={styles.noBookMarkTxt}>No bookmarks added</Text>
+            )
           ) : null
         }
 

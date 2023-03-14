@@ -106,8 +106,16 @@ const Profile = ({ navigation }) => {
             <Text style={styles.edittext}>Edit</Text>
           </TouchableOpacity>
           <View style={styles.profileHeader}>
-            <Image source={userData?.profile ? { uri: imageurl + userData?.profile } : require('../../assets/images/profile.png')}
-              style={styles.profileimg} />
+            {
+              userData?.profile ? (
+                <Image source={{ uri: imageurl + userData?.profile }}
+                  style={styles.profileimg} />
+              ) : (
+                <View style={{ borderWidth: 1, borderColor:colors.lightblack, borderRadius: 70, padding: 20 }}>
+                  {svgs.userIcon(colors.gray, 90, 90)}
+                </View>
+              )
+            }
             <Text style={styles.userName}>{userData?.name ? userData?.name : userData?.fname} {userData?.lname}</Text>
           </View>
           <View style={styles.activerow}>

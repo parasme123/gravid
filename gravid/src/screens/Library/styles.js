@@ -64,13 +64,13 @@ const styles = StyleSheet.create({
   WebinarActiveBtnTxt: {
     fontFamily: fonts.OptimaMedium,
     color: colors.white,
-    fontSize: 12,
+    fontSize: 14,
     lineHeight: 24
   },
   WebinarInactiveBtnTxt: {
     fontFamily: fonts.OptimaMedium,
     color: colors.themeColor,
-    fontSize: 12,
+    fontSize: 14,
     lineHeight: 24
   },
   signupImg: {
@@ -424,9 +424,16 @@ const styles = StyleSheet.create({
     color: colors.white,
     fontSize: 14,
   },
+  noBookMarkTxt: {
+    fontFamily: fonts.OptimaBold,
+    color: colors.black,
+    fontSize: 18,
+    textAlign: "center",
+    marginTop: 200
+  },
   talkBubbleTriangleRight: {
     position: "absolute",
-    left: 55,
+    left: 75,
     bottom: -15,
     width: 0,
     height: 0,
@@ -438,7 +445,7 @@ const styles = StyleSheet.create({
   },
   talkBubbleTriangleLeft: {
     position: "absolute",
-    left: 45,
+    left: 65,
     bottom: -15,
     width: 0,
     height: 0,

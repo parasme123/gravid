@@ -23,7 +23,7 @@ const Signup = (props) => {
   const [number, setNumber] = useState('')
   const [email, setEmail] = useState('')
   const [city, setCity] = useState('')
-  const [selected, setSelected] = React.useState("");
+  const [selected, setSelected] = useState("User");
   const [errselect, setErrSelect] = useState("Please Select Option")
   const [errfname, setErrFname] = useState("Enter First name")
   const [errlname, setErrLname] = useState('Enter Last name')
@@ -31,7 +31,7 @@ const Signup = (props) => {
   const [numberlength, setNumberLength] = useState('Enter 10 Digit Mobile Number')
   const [errmail, setErrMail] = useState('Enter Email id')
   const [errcity, setErrCity] = useState('Enter City')
-  const [errcheck, setErrCheck] = useState('fill in the check box')
+  const [errcheck, setErrCheck] = useState('Click the checkbox to proceed')
 
 
   const [term, setTerm] = useState(false)
@@ -57,8 +57,14 @@ const Signup = (props) => {
     else if (firstn == '') {
       Toast.show(errfname, Toast.LONG);
       error = true
+    } else if (firstn.length < 2 || firstn.length > 50) {
+      Toast.show("First Name must be between 2 to 50 characters", Toast.LONG);
+      error = true
     } else if (lastn == '') {
       Toast.show(errlname, Toast.LONG);
+    } else if (lastn.length < 2 || lastn.length > 50) {
+      Toast.show("Last Name must be between 2 to 50 characters", Toast.LONG);
+      error = true
     } else if (number == '') {
       Toast.show(errphone, Toast.LONG);
     } else if (number.length != 10) {
@@ -96,7 +102,8 @@ const Signup = (props) => {
                 type: 'signup',
                 Temp_Id: json.data.id,
                 verifynumber: json.data.mobile,
-                Country_Code: json.data.country_code
+                Country_Code: json.data.country_code,
+                confirmation
               })
             }).catch((err) => {
               console.log("Error : ", err);
@@ -118,7 +125,7 @@ const Signup = (props) => {
         </View>
         <View style={styles.formMainView}>
           <Text style={styles.welcmTxt}>Create your account</Text>
-          <View style={{ width: '96%', flexDirection: "row", alignItems: "center", marginBottom: 4 }}>
+          {/* <View style={{ width: '96%', flexDirection: "row", alignItems: "center", marginBottom: 4 }}>
             <View style={{ width: "8%", alignSelf: "flex-start", marginTop: 12 }}>
               <Image style={styles.managementImage} source={require('../../assets/images/management.png')} />
             </View>
@@ -131,7 +138,7 @@ const Signup = (props) => {
                 save="value"
               />
             </View>
-          </View>
+          </View> */}
           <View style={styles.formInputView}>
             {svgs.userIcon(colors.grayRegular, 20)}
             <TextInput
@@ -180,7 +187,7 @@ const Signup = (props) => {
             <TouchableOpacity onPress={handleTerm}>
               {term ? svgs.checkedCheckbox(colors.grayRegular, 18) : svgs.checkbox(colors.grayRegular, 18)}
             </TouchableOpacity>
-            <Text style={styles.termConditionTxt}>you're agree to our <Text style={styles.termTxt}>Terms & Conditions</Text> and <Text style={styles.termTxt}>Privacy Policy</Text></Text>
+            <Text style={styles.termConditionTxt}>I agree with the <Text style={styles.termTxt} onPress={() => props.navigation.navigate("TermsCondition")}>Terms & Conditions</Text> and <Text style={styles.termTxt} onPress={() => props.navigation.navigate("Privacy_Policy")}>Privacy Policy</Text></Text>
           </View>
           <TouchableOpacity style={styles.signUpBtn} onPress={() => { SignUp() }}>
             <Text style={styles.signUpBtnTxt}>SIGN UP</Text>

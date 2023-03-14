@@ -1,8 +1,8 @@
 import Svg, { Circle, Ellipse, G, Text, TSpan, TextPath, Path, Polygon, Polyline, Line, Rect, Use, Image, Symbol, Defs, LinearGradient, RadialGradient, Stop, ClipPath, Pattern, Mask } from 'react-native-svg';
 
-export const userIcon = (color, size) => {
+export const userIcon = (color, width="19.546", height="18.615") => {
   return (
-    <Svg xmlns="http://www.w3.org/2000/svg" width="19.546" height="18.615" viewBox="0 0 19.546 18.615">
+    <Svg xmlns="http://www.w3.org/2000/svg" width={width} height={height} viewBox="0 0 19.546 18.615">
       <G id="webpagehome_85808" transform="translate(0)">
         <G id="Group_117" data-name="Group 117" transform="translate(0 0)">
           <G id="Group_152" data-name="Group 152" transform="translate(0 0)">

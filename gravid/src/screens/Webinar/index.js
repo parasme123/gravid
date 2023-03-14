@@ -7,7 +7,7 @@
  */
 
 import React, { useEffect, useState } from 'react';
-import { Image, ScrollView, Text, View, TouchableOpacity, FlatList, ActivityIndicator } from 'react-native';
+import { Image, ScrollView, Text, View, TouchableOpacity, FlatList, ActivityIndicator, Linking } from 'react-native';
 import { svgs, colors } from '@common';
 import styles from './styles';
 import Swiper from 'react-native-swiper';
@@ -76,7 +76,7 @@ const Webinar = (props) => {
   }
   const LiverenderItem = ({ item }) => {
     return (
-      <TouchableOpacity onPress={() => handleWebinarDetail(item)} style={styles.NewsLetterView} >
+      <TouchableOpacity key={item.id} onPress={() => handleWebinarDetail(item)} style={styles.NewsLetterView} >
         <Image source={{ uri: imageurl + item.image }} style={styles.newsImg} />
         {/* {
           type == "live" ? (
@@ -108,7 +108,7 @@ const Webinar = (props) => {
 
   const recordrenderItem = ({ item }) => {
     return (
-      <View style={styles.NewsLetterView} >
+      <View style={styles.NewsLetterView} key={item.id} >
         <TouchableOpacity onPress={() => handleWebinarDetail(item)}>
           <Image source={{ uri: imageurl + item.image }} style={styles.newsImg} />
         </TouchableOpacity>
@@ -134,6 +134,7 @@ const Webinar = (props) => {
       </View>
     );
   };
+
   const renderItemIssue = ({ item }) => {
     return (
       <TouchableOpacity style={styles.currenIssueView}>
@@ -151,14 +152,19 @@ const Webinar = (props) => {
       </TouchableOpacity>
     );
   };
+
+  const handleOtherSlider = (url) => {
+    Linking.openURL(url);
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.haddingView}>
-        <TouchableOpacity style={{ flex: 3 }} onPress={() => props.navigation.goBack()}>
+        {/* <TouchableOpacity style={{ flex: 3 }} onPress={() => props.navigation.goBack()}>
           {svgs.backArrow("black", 24, 24)}
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <Text style={styles.haddingTxt}>Webinar</Text>
-        <View style={{ flex: 3 }} />
+        {/* <View style={{ flex: 3 }} /> */}
       </View>
       <View style={styles.radiusView} />
       <ScrollView nestedScrollEnabled={true} showsVerticalScrollIndicator={false}>
@@ -264,8 +270,11 @@ const Webinar = (props) => {
                   {
                     btmSlider?.map((item) => {
                       return (
-                        <Image key={item.id} style={styles.endImg} source={{ uri: imageurl + item.image }} />
+                        <TouchableOpacity key={item.id} onPress={item.slider_url ? () => handleOtherSlider(item.slider_url) : null}>
+                          <Image style={styles.endImg} source={{ uri: imageurl + item.image }} />
+                        </TouchableOpacity>
                       )
+
                     })
                   }
                   {/* <Image style={styles.endImg} source={require('../../assets/images/home-end.png')} />

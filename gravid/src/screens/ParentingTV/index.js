@@ -1,4 +1,4 @@
-import react, { useRef } from "react";
+import react, { useEffect, useRef, useState } from "react";
 import { View, Text, TouchableOpacity, Dimensions } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import styles from "./styles";
@@ -7,10 +7,17 @@ import VideoPlayer from 'react-native-video-controls';
 import { imageurl } from '../../Services/constants';
 import Video from 'react-native-video';
 const { width } = Dimensions.get('window');
+import { useIsFocused } from '@react-navigation/native';
 
 const ParentingTV = (props) => {
+    const isFocused = useIsFocused();
+    const [isPaused, setIsPaused] = useState(false);
     const playerRef = useRef(null)
     const videoUrl = 'https://www.sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4';
+
+    useEffect(() => {
+        setIsPaused(!isFocused)
+    }, [isFocused])
     return (
         <View style={styles.container}>
             <View style={styles.haddingView}>
@@ -28,6 +35,7 @@ const ParentingTV = (props) => {
                 controls
             /> */}
             <VideoPlayer
+                paused={isPaused}
                 source={{ uri: 'https://rasatva.apponedemo.top/gravid/public/vedio/Tusshar_Kapoor_7th.mp4', initOptions: ['--codec=avcodec'] }}
                 // source={{ uri: imageurl + 'public\vedio\Tusshar Kapoor 7th Cut.mov' }}
                 onPause={() => console.log("pause")}

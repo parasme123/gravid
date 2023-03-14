@@ -49,11 +49,13 @@ const styles = StyleSheet.create({
     color: colors.black,
     fontSize: 18,
     lineHeight: 18,
-    marginTop: 10
+    marginTop: 10,
+    textAlign: "center"
   },
   newsleftView: {
     flexDirection: "row",
-    marginTop: 16
+    marginTop: 16,
+    justifyContent:"center"
   },
   issueDes: {
     // flex: 3,
@@ -75,11 +77,12 @@ const styles = StyleSheet.create({
   },
   newsImg: {
     // flex: 2,
-    width: "100%",
+    width: 200,
     height: 200,
     marginTop: 5,
-    resizeMode:"contain",    // width: "100%",
-    alignSelf:"center"
+    resizeMode: "contain",    // width: "100%",
+    alignSelf: "center",
+    borderRadius: 100
   },
   endView: {
     marginHorizontal: 24,

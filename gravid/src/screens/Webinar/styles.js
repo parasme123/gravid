@@ -12,10 +12,10 @@ const styles = StyleSheet.create({
     height: 110,
     paddingTop: 16,
     paddingBottom: 40,
-    flexDirection: "row",
+    // flexDirection: "row",
     paddingHorizontal: 24,
-    // alignItems: "center",
-    // justifyContent: 'space-between'
+    alignItems: "center",
+    // justifyContent: 'center'
   },
   haddingTxt: {
     flex: 3,
@@ -273,6 +273,7 @@ const styles = StyleSheet.create({
   endView: {
     marginHorizontal: 24,
     marginVertical: 40,
+    height:200
   },
   endImg: {
     width: "100%",

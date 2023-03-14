@@ -65,14 +65,46 @@ const Introduction = (props) => {
             data={introductionlist}
             renderItem={renderslider}
             activeDotStyle={styles.activedot}
-            onDone={() => { props.navigation.navigate("welcome") }}
+            onDone={() => props.navigation.navigate("welcome")}
+            onSkip={() => props.navigation.navigate("welcome")}
+            showSkipButton
+            showPrevButton
+            renderNextButton={() => {
+              return (
+                <View>
+                  <Text style={styles.nextBtnTxt}>Next</Text>
+                </View>
+              )
+            }
+            }
+            renderSkipButton={() => {
+              return (
+                <View>
+                  <Text style={styles.skipBtnTxt}>Skip</Text>
+                </View>
+              )
+            }
+            }
+            renderDoneButton={() => {
+              return (
+                <View>
+                  <Text style={styles.skipBtnTxt}>Finish</Text>
+                </View>
+              )
+            }
+            }
+            renderPrevButton={() => {
+              return (
+                <View>
+                  <Text style={styles.skipBtnTxt}>Previous</Text>
+                </View>
+              )
+            }
+            }
           />
           : null
         }
-        <TouchableOpacity style={styles.skipBtn}
-          onPress={() => props.navigation.navigate("welcome")}>
-          <Text style={styles.skipBtnTxt}>Skip</Text>
-        </TouchableOpacity>
+
       </View>
       {/* <View style={styles.btnMainView}>
           <TouchableOpacity style={styles.skipBtn}
