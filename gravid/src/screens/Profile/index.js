@@ -70,12 +70,14 @@ const Profile = ({ navigation }) => {
         // } catch (e) {
         //   // saving error
         // }
-        navigation.navigate('Signin')
+        navigation.reset({ index: 0, routes: [{ name: "welcome" }] })
+        // navigation.navigate('Signin')
         // }
       }).catch(async () => {
         await AsyncStorage.removeItem("valuedata")
         await AsyncStorage.removeItem("userProfile")
-        navigation.navigate('Signin')
+        navigation.reset({ index: 0, routes: [{ name: "welcome" }] })
+        // navigation.navigate('Signin')
       })
   }
 

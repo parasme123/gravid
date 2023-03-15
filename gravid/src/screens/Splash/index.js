@@ -19,9 +19,11 @@ const Home = (props) => {
       const jsondata = await AsyncStorage.getItem('valuedata');
       if (jsondata !== null) {
         console.log("JSONDATA====", jsondata);
-        props.navigation.navigate("BottomTabs")
+        props.navigation.reset({ index: 0, routes: [{ name: "BottomTabs" }] })
+        // props.navigation.navigate("BottomTabs")
       } else {
-        props.navigation.navigate("Introduction")
+        props.navigation.reset({ index: 0, routes: [{ name: "Introduction" }] })
+        // props.navigation.navigate("Introduction")
       }
     }, 2000);
   }

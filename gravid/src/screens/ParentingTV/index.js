@@ -12,8 +12,6 @@ import { useIsFocused } from '@react-navigation/native';
 const ParentingTV = (props) => {
     const isFocused = useIsFocused();
     const [isPaused, setIsPaused] = useState(false);
-    const playerRef = useRef(null)
-    const videoUrl = 'https://www.sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4';
 
     useEffect(() => {
         setIsPaused(!isFocused)
@@ -21,11 +19,11 @@ const ParentingTV = (props) => {
     return (
         <View style={styles.container}>
             <View style={styles.haddingView}>
-                <TouchableOpacity style={{ flex: 3 }} onPress={() => props.navigation.goBack()}>
+                {/* <TouchableOpacity style={{ flex: 3 }} onPress={() => props.navigation.goBack()}>
                     {svgs.backArrow("black", 24, 24)}
-                </TouchableOpacity>
+                </TouchableOpacity> */}
                 <Text style={styles.haddingTxt}>Parenting TV</Text>
-                <View style={{ flex: 3 }} />
+                {/* <View style={{ flex: 3 }} /> */}
             </View>
             <View style={styles.radiusView} />
             {/* <Video

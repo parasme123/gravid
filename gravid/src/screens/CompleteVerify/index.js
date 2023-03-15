@@ -20,7 +20,8 @@ const CompleteVerify = (props) => {
   const [righticon, setRighIcon] = useState('0')
 
   const handleSubmit = async () => {
-    props.navigation.navigate("BottomTabs")
+    props.navigation.reset({ index: 0, routes: [{ name: "BottomTabs" }] })
+    // props.navigation.navigate("BottomTabs")
   }
 
   useEffect(() => {

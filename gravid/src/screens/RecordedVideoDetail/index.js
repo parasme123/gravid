@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, TouchableOpacity, ScrollView, Image, ActivityIndicator } from 'react-native';
+import { Text, View, TouchableOpacity, ScrollView, Image, ActivityIndicator, Dimensions } from 'react-native';
 import styles from './style';
 import { svgs, colors } from '@common';
 import { imageurl } from '../../Services/constants';
@@ -7,16 +7,27 @@ import Pdf from 'react-native-pdf';
 import RazorpayCheckout from 'react-native-razorpay';
 import Apis from '../../Services/apis';
 import RNFetchBlob from 'rn-fetch-blob'
-import Share from 'react-native-share';
+import VideoPlayer from 'react-native-video-controls';
+const { width } = Dimensions.get('window');
+import { useIsFocused } from '@react-navigation/native';
+import RenderHtml from 'react-native-render-html';
 
-const RecentIssuesDetail = (props) => {
-  let recentIssueDetail = props?.route?.params?.item;
+const RecordedVideoDetail = (props) => {
+  const isFocused = useIsFocused();
+  let recordedVideoData = props?.route?.params?.item;
   const [magazineDetail, setMagazineDetail] = useState({})
   const [isLoader, setIsLoader] = useState(false)
+  const [playVideoId, setPlayVideoId] = useState()
 
   useEffect(() => {
-    setMagazineDetail(recentIssueDetail);
-  }, [recentIssueDetail])
+    if (!isFocused) {
+      setPlayVideoId(null)
+    }
+  }, [isFocused])
+
+  useEffect(() => {
+    setMagazineDetail(recordedVideoData);
+  }, [recordedVideoData])
 
   // const HomePagedata = () => {
   //   const params = {
@@ -61,7 +72,7 @@ const RecentIssuesDetail = (props) => {
   const handleUpdatePayment = (paymentID) => {
     setIsLoader(true)
     const params = {
-      type: 1,
+      type: 3,
       type_id: magazineDetail.id,
       pay_id: paymentID,
       currency: "INR",
@@ -124,73 +135,49 @@ const RecentIssuesDetail = (props) => {
     })
   }
 
-  const handleSharePdf = async () => {
-    const shareOptions = {
-      message: magazineDetail.title,
-      title: "Gravid",
-      url: "\n " + imageurl + magazineDetail.file,
-      failOnCancel: false,
-    };
-    try {
-      const ShareResponse = await Share.open(shareOptions);
-      console.log('Result =>', ShareResponse);
-      // setResult(JSON.stringify(ShareResponse, null, 2));
-    } catch (error) {
-      console.log('Error =>', error);
-      // setResult('error: '.concat(getErrorString(error)));
-    }
-  }
-
   return (
     <View style={styles.container}>
       <View style={styles.haddingView}>
         <TouchableOpacity style={{ flex: 3 }} onPress={() => props.navigation.goBack()}>
           {svgs.backArrow("black", 24, 24)}
         </TouchableOpacity>
-        <Text style={styles.haddingTxt}>Magazine</Text>
-        <View style={{ flex: 3 }}>
-          {
-            magazineDetail.payment_type != "Paid" || magazineDetail?.check_payment?.id ? (
-              <TouchableOpacity style={{ alignSelf: "flex-end" }} onPress={handleSharePdf}>
-                {svgs.share("black", 24, 24)}
-              </TouchableOpacity>
-            ) : null
-          }
-        </View>
+        <Text style={styles.haddingTxt}>Recorded Video</Text>
+        <View style={{ flex: 3 }} />
       </View>
       <View style={styles.radiusView} />
       {
         magazineDetail.payment_type != "Paid" || magazineDetail?.check_payment?.id ? (
-          // <View style={{flexDirection:"row"}}>
-          //   <TouchableOpacity style={{borderWidth:1, alignSelf:"flex-end"}}>
-          //     <Text>Download</Text>
-          //   </TouchableOpacity>
-          <View style={{ flex: 1, marginLeft: 24 }}>
-            {/* <TouchableOpacity style={styles.downloadBtn} onPress={() => handleDownload(imageurl + magazineDetail.file)}>
-              <Text style={styles.downloadBtnTxt}>Download</Text>
-            </TouchableOpacity> */}
-            <Pdf
-              trustAllCerts={false}
-              source={{ uri: imageurl + magazineDetail.file, cache: true }}
-              onLoadComplete={(numberOfPages, filePath) => {
-                console.log(`Number of pages: ${numberOfPages}`);
-              }}
-              onPageChanged={(page, numberOfPages) => {
-                console.log(`Current page: ${page}`);
-              }}
-              onError={(error) => {
-                console.log(error);
-              }}
-              onPressLink={(uri) => {
-                console.log(`Link pressed: ${uri}`);
-              }}
-              style={styles.pdf} />
-          </View>
-          // </View>
+          <ScrollView showsVerticalScrollIndicator={false}>
+            {magazineDetail?.url_data?.map((item, index) => {
+              return (
+                <View style={{ marginBottom: 10 }}>
+                  {/* <WebView
+                    source={{ html: '<iframe width="100%" height="50%" src="https://drive.google.com/file/d/1vnm4-WoX4ewwgxH80JfppxVN2cjuNEEC/view" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>' }}
+                    style={{ marginTop: 20 }}
+                  /> */}
+                  {/* <RenderHtml
+                    contentWidth={width}
+                    source={{ html: '<iframe width="100%" height="50%" src="https://drive.google.com/file/d/1vnm4-WoX4ewwgxH80JfppxVN2cjuNEEC/view" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>' }}
+                  /> */}
+                  <VideoPlayer
+                    paused={playVideoId == item.id ? true : false}
+                    source={{ uri: "https://drive.google.com/uc?id=1vnm4-WoX4ewwgxH80JfppxVN2cjuNEEC&export=download", initOptions: ['--codec=avcodec'] }}
+                    // source={{ uri: imageurl + 'public\vedio\Tusshar Kapoor 7th Cut.mov' }}
+                    onPause={() => console.log("pause")}
+                    onPlay={() => setPlayVideoId(item.id)}
+                    navigator={props.navigator}
+                    onError={err => console.log("err", err)}
+                    style={{ width: width, height: 200 }}
+                  />
+                </View>
+              )
+            })
+            }
+          </ScrollView>
         ) : (
           <ScrollView style={{ paddingHorizontal: 16 }} showsVerticalScrollIndicator={false}>
             <View>
-              <Image style={styles.ScreenshotImage} source={{ uri: imageurl + magazineDetail.image }} />
+              <Image style={styles.ScreenshotImage} source={{ uri: imageurl + magazineDetail.file }} />
               <Text style={styles.gravidTitleText}>{magazineDetail.title}</Text>
               <Text style={styles.novemberText}>{magazineDetail.short_description}</Text>
             </View>
@@ -203,7 +190,7 @@ const RecentIssuesDetail = (props) => {
                 isLoader ? (
                   <ActivityIndicator />
                 ) : (
-                  <Text style={styles.buyIssuesText}>Buy Issues {magazineDetail.amount}</Text>
+                  <Text style={styles.buyIssuesText}>Buy Video {magazineDetail.amount}</Text>
                 )
               }
             </TouchableOpacity>
@@ -215,4 +202,4 @@ const RecentIssuesDetail = (props) => {
   );
 };
 
-export default RecentIssuesDetail;
+export default RecordedVideoDetail;

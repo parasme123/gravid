@@ -107,7 +107,7 @@ const Home = (props, { route }) => {
   }
 
   const renderslider = ({ item, index }) => (
-    <TouchableOpacity onPress={index == 1 ? () => setModalVisible(true) : null}>
+    <TouchableOpacity onPress={index == 1 ? () => setModalVisible(true) : item?.slider_url ? () => Linking.openURL(item.slider_url) : null}>
       <Image style={styles.subscribeOfferImg}
         source={{ uri: imageurl + item.image }}
       />

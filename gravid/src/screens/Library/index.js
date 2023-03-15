@@ -21,12 +21,15 @@ const Library = (props) => {
   const [type, setType] = useState("bookmark")
   const [confirmDeleteModal, setConfirmDeleteModal] = useState(false)
   const [bookmarkDataList, setBookmarkDataList] = useState([])
+  const [recordedList, setRecordedList] = useState([])
   const [removeBookmarkParams, setRemoveBookmarkParams] = useState({})
   const [isLoader, setIsLoader] = useState(false)
+  const [isVideoLoader, setIsVideoLoader] = useState(false)
 
   useEffect(() => {
     if (isFocused) {
       bookmarkList()
+      recordedVideo()
     }
   }, [isFocused])
 
@@ -34,7 +37,7 @@ const Library = (props) => {
     setIsLoader(true)
     Apis.AllBookMark({})
       .then(async (json) => {
-        console.log('datalistHomePage=====:', JSON.stringify(json));
+        console.log('AllBookMark=====:', JSON.stringify(json));
         if (json.status == true) {
           setBookmarkDataList(json.data);
         }
@@ -42,6 +45,21 @@ const Library = (props) => {
       }).catch((err) => {
         setIsLoader(false)
         console.log("Bookmark err : ", err);
+      })
+  }
+
+  const recordedVideo = () => {
+    setIsVideoLoader(true)
+    Apis.recordedVideo({})
+      .then(async (json) => {
+        console.log('recordedVideo=====:', JSON.stringify(json));
+        if (json.status == true) {
+          setRecordedList(json.data);
+        }
+        setIsVideoLoader(false)
+      }).catch((err) => {
+        setIsVideoLoader(false)
+        console.log("recordedVideo err : ", err);
       })
   }
 
@@ -68,7 +86,7 @@ const Library = (props) => {
 
   const renderItemNewsLetter = ({ item }) => {
     return (
-      <TouchableOpacity style={styles.NewsLetterView} onPress={item.type == "blog" ? () => props.navigation.navigate("RecentBlogsDetail", { item: item.blogs }) : () => props.navigation.navigate("RecentIssuesDetail", { item: item.magzine })}>
+      <TouchableOpacity style={styles.NewsLetterView} onPress={item.type == "blog" ? () => props.navigation.navigate("RecentBlogsDetail", { item: item.blogs }) : () => props.navigation.navigate("RecentIssuesDetail", { item: { ...item.magzine, check_payment: item.check_payment } })}>
         <Image source={item.type == "blog" ? { uri: imageurl + item.blogs.image } : { uri: imageurl + item.magzine.image }} style={styles.newsImg} />
         <TouchableOpacity style={styles.wifiCon} onPress={() => handleDelete(item.type, item.type == "blog" ? item.blogs.id : item.magzine.id)}>
           {svgs.deleteIcon(colors.white, 10, 10)}
@@ -76,6 +94,21 @@ const Library = (props) => {
         <View style={styles.newsleftView}>
           <Text style={styles.issuetitle} numberOfLines={2}>{item.type == "blog" ? item.blogs.title : item.magzine.title}</Text>
           <Text style={styles.issueDes} numberOfLines={3}>{item.type == "blog" ? item.blogs.short_description : item.magzine.short_description}</Text>
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
+  const renderVideos = ({ item }) => {
+    return (
+      <TouchableOpacity style={styles.NewsLetterView} onPress={() => props.navigation.navigate("RecordedVideoDetail", { item })}>
+        <Image source={{ uri: imageurl + item.file }} style={styles.newsImg} />
+        {/* <TouchableOpacity style={styles.wifiCon} onPress={() => handleDelete(item.type, item.type == "blog" ? item.blogs.id : item.magzine.id)}>
+          {svgs.deleteIcon(colors.white, 10, 10)}
+        </TouchableOpacity> */}
+        <View style={styles.newsleftView}>
+          <Text style={styles.issuetitle} numberOfLines={2}>{item.title}</Text>
+          <Text style={styles.issueDes} numberOfLines={3}>{item.short_description}</Text>
         </View>
       </TouchableOpacity>
     );
@@ -128,7 +161,11 @@ const Library = (props) => {
           </TouchableOpacity>
         </View>
         {
-          isLoader ? (
+          isLoader && type == "bookmark" ? (
+            <View style={{ marginTop: 250 }}>
+              <ActivityIndicator size="large" />
+            </View>
+          ) : isVideoLoader && type == "video" ? (
             <View style={{ marginTop: 250 }}>
               <ActivityIndicator size="large" />
             </View>
@@ -144,6 +181,14 @@ const Library = (props) => {
             ) : (
               <Text style={styles.noBookMarkTxt}>No bookmarks added</Text>
             )
+          ) : type == "video" ? (
+            <FlatList
+              data={recordedList}
+              numColumns={2}
+              style={{ paddingLeft: 16, marginTop: 40, flexDirection: "row" }}
+              renderItem={renderVideos}
+              keyExtractor={(item) => item.id}
+            />
           ) : null
         }
 
@@ -170,7 +215,7 @@ const Library = (props) => {
         </View>
       </Modal>
 
-    </View>
+    </View >
 
   );
 };

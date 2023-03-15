@@ -23,6 +23,7 @@ import CurrentIssue from '../screens/CurrentIssue';
 import Blogs from '../screens/Blogs';
 import Video_Library from '../screens/Video_Library';
 import WebinarDetail from '../screens/WebinarDetail';
+import RecordedVideoDetail from '../screens/RecordedVideoDetail';
 const RootStack = createNativeStackNavigator();
 
 const Navigators = () => {
@@ -53,6 +54,7 @@ const Navigators = () => {
       <RootStack.Screen name="blogs" component={Blogs} options={{ headerShown: false }} />
       <RootStack.Screen name="Video_Library" component={Video_Library} options={{ headerShown: false }} />
       <RootStack.Screen name="webinarDetail" component={WebinarDetail} options={{ headerShown: false }} />
+      <RootStack.Screen name="RecordedVideoDetail" component={RecordedVideoDetail} options={{ headerShown: false }} />
 
     </RootStack.Navigator>
   );

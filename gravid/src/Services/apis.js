@@ -60,6 +60,9 @@ export default class Apis {
   static updatePayment = (data) => {
     return Network('POST', 'payment-update', data)
   }
+  static recordedVideo = (data) => {
+    return Network('GET', 'recorded-vedios', data)
+  }
   static Signout = (data) => {
     return Network('POST', 'user-signout', data)
   }
