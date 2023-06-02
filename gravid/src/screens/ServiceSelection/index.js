@@ -133,7 +133,7 @@ const ServiceSelection = props => {
           </View>
         </View>
         </View> }
-         
+         {/* irfan  */}
         <Text
           style={{
             fontSize: 16,
@@ -141,8 +141,10 @@ const ServiceSelection = props => {
             color: '#000',
             marginTop: 20,
           }}>
-          Consultant :
+          Consultant :::
         </Text>
+        {/* ffdfdfdfdf  */}
+        {/* ffdfdfdfdf  */}
         <View>
           <TouchableOpacity
             onPress={() => {
