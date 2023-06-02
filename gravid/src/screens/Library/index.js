@@ -18,6 +18,7 @@ import Toast from 'react-native-simple-toast';
 
 const Library = (props) => {
   const isFocused = useIsFocused();
+  const { navigation } = props;
   const [type, setType] = useState("bookmark")
   const [confirmDeleteModal, setConfirmDeleteModal] = useState(false)
   const [bookmarkDataList, setBookmarkDataList] = useState([])
@@ -30,8 +31,9 @@ const Library = (props) => {
     if (isFocused) {
       bookmarkList()
       recordedVideo()
+      deleteBookmark()
     }
-  }, [isFocused])
+  }, [isFocused, type])
 
   const bookmarkList = () => {
     setIsLoader(true)
@@ -54,7 +56,9 @@ const Library = (props) => {
       .then(async (json) => {
         console.log('recordedVideo=====:', JSON.stringify(json));
         if (json.status == true) {
-          setRecordedList(json.data);
+          let newData = json?.data?.filter((item) => { return item?.check_payment })
+          //  console.log("json.datajson.datajson.datajson.datajson.data" , newData)
+          setRecordedList(newData);
         }
         setIsVideoLoader(false)
       }).catch((err) => {
@@ -86,14 +90,25 @@ const Library = (props) => {
 
   const renderItemNewsLetter = ({ item }) => {
     return (
-      <TouchableOpacity style={styles.NewsLetterView} onPress={item.type == "blog" ? () => props.navigation.navigate("RecentBlogsDetail", { item: item.blogs }) : () => props.navigation.navigate("RecentIssuesDetail", { item: { ...item.magzine, check_payment: item.check_payment } })}>
-        <Image source={item.type == "blog" ? { uri: imageurl + item.blogs.image } : { uri: imageurl + item.magzine.image }} style={styles.newsImg} />
-        <TouchableOpacity style={styles.wifiCon} onPress={() => handleDelete(item.type, item.type == "blog" ? item.blogs.id : item.magzine.id)}>
+      <TouchableOpacity style={styles.NewsLetterView} onPress={item.type == "blog" ? () => props.navigation.navigate("RecentBlogsDetail", { item: item.blogs }) :
+        item.type == "offer" ? () => props.navigation.navigate("RecentOffersDetail", { item: item.offer }) :
+          () => props.navigation.navigate("RecentIssuesDetail", { item: { ...item.magzine, check_payment: item.check_payment } })}>
+        <Image source={
+          item.type == "blog" ? { uri: imageurl + item.blogs.image } :
+          // item.type == "offer" ? { uri: imageurl + item.offer.image } :
+            { uri: imageurl + item.magzine.image }} style={styles.newsImg} />
+        <TouchableOpacity style={styles.wifiCon} onPress={() => handleDelete(item.type, item.type == "blog" ? item.blogs.id :
+          item.type == "offer" ? item.offer.id :
+            item.magzine.id)}>
           {svgs.deleteIcon(colors.white, 10, 10)}
         </TouchableOpacity>
         <View style={styles.newsleftView}>
-          <Text style={styles.issuetitle} numberOfLines={2}>{item.type == "blog" ? item.blogs.title : item.magzine.title}</Text>
-          <Text style={styles.issueDes} numberOfLines={3}>{item.type == "blog" ? item.blogs.short_description : item.magzine.short_description}</Text>
+          <Text style={styles.issuetitle} numberOfLines={2}>{item.type == "blog" ? item.blogs.title :
+            // item.type == "offer" ? item.offer.title :
+              item.magzine.title}</Text>
+          <Text style={styles.issueDes} numberOfLines={3}>{item.type == "blog" ? item.blogs.short_description :
+            // item.type == "offer" ? item.offer.short_description :
+              item.magzine.short_description}</Text>
         </View>
       </TouchableOpacity>
     );
@@ -103,9 +118,6 @@ const Library = (props) => {
     return (
       <TouchableOpacity style={styles.NewsLetterView} onPress={() => props.navigation.navigate("RecordedVideoDetail", { item })}>
         <Image source={{ uri: imageurl + item.file }} style={styles.newsImg} />
-        {/* <TouchableOpacity style={styles.wifiCon} onPress={() => handleDelete(item.type, item.type == "blog" ? item.blogs.id : item.magzine.id)}>
-          {svgs.deleteIcon(colors.white, 10, 10)}
-        </TouchableOpacity> */}
         <View style={styles.newsleftView}>
           <Text style={styles.issuetitle} numberOfLines={2}>{item.title}</Text>
           <Text style={styles.issueDes} numberOfLines={3}>{item.short_description}</Text>
@@ -116,13 +128,20 @@ const Library = (props) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.haddingView}>
-        <TouchableOpacity style={{ flex: 3 }} onPress={() => props.navigation.goBack()}>
-          {svgs.backArrow("black", 24, 24)}
+      {/* <View style={styles.haddingView}>
+        <TouchableOpacity style={{ flex: 3 }}
+        >
         </TouchableOpacity>
         <Text style={styles.haddingTxt}>Library</Text>
         <View style={{ flex: 3 }} />
-      </View>
+      </View> */}
+      <View style={styles.haddingView}>
+                <TouchableOpacity style={{ flex: 3 }} onPress={() => navigation.goBack()}>
+                    {svgs.backArrow("black", 24, 24)}
+                </TouchableOpacity>
+                <Text style={styles.haddingTxt}>Library</Text>
+                <View style={{ flex: 3 }} />
+            </View>
       <View style={styles.radiusView} />
       <ScrollView nestedScrollEnabled={true} showsVerticalScrollIndicator={false}>
         <View style={styles.tabView}>
@@ -137,17 +156,6 @@ const Library = (props) => {
             }
             <Text style={type == "bookmark" ? styles.WebinarActiveBtnTxt : styles.WebinarInactiveBtnTxt}>Bookmarks</Text>
           </TouchableOpacity>
-          {/* <TouchableOpacity style={type == "download" ? styles.WebinarActiveBtn : styles.WebinarInactiveBtn} onPress={() => handleWebinarType("download")}>
-            {
-              type == "download" ? (
-                <>
-                  <View style={styles.talkBubbleTriangleLeft} />
-                  <View style={styles.talkBubbleTriangleRight} />
-                </>
-              ) : null
-            }
-            <Text style={type == "download" ? styles.WebinarActiveBtnTxt : styles.WebinarInactiveBtnTxt}>Download</Text>
-          </TouchableOpacity> */}
           <TouchableOpacity style={type == "video" ? styles.WebinarActiveBtn : styles.WebinarInactiveBtn} onPress={() => handleWebinarType("video")}>
             {
               type == "video" ? (
@@ -157,7 +165,7 @@ const Library = (props) => {
                 </>
               ) : null
             }
-            <Text style={type == "video" ? styles.WebinarActiveBtnTxt : styles.WebinarInactiveBtnTxt}>Recorded video</Text>
+            <Text style={type == "video" ? styles.WebinarActiveBtnTxt : styles.WebinarInactiveBtnTxt}>Recorded videos</Text>
           </TouchableOpacity>
         </View>
         {

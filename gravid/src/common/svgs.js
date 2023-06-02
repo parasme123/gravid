@@ -19,6 +19,53 @@ export const userIcon = (color, width = "19.546", height = "18.615") => {
   )
 }
 
+
+export const lappyIcon = (color, width = "19.546", height = "18.615") => {
+  return (
+    <Svg xmlns="http://www.w3.org/2000/svg" width="16.974" height="16.974" viewBox="0 0 16.974 16.974">
+  <G id="Packages" transform="translate(-374.559 -2050.125)">
+    <G id="fastshippingservicepackageemslogistic_109710" transform="translate(374.688 2050.255)">
+      <Path id="Path_522" data-name="Path 522" d="M16.453,6.007a1.726,1.726,0,0,0-.509-1.229.261.261,0,0,0-.28-.058,1.735,1.735,0,0,0-.256-.922V.261A.261.261,0,0,0,15.247.02a.255.255,0,0,0-.1-.017V0H3.395A.26.26,0,0,0,3.21.077L.077,3.21A.261.261,0,0,0,0,3.395V14.363a.261.261,0,0,0,.261.261H12.013a.263.263,0,0,0,.185-.077l3.134-3.134a.26.26,0,0,0,.077-.185V9.7a4.668,4.668,0,0,0,.8-.631,1.739,1.739,0,0,0,.1-2.351A1.734,1.734,0,0,0,16.453,6.007ZM12.44,7.65l-.261.261-.522.522.369.369.522-.522.261-.261.579-.579a1.218,1.218,0,0,1-.165,1.516l-.261.261L12.179,10l.369.369.783-.783.261-.261.057-.057a1.218,1.218,0,0,1-.165,1.516,4.17,4.17,0,0,1-2.968,1.229H9.4a1.567,1.567,0,1,1,0-3.134h.306A.261.261,0,0,0,9.891,8.8L12.6,6.133A1.217,1.217,0,0,1,12.44,7.65ZM11.9,3.134H7.943L10.554.522h3.962ZM9.816.522,7.128,3.21a.26.26,0,0,0-.077.185V7.086l-.377-.252a.26.26,0,0,0-.29,0l-.639.426-.639-.426a.261.261,0,0,0-.29,0l-.377.252V3.5L7.42.522ZM3.5.522H6.682L4.07,3.134H.892ZM.522,3.656H3.917V7.573a.261.261,0,0,0,.406.217l.639-.426.639.426a.26.26,0,0,0,.29,0l.639-.426.639.426a.261.261,0,0,0,.406-.217V3.656h4.178V6.238L9.6,8.357H9.4a2.089,2.089,0,1,0,0,4.178h1.116a4.737,4.737,0,0,0,1.235-.167V14.1H.522Zm14.363,7.465-2.612,2.612V12.2a4.708,4.708,0,0,0,1.58-1.043,1.736,1.736,0,0,0,.1-2.351,1.735,1.735,0,0,0-.359-1.935.26.26,0,0,0-.275-.059c0-.006,0-.011,0-.017a1.726,1.726,0,0,0-.509-1.229.261.261,0,0,0-.368,0l-.168.165V3.5L14.886.892v10.23Zm.95-2.427a3.939,3.939,0,0,1-.427.369V5.682l.331-.331a1.218,1.218,0,0,1-.165,1.516.261.261,0,1,0,.369.369l0,0L16,7.179a1.218,1.218,0,0,1-.165,1.516Z" fill={color} stroke={color} stroke-width="0.26"/>
+      <Path id="Path_523" data-name="Path 523" d="M9.356,9.35A1.045,1.045,0,1,0,10.4,10.4,1.046,1.046,0,0,0,9.356,9.35Zm0,1.567a.522.522,0,1,1,.522-.522A.523.523,0,0,1,9.356,10.917Z" transform="translate(0.045 0.051)" fill={color} stroke={color} stroke-width="0.26"/>
+      <Rect id="Rectangle_365" data-name="Rectangle 365" width="3.917" height="0.522" transform="translate(1.828 15.147)" fill={color} stroke={color} stroke-width="0.26"/>
+      <Rect id="Rectangle_366" data-name="Rectangle 366" width="0.522" height="0.522" transform="translate(6.268 15.147)" fill={color} stroke={color} stroke-width="0.26"/>
+      <Rect id="Rectangle_367" data-name="Rectangle 367" width="0.522" height="0.522" transform="translate(7.312 15.147)" fill={color} stroke={color} stroke-width="0.26"/>
+      <Rect id="Rectangle_368" data-name="Rectangle 368" width="0.522" height="0.522" transform="translate(8.357 15.147)" fill={color} stroke={color} stroke-width="0.26"/>
+      <Rect id="Rectangle_369" data-name="Rectangle 369" width="3.917" height="0.522" transform="translate(7.312 16.192)" fill={color} stroke={color} stroke-width="0.26"/>
+      <Rect id="Rectangle_370" data-name="Rectangle 370" width="0.522" height="0.522" transform="translate(11.752 16.192)" fill={color} stroke={color} stroke-width="0.26"/>
+      <Rect id="Rectangle_371" data-name="Rectangle 371" width="0.522" height="0.522" transform="translate(12.797 16.192)" fill={color} stroke={color} stroke-width="0.26"/>
+      <Rect id="Rectangle_372" data-name="Rectangle 372" width="0.522" height="0.522" transform="translate(13.841 16.192)" fill={color} stroke={color} stroke-width="0.26"/>
+      <Rect id="Rectangle_373" data-name="Rectangle 373" width="0.522" height="0.522" transform="translate(13.319 14.886)" fill={color} stroke={color} stroke-width="0.26"/>
+      <Rect id="Rectangle_375" data-name="Rectangle 375" width="0.522" height="0.522" transform="translate(15.408 14.886)" fill={color} stroke={color} stroke-width="0.26"/>
+      <Rect id="Rectangle_374" data-name="Rectangle 374" width="0.522" height="0.522" transform="translate(14.363 14.886)" fill={color} stroke={color} stroke-width="0.26"/>
+    </G>
+  </G>
+</Svg>
+  )
+}
+export const program = (color, width = "19.546", height = "18.615") => {
+  return (
+<Svg xmlns="http://www.w3.org/2000/svg" width="24.26" height="17.958" viewBox="0 0 24.26 17.958">
+<G id="Programs" transform="translate(1.786 0.053)">
+  <G id="Group_117" data-name="Group 117" transform="translate(-1.786 -0.053)">
+    <G id="Group_152" data-name="Group 152" transform="translate(0 0)">
+      <G id="profile_121261" transform="translate(0 0)">
+        <G id="Group_151" data-name="Group 151">
+          <G id="Group_206" data-name="Group 206">
+            <G id="laptop-material-6-svgrepo-com">
+              <Path id="Path_378" data-name="Path 378" d="M20.327,1.475H1.081V13.3H20.327Zm-1.891,9.931H2.973V3.367H18.436Z" transform="translate(1.426 -1.475)" fill={color}/>
+              <Path id="Path_379" data-name="Path 379" d="M21.438,7.186H2.823L0,9.838v1.526H24.26V9.838ZM9.723,9.592l.463-.74h3.89l.463.74Z" transform="translate(0 6.594)" fill={color}/>
+            </G>
+          </G>
+        </G>
+      </G>
+    </G>
+  </G>
+  <Path id="Path_525" data-name="Path 525" d="M7.293,3.258A1.278,1.278,0,1,0,8.582,4.537,1.287,1.287,0,0,0,7.293,3.258ZM6,6.454A1.287,1.287,0,0,0,4.716,7.732v.639H9.871V7.732A1.287,1.287,0,0,0,8.582,6.454Z" transform="translate(3.05 -0.246)" fill={color}/>
+</G>
+</Svg>
+  )}
+
 export const search = (color, width, height) => {
   return (
     <Svg xmlns="http://www.w3.org/2000/svg" width={width} height={height} viewBox="0 0 16.998 17">
@@ -109,9 +156,24 @@ export const home = (color, width, height) => {
 
 export const webinar = (color, width, height) => {
   return (
-    <Svg xmlns="http://www.w3.org/2000/svg" width={width} height={height} viewBox="0 0 21 15.311">
-      <Path id="live_regular_icon_205193" d="M6.289,5.175a.787.787,0,0,1,0,1.114,8.925,8.925,0,0,0,0,12.622.788.788,0,0,1-1.114,1.114,10.5,10.5,0,0,1,0-14.849A.788.788,0,0,1,6.289,5.175Zm13.736,0a10.5,10.5,0,0,1,0,14.849.788.788,0,0,1-1.114-1.114,8.925,8.925,0,0,0,0-12.622.788.788,0,1,1,1.114-1.114ZM9.259,8.145a.788.788,0,0,1,0,1.114,4.725,4.725,0,0,0,0,6.682.788.788,0,1,1-1.114,1.114,6.3,6.3,0,0,1,0-8.91A.788.788,0,0,1,9.259,8.145Zm7.8,0a6.3,6.3,0,0,1,0,8.91.787.787,0,1,1-1.114-1.114,4.725,4.725,0,0,0,0-6.682.787.787,0,0,1,1.114-1.114ZM12.6,11.025A1.575,1.575,0,1,1,11.025,12.6,1.575,1.575,0,0,1,12.6,11.025Z" transform="translate(-2.1 -4.944)" fill={color} />
-    </Svg>
+    // <Svg xmlns="http://www.w3.org/2000/svg" width={width} height={height} viewBox="0 0 21 15.311">
+    //   <Path id="live_regular_icon_205193" d="M6.289,5.175a.787.787,0,0,1,0,1.114,8.925,8.925,0,0,0,0,12.622.788.788,0,0,1-1.114,1.114,10.5,10.5,0,0,1,0-14.849A.788.788,0,0,1,6.289,5.175Zm13.736,0a10.5,10.5,0,0,1,0,14.849.788.788,0,0,1-1.114-1.114,8.925,8.925,0,0,0,0-12.622.788.788,0,1,1,1.114-1.114ZM9.259,8.145a.788.788,0,0,1,0,1.114,4.725,4.725,0,0,0,0,6.682.788.788,0,1,1-1.114,1.114,6.3,6.3,0,0,1,0-8.91A.788.788,0,0,1,9.259,8.145Zm7.8,0a6.3,6.3,0,0,1,0,8.91.787.787,0,1,1-1.114-1.114,4.725,4.725,0,0,0,0-6.682.787.787,0,0,1,1.114-1.114ZM12.6,11.025A1.575,1.575,0,1,1,11.025,12.6,1.575,1.575,0,0,1,12.6,11.025Z" transform="translate(-2.1 -4.944)" fill={color} />
+    // </Svg>
+    <Svg xmlns="http://www.w3.org/2000/svg" width="26" height="23" viewBox="0 0 26 23">
+  <G id="Webinar" transform="translate(-111 -2047)">
+    <G id="webinar-svgrepo-com" transform="translate(110.937 2047.114)">
+      <Path id="Path_524" data-name="Path 524" d="M4.329,2.259h-1.6v14.3c0,1.073-.521,1.048-.539,2.02h9.119v.975H6.655v.817H20.612v-.817H15.96V18.58h9.3c-.018-.906-.831-.878-.831-1.951V2.362Zm0,1.691h18.61V16.629H4.329Z" transform="translate(-0.125 -0.378)" fill={color}/>
+      <Rect id="Rectangle_376" data-name="Rectangle 376" width="26" height="23" transform="translate(0.063 -0.114)" fill="none"/>
+      <G id="Live" transform="translate(-103.231 -64.06)">
+        <Path id="Path_529" data-name="Path 529" d="M120.34,192.662a.2.2,0,0,0-.2,0l-1.213.66v-.77a.767.767,0,0,0-.766-.766h-4.1a.767.767,0,0,0-.766.766v2.835a.767.767,0,0,0,.766.766h1.533l-1.769,1.619a.2.2,0,0,0,.362.172l1.85-1.791h.294l1.85,1.791a.2.2,0,1,0,.362-.172l-1.769-1.619h1.39a.767.767,0,0,0,.766-.766v-.77l1.213.66a.2.2,0,0,0,.3-.176v-2.261A.2.2,0,0,0,120.34,192.662Zm-1.811,2.72a.366.366,0,0,1-.365.365h-4.1a.366.366,0,0,1-.365-.365v-2.835a.366.366,0,0,1,.365-.365h4.1a.366.366,0,0,1,.365.365Z" transform="translate(0 -119.083)" fill={color}/>
+        <Path id="Path_530" data-name="Path 530" d="M151.845,228.621h.731a.2.2,0,0,0,0-.4h-.731a.2.2,0,0,0,0,.4Z" transform="translate(-37.391 -154.611)" fill={color}/>
+        <Path id="Path_531" data-name="Path 531" d="M149.651,294.975h3.533a.144.144,0,0,1,.144.144v.623a.144.144,0,0,1-.144.144h-3.533a.144.144,0,0,1-.144-.144v-.623a.144.144,0,0,1,.144-.144Z" transform="translate(-35.305 -219.694)" fill={color}/>
+        <Circle id="Ellipse_155" data-name="Ellipse 155" cx="0.246" cy="0.246" r="0.246" transform="translate(115.692 73.565)" fill={color}/>
+      </G>
+    </G>
+    <Path id="Gender_Neutral_User_icon-icons.com_55902" d="M7.236,5a.865.865,0,0,0-.483,1.583A1.239,1.239,0,0,0,6,7.719h.247a.989.989,0,0,1,1.977,0h.247a1.239,1.239,0,0,0-.753-1.135A.865.865,0,0,0,7.236,5Zm0,.247a.618.618,0,1,1-.618.618A.616.616,0,0,1,7.236,5.247Z" transform="translate(116.76 2048.2)" fill={color}/>
+  </G>
+</Svg>
   )
 }
 

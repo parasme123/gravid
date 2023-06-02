@@ -1,51 +1,63 @@
 import react, { useEffect, useRef, useState } from "react";
-import { View, Text, TouchableOpacity, Dimensions } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
+import { View, Text, TouchableOpacity, Dimensions,ScrollView } from "react-native";
+// import { ScrollView } from "react-native-gesture-handler";
 import styles from "./styles";
-import { svgs, colors } from '@common';
 import VideoPlayer from 'react-native-video-controls';
-import { imageurl } from '../../Services/constants';
-import Video from 'react-native-video';
-const { width } = Dimensions.get('window');
-import { useIsFocused } from '@react-navigation/native';
+import Orientation from 'react-native-orientation-locker';
 
 const ParentingTV = (props) => {
-    const isFocused = useIsFocused();
-    const [isPaused, setIsPaused] = useState(false);
+    const [orientation, setOrientation] = useState('')
+    console.log('object', orientation)
 
-    useEffect(() => {
-        setIsPaused(!isFocused)
-    }, [isFocused])
+useEffect(() => {
+    const currentOrientation = Orientation.getInitialOrientation();
+    getCurrentScreenOrientation();
+    setOrientation('Current Device Orientation is = ' + currentOrientation);
+    Orientation.addOrientationListener(OnOrientationChange);
+    return () => {
+      Orientation.removeOrientationListener(OnOrientationChange);
+    };
+  }, []);
+
+  const getCurrentScreenOrientation = () => {
+    Orientation.getOrientation((err, orientation) => {
+      console.log('orientation', orientation);
+    });
+  };
+  const OnOrientationChange = orientation => {
+    setOrientation('Current Screen Orientation is ' + orientation);
+  };
     return (
         <View style={styles.container}>
             <View style={styles.haddingView}>
-                {/* <TouchableOpacity style={{ flex: 3 }} onPress={() => props.navigation.goBack()}>
-                    {svgs.backArrow("black", 24, 24)}
-                </TouchableOpacity> */}
                 <Text style={styles.haddingTxt}>Parenting TV</Text>
-                {/* <View style={{ flex: 3 }} /> */}
+                <View style={styles.radiusView} />
             </View>
-            <View style={styles.radiusView} />
-            {/* <Video
-                source={{ uri: videoUrl }}
-                resizeMode="contain"
-                style={{ width: 250, height: 200 }}
-                controls
-            /> */}
-            <VideoPlayer
-                paused={isPaused}
-                source={{ uri: 'https://rasatva.apponedemo.top/gravid/public/vedio/Tusshar_Kapoor_7th.mp4', initOptions: ['--codec=avcodec'] }}
-                // source={{ uri: imageurl + 'public\vedio\Tusshar Kapoor 7th Cut.mov' }}
-                onPause={() => console.log("pause")}
-                onPlay={() => console.log("Play")}
-                navigator={props.navigator}
-                onError={err => console.log("err", err)}
-                style={{ width: width, height: 100 }}
-            />
-            {/* <ScrollView style={{ paddingHorizontal: 16 }} showsVerticalScrollIndicator={false}>
-                
-            </ScrollView> */}
+            <ScrollView>
+                <View style={styles.backgroundVideo}>
+                   <VideoPlayer
+                            source={{
+                                uri: 'https://adminapp.gravidparenting.com/public/videos/Tusshar_Kapoor_7th_Cut.mp4',
+                            }}
+                            onShowControls={true}
+                            paused={true}
+                            disableControlsAutoHide={true}
+                            onEnterFullscreen={() => {
+                                console.log('First');
+                                Orientation.lockToLandscape();
+                            }}
+                            onExitFullscreen={() => {
+                                console.log('second');
+                                Orientation.unlockAllOrientations();
+                            }}
+                    
+                            />
+                </View>
+            </ScrollView>
         </View>
+
     )
 }
 export default ParentingTV 
+
+

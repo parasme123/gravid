@@ -5,7 +5,15 @@ const { width } = Dimensions.get('window');
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: '#ffffff',
+  },
+  searchBox: {
+    fontFamily: fonts.OptimaBold,
+    color: colors.black,
+    fontSize: 14,
+    marginLeft: 6,
+    paddingRight: 12,
+    height: 45, width: 315
   },
   haddingView: {
     backgroundColor: colors.themeColor,
@@ -31,10 +39,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 4
   },
   NewsLetterView: {
+    // backgroundColor:"red",
     marginHorizontal: 8,
     marginBottom: 16,
     padding: 10,
-    backgroundColor: colors.white,
+    backgroundColor:colors.grayLight,
     borderRadius: 10,
   },
   blogTitleTime: {
@@ -50,25 +59,39 @@ const styles = StyleSheet.create({
     fontSize: 18,
     lineHeight: 18,
     marginTop: 10,
-    textAlign: "center"
+    textAlign: "center",
+  },
+  searchBoxView: {
+    backgroundColor: "#F9FAFC",
+    borderColor:"#E1E3E7",
+    borderWidth:0.5,
+    borderRadius: 15,
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 16,
+    marginBottom: 10,
+    flex:1
   },
   newsleftView: {
+    flex: 1,
     flexDirection: "row",
     marginTop: 16,
-    justifyContent:"center"
+    alignItems: "center",
+    justifyContent: "center",
+    // backgroundColor: "red"
   },
   issueDes: {
-    // flex: 3,
-    // backgroundColor:'red',
-    width: 200,
+    flex: 1,
     fontSize: 11,
     lineHeight: 18,
     color: "#929397",
     fontFamily: fonts.OptimaDemiBold,
+    alignSelf: "center",
+    textAlign: "center"
   },
   manflatlistview: {
-    backgroundColor: "#FAFAFA",
-    paddingHorizontal: 6,
+    backgroundColor: "#ffffff",
+    // paddingHorizontal: 6,
     paddingTop: 30,
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
@@ -76,9 +99,9 @@ const styles = StyleSheet.create({
     flex: 1
   },
   newsImg: {
-    // flex: 2,
-    width: 200,
-    height: 200,
+    flex: 1,
+    width: width / 2.5,
+    height: width / 2.5,
     marginTop: 5,
     resizeMode: "contain",    // width: "100%",
     alignSelf: "center",

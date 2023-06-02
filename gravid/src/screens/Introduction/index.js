@@ -26,7 +26,7 @@ const Introduction = (props) => {
 
   const Welcomescreendata = () => {
     const params = {
-
+      
     }
     Apis.Welcomescreendata(params)
       .then(async (json) => {
@@ -35,6 +35,8 @@ const Introduction = (props) => {
           setIntroduction(json.data)
         }
       })
+
+     
   }
   const renderslider = ({ item, index }) => {
     return (

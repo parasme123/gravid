@@ -16,29 +16,33 @@ import { imageurl } from '../../Services/constants';
 import { useIsFocused } from '@react-navigation/native';
 
 const CurrentIssue = (props) => {
+  
   const isFocused = useIsFocused();
   const [term, setTerm] = useState(false)
   const [issuelist, setIssueList] = useState([])
   const [isLoader, setIsLoader] = useState(false)
-
   const handleTerm = () => {
     setTerm(!term)
   }
 
   useEffect(() => {
-    if (isFocused) {
+    // if (isFocused) {
       setIssueList([])
-      HomePagedata()
-    }
-  }, [isFocused])
+      HomeIssuedata()
+    // }
+  }, [])
 
-  const HomePagedata = () => {
+  const HomeIssuedata = () => {
     setIsLoader(true)
-    Apis.HomePagedata({})
+    const params = {
+              id: 1,
+              type: 2
+          }
+    Apis.HomeDatalist(params)
       .then(async (json) => {
         console.log('IssuesList;;=====:', JSON.stringify(json));
         if (json.status == true) {
-          setIssueList(json.data.issuelist.data);
+          setIssueList(json?.data?.issuelist?.data);
         }
         setIsLoader(false)
       }).catch((err) => {
@@ -47,14 +51,19 @@ const CurrentIssue = (props) => {
       })
   }
   const renderItemNewsLetter = ({ item }) => {
+    console.log('itemssssssss', item  )
     return (
       <TouchableOpacity
         key={item.id}
         style={styles.NewsLetterView}
-        onPress={() => props.navigation.navigate("RecentIssuesDetail", { item })}
+        onPress={() => props.navigation.navigate("RecentIssuesDetail", {item})}
       >
+         
         <Image source={{ uri: imageurl + item.image }} style={styles.newsImg} />
         <View style={styles.newsleftView}>
+        <View style={styles.isFreeView}>
+            <Text style={styles.isFree}>{item.payment_type}</Text>
+        </View>
           <Text style={styles.issuetitle}>{item.title}</Text>
           <Text style={styles.issueDes}>{item.short_description}</Text>
           <View style={styles.downloadmanview}>

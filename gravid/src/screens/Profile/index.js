@@ -20,10 +20,12 @@ const Profile = ({ navigation }) => {
   const isFocused = useIsFocused();
   const [userData, setUserData] = useState()
   const [userProfile, setUserProfile] = useState()
+  const refferalCode= userData?.referral_code
   const data = [
     { img: require('../../assets/images/profileicon.png'), titel: 'My Account', navigation: 'EditProfile' },
-    { img: require('../../assets/images/Referral.png'), titel: 'Referral', navigation: 'Referral' },
-    { img: require('../../assets/images/List.png'), titel: 'List of Experts', navigation: 'Expert List' },
+    { img: require('../../assets/images/Referral.png'), titel: 'Referral', navigation: 'Referral'},
+    { img: require('../../assets/images/library.png'), titel: 'Library', navigation: 'Library' },
+    { img: require('../../assets/images/skype.png'), titel: 'ParentingTV', navigation: 'ParentingTV' },
     { img: require('../../assets/images/termi_con.png'), titel: 'Terms & Conditions', navigation: 'TermsCondition' },
     { img: require('../../assets/images/policy_icon.png'), titel: 'Privacy Policy', navigation: 'Privacy_Policy' },
   ]
@@ -82,14 +84,20 @@ const Profile = ({ navigation }) => {
   }
 
   const renderItem = ({ item, index }) => (
-    <TouchableOpacity style={styles.manFlat} onPress={() => { navigation.navigate(item.navigation) }} >
-      <View style={styles.profileHeader}>
-        <Image source={item.img} style={styles.flatlistimage} />
-        <Text style={styles.accountxt}>{item.titel}</Text>
-      </View>
-      <Image source={require('../../assets/images/right_arrow.png')}
-        style={styles.arrowicon} />
-    </TouchableOpacity>
+ 
+    <>
+      
+      {/* {item.titel !== "Referral" ? */}
+        <TouchableOpacity style={styles.manFlat} onPress={() => { navigation.navigate(item.navigation,{refferalCode}) }}>
+          <View style={styles.profileHeader}>
+            <Image source={item.img} style={styles.flatlistimage} />
+            <Text style={styles.accountxt}>{item.titel}</Text>
+          </View>
+          <Image source={require('../../assets/images/right_arrow.png')}
+            style={styles.arrowicon} />
+        </TouchableOpacity>
+        {/* : null} */}
+    </>
   )
   return (
     <View style={styles.container}>
@@ -113,7 +121,7 @@ const Profile = ({ navigation }) => {
                 <Image source={{ uri: imageurl + userData?.profile }}
                   style={styles.profileimg} />
               ) : (
-                <View style={{ borderWidth: 1, borderColor:colors.lightblack, borderRadius: 70, padding: 20 }}>
+                <View style={{ borderWidth: 1, borderColor: colors.lightblack, borderRadius: 70, padding: 20 }}>
                   {svgs.userIcon(colors.gray, 90, 90)}
                 </View>
               )

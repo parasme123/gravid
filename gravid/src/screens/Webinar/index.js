@@ -1,13 +1,6 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
 
 import React, { useEffect, useState } from 'react';
-import { Image, ScrollView, Text, View, TouchableOpacity, FlatList, ActivityIndicator, Linking } from 'react-native';
+import { Image, ScrollView, Text, View, TouchableOpacity, FlatList, ActivityIndicator, Linking, TextInput } from 'react-native';
 import { svgs, colors } from '@common';
 import styles from './styles';
 import Swiper from 'react-native-swiper';
@@ -18,14 +11,67 @@ import { useIsFocused } from '@react-navigation/native';
 
 const Webinar = (props) => {
   const isFocused = useIsFocused();
-  // const [modalVisible, setModalVisible] = useState(true);
-  // const [textinputVal, setTextinputVal] = useState("Gravid Digital 1 Year")
-  // const [price, setPrice] = useState("1800")
   const [webinarrecoded, setWebinarRecoded] = useState([])
+
   const [webinarLive, setWebinarListApi] = useState([])
+  const [webinarLiveSearch, setWebinarListSearch] = useState([])
+  const [recordedList, setRecordedList] = useState([])
+  const [recordedListSearch, setRecordedListSearch] = useState([])
+
   const [type, setType] = useState("live")
   const [btmSlider, setBtmSlider] = useState([])
   const [isLoader, setIsLoader] = useState(false)
+  const [isVideoLoader, setIsVideoLoader] = useState(false)
+  const [searchTxt, setSearchTxt] = useState("")
+
+
+  useEffect(() => {
+    recordedVideo()
+  }, [type])
+
+  useEffect(() => {
+    if (searchTxt && searchTxt != "") {
+      setWebinarListSearch(webinarLive.filter((item) => item.title.toLowerCase().includes(searchTxt.toLowerCase())))
+      setRecordedListSearch(recordedList.filter((item) => item.title.toLowerCase().includes(searchTxt.toLowerCase())))
+    }
+  }, [searchTxt])
+
+  // new added 
+  const recordedVideo = () => {
+    setIsVideoLoader(true)
+    Apis.recordedVideo({})
+      .then(async (json) => {
+        // console.log('recordedVideo=====11111:', JSON.stringify(json));
+        if (json.status == true) {
+          setRecordedList(json.data);
+        }
+        setIsVideoLoader(false)
+      }).catch((err) => {
+        setIsVideoLoader(false)
+        console.log("recordedVideo err : ", err);
+      })
+  }
+
+  // new added
+  const renderVideos = ({ item }) => {
+
+    return (
+      <TouchableOpacity style={styles.NewsLetterView} onPress={() => props.navigation.navigate("RecordedVideoDetail", { item, recordedVideo })}>
+        <Image source={{ uri: imageurl + item.file }} style={styles.newsImg} />
+        <View style={styles.paidType}>
+          <Text style={styles.paidTypeTxt}>{item.payment_type}</Text>
+        </View>
+        {/* <TouchableOpacity style={styles.wifiCon} onPress={() => handleDelete(item.type, item.type == "blog" ? item.blogs.id : item.magzine.id)}>
+          {svgs.deleteIcon(colors.white, 10, 10)}
+        </TouchableOpacity> */}
+        <View style={styles.newsleftView}>
+          <Text style={styles.issuetitle} numberOfLines={2}>{item.title}</Text>
+          <Text style={styles.issueDes} numberOfLines={3}>{item.short_description}</Text>
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
 
   const handleWebinarType = (type) => {
     setType(type)
@@ -36,11 +82,11 @@ const Webinar = (props) => {
   }
 
   useEffect(() => {
-    if (isFocused) {
-      HomePagedata();
-      recoder();
-    }
-  }, [isFocused])
+    // if (isFocused) {
+    HomePagedata();
+    recoder();
+    // }
+  }, [isFocused, type])
 
   const HomePagedata = () => {
     const params = {
@@ -51,8 +97,8 @@ const Webinar = (props) => {
       .then(async (json) => {
         console.log('live=====:', JSON.stringify(json))
         if (json.status == true) {
-          setWebinarListApi(json.data.webinarList)
-          setBtmSlider(json.data.other_sliders.data);
+          setWebinarListApi(json?.data?.webinarList)
+          setBtmSlider(json?.data?.other_sliders?.data);
         }
         setIsLoader(false)
       }).catch((error) => {
@@ -67,10 +113,10 @@ const Webinar = (props) => {
     }
     Apis.webinarrecoded(params)
       .then(async (json) => {
-        console.log('recorded=====:', JSON.stringify(json))
+        // console.log('recorded=====:', JSON.stringify(json))
         if (json.status == true) {
-          setWebinarRecoded(json.data.webinarList)
-          setBtmSlider(json.data.other_sliders.data);
+          setWebinarRecoded(json?.data?.webinarList)
+          setBtmSlider(json?.data?.other_sliders?.data);
         }
       })
   }
@@ -78,27 +124,10 @@ const Webinar = (props) => {
     return (
       <TouchableOpacity key={item.id} onPress={() => handleWebinarDetail(item)} style={styles.NewsLetterView} >
         <Image source={{ uri: imageurl + item.image }} style={styles.newsImg} />
-        {/* {
-          type == "live" ? (
-            <> */}
         <View style={styles.paidType}>
           <Text style={styles.paidTypeTxt}>{item.payment_type}</Text>
         </View>
-        <View style={styles.wifiCon}>
-          {svgs.webinar(colors.black, 12, 12)}
-        </View>
-        {/* </>
-          ) : null
-        } */}
         <View style={styles.newsleftView}>
-          {/* <View style={{ flexDirection: "row", justifyContent: "space-between", paddingHorizontal: 5 }}>
-            <View style={styles.bkmrkBtn}>
-              <View style={styles.bkmrkIcn}>
-                {svgs.clock(colors.gray, 12, 12)}
-              </View>
-              <Text style={styles.bkmrkBtnTxt}>5 min.</Text>
-            </View>
-          </View> */}
           <Text style={styles.issuetitle}>{item.title}</Text>
           <Text style={styles.issueDes}>{item.short_description}</Text>
         </View>
@@ -115,9 +144,9 @@ const Webinar = (props) => {
         <View style={styles.paidType}>
           <Text style={styles.paidTypeTxt}>{item.payment_type}</Text>
         </View>
-        <View style={styles.wifiCon}>
+        {/* <View style={styles.wifiCon}>
           {svgs.webinar(colors.black, 12, 12)}
-        </View>
+        </View> */}
         <View style={styles.newsleftView}>
           {/* <View style={{ flexDirection: "row", justifyContent: "space-between", paddingHorizontal: 5 }}>
 
@@ -160,13 +189,23 @@ const Webinar = (props) => {
   return (
     <View style={styles.container}>
       <View style={styles.haddingView}>
-        {/* <TouchableOpacity style={{ flex: 3 }} onPress={() => props.navigation.goBack()}>
-          {svgs.backArrow("black", 24, 24)}
-        </TouchableOpacity> */}
         <Text style={styles.haddingTxt}>Webinar</Text>
-        {/* <View style={{ flex: 3 }} /> */}
       </View>
       <View style={styles.radiusView} />
+
+      <View style={styles.searchBoxView}>
+        {svgs.search(colors.grayRegular, 17, 17)}
+        <TextInput
+          placeholder='Search                                                                         '
+          style={styles.searchBox}
+          value={searchTxt}
+          onChangeText={setSearchTxt}
+        />
+      </View>
+
+
+
+
       <ScrollView nestedScrollEnabled={true} showsVerticalScrollIndicator={false}>
         <View style={styles.tabView}>
           <TouchableOpacity style={type == "live" ? styles.WebinarActiveBtn : styles.WebinarInactiveBtn} onPress={() => handleWebinarType("live")}>
@@ -178,7 +217,7 @@ const Webinar = (props) => {
                 </>
               ) : null
             }
-            <Text style={type == "live" ? styles.WebinarActiveBtnTxt : styles.WebinarInactiveBtnTxt}>Live Webinar</Text>
+            <Text style={type == "live" ? styles.WebinarActiveBtnTxt : styles.WebinarInactiveBtnTxt}>Webinar</Text>
           </TouchableOpacity>
           <TouchableOpacity style={type == "record" ? styles.WebinarActiveBtn : styles.WebinarInactiveBtn} onPress={() => handleWebinarType("record")}>
             {
@@ -203,7 +242,7 @@ const Webinar = (props) => {
                 type == "live" ?
                   <>
                     <FlatList
-                      data={webinarLive}
+                      data={searchTxt && searchTxt != "" ? webinarLiveSearch : webinarLive}
                       numColumns={2}
                       style={{ paddingLeft: 16, marginTop: 26, flexDirection: "row" }}
                       renderItem={LiverenderItem}
@@ -212,55 +251,18 @@ const Webinar = (props) => {
                   </>
                   :
                   <>
+
                     <FlatList
-                      data={webinarrecoded}
+                      data={searchTxt && searchTxt != "" ? recordedListSearch : recordedList}
                       numColumns={2}
-                      style={{ paddingLeft: 16, marginTop: 26, flexDirection: "row" }}
-                      renderItem={recordrenderItem}
+                      style={{ paddingLeft: 16, marginTop: 40, flexDirection: "row" }}
+                      renderItem={renderVideos}
                       keyExtractor={(item) => item.id}
                     />
                   </>
               }
 
-              {/* <View style={styles.pregnantBack2} >
-          <Swiper style={{ height: 300 }}
-            activeDotStyle={{ backgroundColor: 'transparent', }}
-            dotStyle={{ backgroundColor: 'transparent', }}
-            autoplay={true}
-          >
-            <ImageBackground source={require('../../assets/images/pregnant-black-woman.png')}
-              resizeMethod='resize' style={styles.pregnantBack}>
-              <View style={{ flex: 5 }}>
-                <Text style={styles.subscribeTxt}>Save Big and get access to the complete “Gravid Library” with Gravid Annual Membership</Text>
-                <TouchableOpacity style={styles.subscribeBtn}>
-                  <Text style={styles.subscribeBtnTxt}>SUBSCRIBE</Text>
-                </TouchableOpacity>
-              </View>
-              <View style={{ flex: 3 }}>
-              </View>
-            </ImageBackground>
-            <ImageBackground source={require('../../assets/images/pregnant-black-woman.png')}
-              resizeMethod='resize' style={styles.pregnantBack}>
-              <View style={{ flex: 5 }}>
-                <Text style={styles.subscribeTxt}>Save Big and get access to the complete “Gravid Library” with Gravid Annual Membership</Text>
-                <TouchableOpacity style={styles.subscribeBtn}>
-                  <Text style={styles.subscribeBtnTxt}>SUBSCRIBE</Text>
-                </TouchableOpacity>
-              </View>
-              <View style={{ flex: 3 }}>
-              </View>
-            </ImageBackground>
-          </Swiper>
-        </View> */}
-
-              {/* <FlatList
-          data={DATA}
-          style={{ paddingLeft: 16, bottom: 40 }}
-          renderItem={renderItemIssue}
-          keyExtractor={(item) => item.id}
-          showsHorizontalScrollIndicator={false}
-          horizontal
-        /> */}
+            
               <View style={styles.endView} >
                 <Swiper
                   activeDotStyle={{ backgroundColor: 'transparent', }}
@@ -277,10 +279,7 @@ const Webinar = (props) => {
 
                     })
                   }
-                  {/* <Image style={styles.endImg} source={require('../../assets/images/home-end.png')} />
-            <Image style={styles.endImg} source={require('../../assets/images/home-end.png')} />
-            <Image style={styles.endImg} source={require('../../assets/images/home-end.png')} />
-            <Image style={styles.endImg} source={require('../../assets/images/home-end.png')} /> */}
+                
                 </Swiper>
               </View>
             </View>

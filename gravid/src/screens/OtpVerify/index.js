@@ -7,7 +7,7 @@
  */
 
 import React, { useEffect, useState, useRef } from 'react';
-import { ImageBackground, Image, SafeAreaView, ScrollView, StatusBar, Text, useColorScheme, View, TouchableOpacity, TextInput } from 'react-native';
+import { ImageBackground, Image, SafeAreaView, ScrollView, StatusBar, Text, useColorScheme, View, TouchableOpacity, TextInput,ActivityIndicator } from 'react-native';
 import OTPInputView from '@twotalltotems/react-native-otp-input'
 import { svgs, colors } from '@common';
 import styles from './styles';
@@ -29,13 +29,15 @@ const OtpVerify = (props) => {
   const [user, setUser] = useState(route.params.User_Id)
   const [countrycode, setCountryCode] = useState(route.params.Country_Code)
   const [signType, setSignType] = useState(route?.params?.type)
-  useEffect(() => {
-    console.log('------route.params.type:: ', signType);
-  }, [])
+  const [isLoader, setIsLoader] = useState(false)
+  console.log("isLoader",isLoader)
+  // useEffect(() => {
+  //   console.log('------route.params.type:: ', signType);
+  // }, [])
 
   const [otp, setotp] = useState('')
-  const [errotp, setErrOtp] = useState('Enter valid Otp')
-  const [errotplength, setErrOtplength] = useState('Enter 4 Digit Otp')
+  const [errotp, setErrOtp] = useState('Enter valid OTP')
+  const [errotplength, setErrOtplength] = useState('Enter 4 Digit OTP')
 
   const SignupOtpMatch = async () => {
     let error = false
@@ -47,14 +49,19 @@ const OtpVerify = (props) => {
       error = true
     }
     else {
+      let fcm= await AsyncStorage.getItem("fcmToken")
+      console.log('fcm', fcm)
       const params = {
         temp_id: id,
         otp: 1234,
+        fcm_token:fcm
       };
+      setIsLoader(true)
       await confirmation.confirm(otp).then(() => {
         Apis.SignupOtpMatch(params)
           .then(async (json) => {
             console.log('OtpMutch========== ;;', JSON.stringify(json.data));
+            setIsLoader(false)
             if (json.status == true) {
               await AsyncStorage.setItem("valuedata", JSON.stringify(json.data))
               try {
@@ -72,6 +79,7 @@ const OtpVerify = (props) => {
             }
           })
       }).catch((err) => {
+        setIsLoader(false)
         console.log("error", err);
       })
     }
@@ -87,14 +95,19 @@ const OtpVerify = (props) => {
       error = true
     }
     else {
+      let fcm= await AsyncStorage.getItem("fcmToken")
+      console.log('fcm', fcm)
       const params = {
         userId: user,
         otp: 1234,
+        fcm_token:fcm
       };
+      setIsLoader(true)
       confirmation.confirm(otp).then((res) => {
         Apis.LoginOtp(params)
           .then(async (json) => {
             console.log('LoginOtp:::======>', JSON.stringify(json));
+            setIsLoader(false)
             if (json.status == true) {
               await AsyncStorage.setItem("valuedata", JSON.stringify(json.data))
               try {
@@ -112,8 +125,9 @@ const OtpVerify = (props) => {
             }
           })
       }).catch((err) => {
+        setIsLoader(false)
         console.log("error", err);
-        Toast.show("Enter Correct Otp", Toast.LONG)
+        Toast.show("Enter Correct OTP", Toast.LONG)
       })
     }
   }
@@ -129,6 +143,17 @@ const OtpVerify = (props) => {
 
       })
   }
+
+  // if (isLoader) {
+  //   return (
+  //     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+  //       <ActivityIndicator size="large" />
+  //     </View>
+  //   )
+  // }
+
+
+
   return (
     <View style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -141,8 +166,16 @@ const OtpVerify = (props) => {
         </View>
         <View style={styles.formMainView}>
           <Text style={styles.welcmTxt}>Verification Code</Text>
-          <Text style={styles.signinTxt}>We have sent the code verification to <Text style={{ color: colors.black, fontFamily: fonts.OptimaBold }}>Your Mobile Number</Text></Text>
-          <Text style={styles.shownumder}>+91 {number}</Text>
+          <Text style={styles.signinTxt}>We have sent the code verification to </Text>
+
+          <View style={{flexDirection:"row",marginHorizontal:35}}>
+              <View style={{flex:1,alignItems:"center",justifyContent:"center"}}>
+              <Text style={{ color: colors.black, fontFamily: fonts.OptimaBold }}>Your Mobile Number</Text>
+              </View>
+              <View style={{flex:1,alignItems:"center"}}>
+              <Text style={{ color: colors.black, fontFamily: fonts.OptimaBold }}>+91 {number}</Text>
+              </View>
+          </View>
           <View style={styles.formInputView}>
             <OTPInputView
               pinCount={6}
@@ -152,6 +185,17 @@ const OtpVerify = (props) => {
               codeInputFieldStyle={styles.underlineStyleBase}
               codeInputHighlightStyle={styles.underlineStyleHighLighted}
             />
+          </View>
+          <View style={{
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            top: 7,
+            bottom: 0,
+            alignItems: 'center',
+            justifyContent: 'center'
+            }}>
+             {isLoader &&  <ActivityIndicator size="large" />}
           </View>
           <TouchableOpacity style={styles.signUpBtn} onPress={() => { signType ? SignupOtpMatch() : LoginOtp() }}>
             <Text style={styles.signUpBtnTxt}>SUBMIT</Text>

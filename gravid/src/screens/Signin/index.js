@@ -7,13 +7,14 @@
  */
 
 import React, { useEffect, useState, useRef } from 'react';
-import { ImageBackground, Image, SafeAreaView, ScrollView, StatusBar, Text, useColorScheme, View, TouchableOpacity, TextInput } from 'react-native';
+import { ImageBackground, Image, SafeAreaView, ScrollView, StatusBar, Text, useColorScheme, View, TouchableOpacity, TextInput,ActivityIndicator } from 'react-native';
 import { svgs, colors } from '@common';
 import styles from './styles';
 import Apis from '../../Services/apis';
 import Toast from 'react-native-simple-toast';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import auth from '@react-native-firebase/auth';
+import { useFocusEffect } from '@react-navigation/native';
 
 const Signin = (props) => {
   const [code, setCode] = useState('+91')
@@ -21,6 +22,12 @@ const Signin = (props) => {
   const [errocode, setErroCode] = useState('Enter country Code')
   const [erronu, setErroNu] = useState('Enter Phone Number')
   const [erronumberlength, setErroNumberLength] = useState('Enter 10 Digit Mobile Number')
+  const [isLoader, setIsLoader] = useState(false)
+
+  useEffect(()=>{
+    
+  },[isLoader])
+
   const LogninApi = async () => {
     let error = false
     if (code == '') {
@@ -32,31 +39,47 @@ const Signin = (props) => {
       Toast.show(erronumberlength, Toast.LONG)
     }
     else {
+    
       const params = {
         country_code: code,
-        mobile: number
+        mobile: number,
+       
       }
+      setIsLoader(true)
       Apis.LogninApi(params)
         .then(async (json) => {
-          console.log('LogninApi+++++++++++=====:', JSON.stringify(json));
+         
+          console.log('LogninApi+++++++++++=====:',json);
           if (json.status == true) {
             await auth().signInWithPhoneNumber("+91" + number).then(async (confirmation) => {
+             
               props.navigation.navigate("otpverify", {
                 User_Id: json.data.id,
                 verifynumber: json.data.mobile,
                 confirmation
                 // NUMDERVerify: json.data.mobile,
               })
+              setIsLoader(false)
             }).catch((err) => {
               console.log("Error : ", err);
+              setIsLoader(false)
               Toast.show("Something Went wrong", Toast.LONG)
             });
           } else {
+            setIsLoader(false)
             alert(json.message)
           }
         })
     }
   }
+
+  // if (isLoader) {
+  //   return (
+  //     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+  //       <ActivityIndicator size="large" />
+  //     </View>
+  //   )
+  // }
   // const handleSignIn = () => {
   //   props.navigation.navigate("otpverify")
   // }
@@ -66,12 +89,12 @@ const Signin = (props) => {
         <View style={styles.child}>
           <Image style={styles.signupImg} source={require('../../assets/images/signup.png')} />
         </View>
+        
+       
         <View style={styles.formMainView}>
           <Text style={styles.welcmTxt}>Sign in</Text>
           <Text style={styles.signinTxt}>Enter your Mobile Number to Continue</Text>
           <View style={styles.formInputView}>
-            {/* {svgs.mobileIcon(colors.grayRegular, 18, 20)} */}
-            {/* <View style={styles.countryCode} /> */}
             <View style={styles.countryCode}>
               <TextInput
                 placeholder='Country code'
@@ -91,11 +114,24 @@ const Signin = (props) => {
               onChangeText={(text) => setNumber(text)}
             />
           </View>
+          <View style={{
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            top: 7,
+            bottom: 0,
+            alignItems: 'center',
+            justifyContent: 'center'
+            }}>
+             {isLoader &&  <ActivityIndicator size="large" />}
+          </View>
+         
           <TouchableOpacity style={styles.signUpBtn} onPress={() => { LogninApi() }}>
             <Text style={styles.signUpBtnTxt}>NEXT</Text>
           </TouchableOpacity>
           {/* <Text style={styles.alreadyAct}>Not have an account? <Text style={styles.termTxt} onPress={handleSignUp}>Sign Up</Text></Text> */}
         </View>
+       
       </ScrollView>
     </View>
 

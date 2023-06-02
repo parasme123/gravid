@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { View, Text, Image, TouchableOpacity, Alert, TextInput, ActivityIndicator } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
+import { View, Text, Image, TouchableOpacity, Alert, TextInput, ActivityIndicator,ScrollView} from "react-native";
+// import { ScrollView } from "react-native-gesture-handler";
 import styles from "./styles";
 import { svgs } from '@common';
 import ImagePicker from 'react-native-image-crop-picker';
@@ -11,21 +11,24 @@ import { imageurl } from "../../Services/constants";
 import { useIsFocused } from "@react-navigation/native";
 
 const EditProfile = (props) => {
+    
     const { navigation } = props;
     const isFocused = useIsFocused();
     const [showdpimage, setShowdpimage] = useState({})
     const [userData, setUserData] = useState({})
     const [isLoader, setIsLoader] = useState(false)
+
+
     useEffect(() => {
         if (isFocused) {
             setUserProfileData();
         }
-
     }, [isFocused])
 
     const setUserProfileData = async () => {
         try {
             const jsondata = await AsyncStorage.getItem('valuedata');
+            console.log('jsondataEditProfile', jsondata)
             if (jsondata !== null) {
                 var newVal = JSON.parse(jsondata);
                 setUserData(newVal)
@@ -57,9 +60,9 @@ const EditProfile = (props) => {
             Toast.show('Enter Phone Number', Toast.LONG);
             error = true
         }
-        //  else if (showdpimage == '') {
-        //     Toast.show("Please select DP Image ", Toast.LONG)
-        // }
+         else if (showdpimage == '') {
+            Toast.show("Please select DP Image ", Toast.LONG)
+        }
         else {
             setIsLoader(true)
             // const params = {
@@ -84,7 +87,7 @@ const EditProfile = (props) => {
             // console.log("params", params);
             Apis.Updata_Profile(formdata)
                 .then(async (json) => {
-                    console.log('Updata_Profile ====== ', json.data);
+                    console.log('Updata_Profile ====== ', json);
                     setIsLoader(false)
                     if (json.status == true) {
                         Toast.show("Profile Updated successfully", Toast.LONG)
@@ -179,8 +182,8 @@ const EditProfile = (props) => {
                     </View>
                     <View style={styles.formInputView}>
                         {svgs.mobileIcon(colors.grayRegular, 16, 18)}
-                        {/* <Image source={require('../../assets/images/mail_icon.png')} style={styles.user_img} /> */}
-                        {/* <Image source={require('../../assets/images/yoga_icon.png')} style={styles.user_img} /> */}
+                        {/* <Image source={require('../../assets/images/mail_icon.png')} style={styles.user_img} />
+                        <Image source={require('../../assets/images/yoga_icon.png')} style={styles.user_img} /> */}
                         <TextInput
                             style={styles.signupInput}
                             keyboardType='email-address'

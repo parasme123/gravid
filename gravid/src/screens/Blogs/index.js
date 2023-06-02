@@ -1,11 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
-
 import React, { useEffect, useState } from 'react';
 import { Image, ScrollView, Text, View, TouchableOpacity, FlatList, ActivityIndicator, Linking } from 'react-native';
 import { svgs } from '@common';
@@ -13,7 +5,6 @@ import styles from './styles';
 import Swiper from 'react-native-swiper';
 import Apis from '../../Services/apis';
 import { imageurl } from '../../Services/constants';
-// const imageurl = "https://rasatva.apponedemo.top/gravid/"
 
 const Blogs = (props) => {
   const adsense = props?.route?.params?.adsense;
@@ -22,16 +13,20 @@ const Blogs = (props) => {
   const [isLoader, setIsLoader] = useState(false)
 
   useEffect(() => {
-    HomePagedata()
+    HomeBlogdata()
   }, [])
 
   useEffect(() => {
     setBtmSlider(adsense)
   }, [adsense])
 
-  const HomePagedata = () => {
+  const HomeBlogdata = () => {
     setIsLoader(true)
-    Apis.HomePagedata({})
+    const params = {
+      id: 1,
+      type: 1
+    }
+    Apis.HomeDatalist(params)
       .then(async (json) => {
         console.log('Blogs=====:', JSON.stringify(json));
         if (json.status == true) {
@@ -39,7 +34,7 @@ const Blogs = (props) => {
         }
         setIsLoader(false)
       }).catch((error) => {
-        console.log("HomePagedata", error);
+        console.log("HomeDatalist", error);
         setIsLoader(false)
       })
   }
@@ -51,7 +46,7 @@ const Blogs = (props) => {
         style={styles.NewsLetterView}
         onPress={() => props.navigation.navigate("RecentBlogsDetail", { item })}
       >
-        {/* <Text style={styles.blogTitleTime}>Gravid Digest India | May-June 2022</Text> */}
+
         <Text style={styles.issuetitle}>{item.title}</Text>
         <View style={styles.newsleftView}>
           <Text style={styles.issueDes}>{item.short_description}</Text>
@@ -104,11 +99,6 @@ const Blogs = (props) => {
                           )
                         })
                       }
-
-                      {/* <Image style={styles.endImg} source={require('../../assets/images/home-end.png')} />
-                  <Image style={styles.endImg} source={require('../../assets/images/home-end.png')} />
-                  <Image style={styles.endImg} source={require('../../assets/images/home-end.png')} />
-                  <Image style={styles.endImg} source={require('../../assets/images/home-end.png')} /> */}
                     </Swiper>
                   </View>
                 )

@@ -29,18 +29,22 @@ const styles = StyleSheet.create({
         marginTop: -30,
     },
     ScreenshotImage: {
-        width: 200,
-        height: 200,
+        width:"100%",
+        height: 230,
         borderRadius: 20,
         resizeMode: "contain",
         alignSelf: 'center',
-        borderRadius: 100,
+       
     },
     CONTRIBUTORSTEXT: {
-        marginTop: 25,
-        color: '#262626',
-        fontSize: 17,
-        fontWeight: 'bold'
+        position:"relative",
+        marginTop: -30,
+        color: '#ffffff',
+        fontSize: 16,
+        fontWeight: 'bold',
+        left:10,
+        marginBottom:10
+       
     },
     gravidDigestText: {
         fontSize: 16,

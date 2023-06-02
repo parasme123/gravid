@@ -1,12 +1,16 @@
 import react from "react";
-import { View, Text, Image, TouchableOpacity, ScrollView, Linking } from "react-native";
-import { FlatList } from "react-native-gesture-handler";
+import { View, Text, Image, TouchableOpacity, ScrollView, Linking,FlatList,Clipboard} from "react-native";
+// import { FlatList } from "react-native-gesture-handler";
 // import colors from "../../common/colors";
 import styles from "./styles";
 import { svgs, colors } from '@common';
 import Share from 'react-native-share';
 
-const Referral = ({ navigation }) => {
+//http://gravidparenting.com/
+
+const Referral = (props) => {
+    const {refferalCode} = props?.route?.params
+    console.log('propsReffralbbbbb', refferalCode)
     const Data = [
         { img: require('../../assets/images/facebook.png'), name: 'Facebook', color: colors.face },
         { img: require('../../assets/images/whatsapp.png'), name: 'Whatsapp', color: colors.what },
@@ -49,7 +53,7 @@ const Referral = ({ navigation }) => {
     return (
         <View style={styles.container}>
             <View style={styles.haddingView}>
-                <TouchableOpacity style={{ flex: 3 }} onPress={() => navigation.goBack()}>
+                <TouchableOpacity style={{ flex: 3 }} onPress={() => props.navigation.goBack()}>
                     {svgs.backArrow("black", 24, 24)}
                 </TouchableOpacity>
                 <Text style={styles.haddingTxt}>My Referral</Text>
@@ -64,9 +68,9 @@ const Referral = ({ navigation }) => {
                 />
                 <Text style={styles.Refertxt}>Refer a friend</Text>
                 <View style={styles.reffarborder}>
-                    <Text style={styles.abcd}>ABCDEFT1542</Text>
-                    <TouchableOpacity activeOpacity={0.6}>
-                        <Text style={styles.taptocopy}>Top to copy</Text>
+                    <Text style={styles.abcd}>{refferalCode}</Text>
+                    <TouchableOpacity activeOpacity={0.6} onPress={() => Clipboard.setString(refferalCode)}>
+                        <Text style={styles.taptocopy}>Tap to copy</Text>
                     </TouchableOpacity>
                 </View>
                 <Text style={styles.Invitetxt}>Invite your friends and get buzz points</Text>
@@ -86,7 +90,7 @@ const Referral = ({ navigation }) => {
                     source={require('../../assets/images/web.png')}
                     style={styles.webicon}
                 />
-                <Text style={styles.Gravid}>www.Gravid.In</Text>
+                <Text style={styles.Gravid}>www.gravidparenting.com</Text>
             </TouchableOpacity>
         </View>
     )

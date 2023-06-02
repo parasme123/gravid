@@ -6,22 +6,33 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
+    
   },
   child: {
-    // justifyContent: 'center',
+    
     alignItems: "center",
     marginHorizontal: 24,
     marginVertical: 20,
-    flexDirection: "row"
+    flexDirection: "row",
+    
+    
   },
   signupImg: {
     width: 30,
     height: 30,
     resizeMode: 'contain',
-    borderRadius: 15
+    borderRadius: 15,
+   
+  },
+  notification:{
+    width: 30,
+    height: 30,
+    resizeMode: 'contain',
   },
   headingText: {
-    marginLeft: 13
+    marginLeft: 13,
+    flex:4
+    
   },
   discount: {
     height: 100,

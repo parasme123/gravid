@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
   //   height: 250, resizeMode: 'contain'
   // },
   formMainView: {
-    marginHorizontal: 35,
+    // marginHorizontal: 35,
     marginTop: 38,
     marginBottom: 20
   },
@@ -34,6 +34,7 @@ const styles = StyleSheet.create({
     textAlign: "center"
   },
   signinTxt: {
+    textAlign:"center",
     fontFamily: fonts.OptimaBlack,
     color: colors.grayRegular,
     fontSize: 16,
@@ -43,10 +44,9 @@ const styles = StyleSheet.create({
     lineHeight: 25
   },
   formInputView: {
-    flexDirection: "row",
+    flex:1,
     alignItems: "center",
     marginVertical: 8,
-    alignSelf: 'center'
   },
   signupInput: {
     borderBottomWidth: 0.4,
@@ -90,6 +90,7 @@ const styles = StyleSheet.create({
     padding: 5,
     marginTop: 30,
     marginBottom: 30,
+    marginHorizontal:35
   },
   signUpBtnTxt: {
     fontFamily: fonts.OptimaBold,

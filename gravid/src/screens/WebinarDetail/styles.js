@@ -32,9 +32,9 @@ const styles = StyleSheet.create({
     flexDirection: "row"
   },
   radiusView: {
-    height: 50,
-    borderTopLeftRadius: 40,
-    borderTopRightRadius: 40,
+    height: 30,
+    borderTopLeftRadius: 50,
+    borderTopRightRadius: 50,
     backgroundColor: "white",
     marginTop: -30,
   },
@@ -447,18 +447,64 @@ const styles = StyleSheet.create({
   },
   joinWebinarBtn: {
     backgroundColor: colors.themeColor,
-    marginTop: 50,
+    marginTop: 10,
     marginBottom: 20,
     alignItems: "center",
     borderRadius: 5,
-    paddingVertical: 14
   },
   joinWebinarBtnTxt: {
     fontFamily: fonts.OptimaMedium,
     color: colors.black,
     fontSize: 20,
-    lineHeight: 18.
-  }
+    paddingVertical: 14,
+    alignSelf:"center"
+  },
+  datetext:{
+    marginHorizontal:25,
+    fontFamily:fonts.OptimaBold,
+    fontSize:16,
+    color: colors.black,
+    marginBottom:15,
+  },
+  calFlatList:{
+    borderWidth:1,
+    borderColor:"#F1F1F1",
+    borderRadius:20,
+    paddingHorizontal:20,
+    paddingVertical:10,
+    marginLeft:10,
+    marginRight:10,
+    fontFamily:fonts.OptimaBold,
+  },
+  dateTimeContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  dateTimeContainerFirst: {
+    width: '48%',
+    borderWidth: 0.5,
+    borderColor: '  #E3E3E3',
+    borderRadius: 30,
+    height: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  timeTextTitleColor: {
+    color: '#6D7A90',
+  },
+  dateTimeContainerTo: {
+    width: '48%',
+    borderWidth: 0.5,
+    borderColor: '  #E3E3E3',
+    borderRadius: 30,
+    height: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  timeTextTitleColor: {
+    color: '#6D7A90',
+  },
 });
 
 export default styles;

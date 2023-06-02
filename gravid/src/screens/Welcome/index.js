@@ -37,7 +37,6 @@ const Welcome = (props) => {
         </TouchableOpacity>
       </View>
     </View>
-
   );
 };
 

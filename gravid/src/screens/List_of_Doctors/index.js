@@ -1,6 +1,6 @@
 import react from "react";
-import { View, Text, Image, TouchableOpacity, TextInput } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
+import { View, Text, Image, TouchableOpacity, TextInput ,ScrollView} from "react-native";
+// import { ScrollView } from "react-native-gesture-handler";
 import styles from "./styles";
 import { svgs, colors } from '@common';
 

@@ -25,6 +25,25 @@ const styles = StyleSheet.create({
     textAlign: "center",
     lineHeight: 32,
   },
+  searchBoxView: {
+    backgroundColor: colors.grayLight,
+    marginHorizontal: 24,
+    borderRadius: 15,
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 16
+  },
+  searchBox: {
+    fontFamily: fonts.OptimaBold,
+    color: colors.black,
+    fontSize: 14,
+    marginLeft: 6,
+    paddingRight: 12,
+    height: 45, 
+    width: 315,
+
+    flex:1
+  },
   child: {
     // justifyContent: 'center',
     alignItems: "center",
@@ -144,6 +163,8 @@ const styles = StyleSheet.create({
     // marginBottom: 20,
   },
   searchBoxView: {
+    marginTop:-20,
+    marginBottom:20,
     backgroundColor: colors.grayLight,
     marginHorizontal: 24,
     borderRadius: 15,

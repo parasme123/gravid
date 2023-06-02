@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     marginTop: 30
   },
   flatlistimage: {
-    height: 23, width: 20, resizeMode: 'contain'
+    height: 23, width: 20, resizeMode: 'contain',tintColor:colors.themeColor,
   },
   manFlat: {
     justifyContent: 'space-between',

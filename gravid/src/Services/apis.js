@@ -23,12 +23,19 @@ export default class Apis {
   static ResendOtpSignup = (data) => {
     return Network('POST', 'signup-otp-resend', data)
   }
+  static SendDateWebinar = (data) => {
+    return Network('POST', 'expert-slot', data)
+  }
   static CategoryApi = (data) => {
     return Network('GET', 'category-list', data)
   }
   static HomePagedata = async (data) => {
     const localData = await AsyncStorage.getItem('catID')
     return Network('GET', 'home-data?category_id=' + JSON.parse(localData), data)
+  }
+  static HomeDatalist = async (data) => {
+    console.log('objectdatadatadatadatadata', data.type)
+    return Network('GET', 'home-data-list?type='+data.type +'&category_id='+data.id, data)
   }
   static Welcomescreendata = (data) => {
     return Network('GET', 'welcome-screen-data', data)
@@ -52,10 +59,14 @@ export default class Apis {
     return Network('GET', 'expert-list', data)
   }
   static AddBookmark = (data) => {
+    console.log('data111111111111', data)
     return Network('POST', 'bookmark', data)
   }
   static AllBookMark = (data) => {
     return Network('GET', 'bookmark-list', data)
+  }
+  static instaMojoPayment = (data) => {
+    return Network('POST', 'instamoja-payment', data)
   }
   static updatePayment = (data) => {
     return Network('POST', 'payment-update', data)
@@ -66,7 +77,9 @@ export default class Apis {
   static Signout = (data) => {
     return Network('POST', 'user-signout', data)
   }
-
+  static TermsCondition = (data) => {
+  return Network('GET', 'terms-condition-app', data)
+  }
 
   // static fetch_usersTrip = () => {
   //  return Network('GET', 'driver/viewTrip')

@@ -1,10 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
 
 import React, { useState, useEffect } from 'react';
 import { Image, ScrollView, Text, View, TouchableOpacity, TextInput, FlatList, ActivityIndicator, Dimensions, Linking } from 'react-native';
@@ -19,13 +12,14 @@ import { imageurl } from '../../Services/constants';
 // const imageurl = "https://rasatva.apponedemo.top/gravid/"
 import { useIsFocused } from '@react-navigation/native';
 import Toast from 'react-native-simple-toast';
-// import Carousel from 'react-native-snap-carousel';
+
 // import Carousel from 'react-native-reanimated-carousel';
 
 const { width } = Dimensions.get('window');
 
 const Home = (props, { route }) => {
   const isFocused = useIsFocused();
+  // console.log('isFocused', isFocused)
   const [userData, setUserData] = useState({})
   const [modalVisible, setModalVisible] = useState(false);
   const [textinputVal, setTextinputVal] = useState("Gravid Digital 1 Year")
@@ -35,19 +29,24 @@ const Home = (props, { route }) => {
   const [sliderlist, setSliderList] = useState([])
   const [issuelist, setIssueList] = useState([])
   const [blogslist, setBlogsList] = useState([])
+  const [offerlist, setOfferList] = useState([])
   const [videolist, setVideoList] = useState([])
   const [searchTxt, setSearchTxt] = useState("")
   const [issuelistSearch, setIssueListSearch] = useState([])
   const [blogslistSearch, setBlogsListSearch] = useState([])
+  const [offerListSearch, setofferListSearch] = useState([])
   const [videolistSearch, setVideoListSearch] = useState([])
   const [btmSlider, setBtmSlider] = useState([])
-  const [showslider, setShowSlider] = useState(true)
+  // const [showslider, setShowSlider] = useState(true)
   const [isLoader, setIsLoader] = useState(false)
+
+
 
   useEffect(() => {
     if (isFocused) {
       HomePagedata();
       setProfileAndHomeData();
+      addBookmark();
     }
   }, [isFocused])
 
@@ -56,6 +55,7 @@ const Home = (props, { route }) => {
       setIssueListSearch(issuelist.filter((item) => item.title.toLowerCase().includes(searchTxt.toLowerCase())))
       setBlogsListSearch(blogslist.filter((item) => item.title.toLowerCase().includes(searchTxt.toLowerCase())))
       setVideoListSearch(videolist.filter((item) => item.title.toLowerCase().includes(searchTxt.toLowerCase())))
+      setofferListSearch(offerlist.filter((item) => item.title.toLowerCase().includes(searchTxt.toLowerCase())))
     }
   }, [searchTxt])
 
@@ -75,13 +75,14 @@ const Home = (props, { route }) => {
     setIsLoader(true);
     Apis.HomePagedata({})
       .then(async (json) => {
-        console.log('datalistHomePage=====:', JSON.stringify(json));
+        console.log('datalistHomePage=====:',json.data);
         if (json.status == true) {
-          setBlogsList(json.data.blog.data);
-          setSliderList(json.data.sliders.data)
-          setVideoList(json.data.expVedios.data);
-          setIssueList(json.data.issuelist.data);
-          setBtmSlider(json.data.other_sliders.data);
+          setBlogsList(json?.data?.blog?.data);
+          setOfferList(json?.data?.offer?.data);
+          setSliderList(json?.data?.sliders?.data)
+          setVideoList(json?.data?.expVedios?.data);
+          setIssueList(json?.data?.issuelist?.data);
+          setBtmSlider(json?.data?.other_sliders?.data);
         }
         setIsLoader(false);
       }).catch((error) => {
@@ -92,6 +93,7 @@ const Home = (props, { route }) => {
 
 
   const addBookmark = (bookmarkID, bookmarkType) => {
+    console.log('bookmarkID',"bookmarkType", bookmarkID,bookmarkType)
     const params = {
       id: bookmarkID,
       type: bookmarkType
@@ -107,7 +109,7 @@ const Home = (props, { route }) => {
   }
 
   const renderslider = ({ item, index }) => (
-    <TouchableOpacity onPress={index == 1 ? () => setModalVisible(true) : item?.slider_url ? () => Linking.openURL(item.slider_url) : null}>
+    <TouchableOpacity onPress={item?.slider_url ? () => Linking.openURL(item.slider_url) : null}>
       <Image style={styles.subscribeOfferImg}
         source={{ uri: imageurl + item.image }}
       />
@@ -126,7 +128,7 @@ const Home = (props, { route }) => {
     return (
       <TouchableOpacity
         style={[styles.currenIssueView, { alignItems: "center" }, index == 0 ? { marginLeft: 15 } : null]}
-        onPress={() => props.navigation.navigate("RecentIssuesDetail", { item })}
+        onPress={() => props.navigation.navigate("RecentIssuesDetail", { item, HomePagedata })}
       >
         <View style={styles.leftView}>
           <View style={styles.isFreeView}>
@@ -137,9 +139,9 @@ const Home = (props, { route }) => {
             contentWidth={100}
             source={{ html: item.description }}
           /> */}
-
           <Text style={styles.issueDes}> {item.short_description} </Text>
-          <TouchableOpacity onPress={() => addBookmark(item.id, "magazine")} style={[styles.bkmrkBtn, { marginTop: 10 }]}>
+          <TouchableOpacity onPress={() => addBookmark(item.id, "magazine")}
+            style={[styles.bkmrkBtn, { marginTop: 10 }]}>
             <View style={styles.bkmrkIcn}>
               {svgs.bookmark("", 8, 8)}
             </View>
@@ -152,6 +154,7 @@ const Home = (props, { route }) => {
   };
 
   const renderItemNewsLetter = ({ item, index }) => {
+
     return (
       <TouchableOpacity
         onPress={() => props.navigation.navigate("RecentBlogsDetail", { item })}
@@ -179,7 +182,32 @@ const Home = (props, { route }) => {
       </TouchableOpacity>
     );
   };
+
+  const renderItemOffers = ({ item, index }) => {
+
+    return (
+      <TouchableOpacity
+        onPress={() => props.navigation.navigate("RecentOffersDetail", { item })}
+        style={[styles.NewsLetterView, index == 0 ? { marginLeft: 15 } : null]}
+      >
+        <Image source={{ uri: imageurl + item.image }} style={styles.newsImg} />
+        <View style={styles.newsleftView}>
+          <View style={styles.bookanddo}>
+            <TouchableOpacity style={styles.bkmrkBtn} onPress={() => addBookmark(item.id, "offer")}>
+              <View style={styles.bkmrkIcn}>
+                {svgs.bookmark("", 8, 8)}
+              </View>
+              <Text style={styles.bkmrkBtnTxt}>Bookmark</Text>
+            </TouchableOpacity>
+          </View>
+          <Text style={styles.issuetitle}>{item.title}</Text>
+          <Text style={styles.issueDes}>{item.short_description}</Text>
+        </View>
+      </TouchableOpacity>
+    );
+  };
   const renderItemvideo = ({ item, index }) => {
+
     return (
       <TouchableOpacity
         onPress={() => props.navigation.navigate("VideosDetails", { item })}
@@ -232,6 +260,13 @@ const Home = (props, { route }) => {
             <Text style={styles.hello}>{userData?.name} {userData?.lname}</Text>
             {/* <Text style={styles.userName}>{userData?.lname}</Text> */}
           </View>
+          <TouchableOpacity
+            onPress={() => { props.navigation.navigate('Notifications') }}>
+            <Image style={styles.notification} source={require('../../assets/images/notification.png')} />
+            <Text style={{position:"absolute",fontSize:8,right:5,top:2.5,color:colors.themeColor}}>5</Text>
+          </TouchableOpacity>
+          <View>
+          </View>
         </View>
         <View style={styles.searchBoxView}>
           {svgs.search(colors.grayRegular, 17, 17)}
@@ -242,42 +277,31 @@ const Home = (props, { route }) => {
             onChangeText={setSearchTxt}
           />
         </View>
-        <View style={[styles.subscribeOfferImg, { marginTop: 20 }]}>
-          {showslider ?
-            <AppIntroSlider
-              data={sliderlist}
-              doneLabel=''
-              nextLabel=''
-              autoplay={true}
-              renderItem={renderslider}
-              dotStyle={{ backgroundColor: 'transparent', }}
-              activeDotStyle={{ backgroundColor: 'transparent', }}
-            />
-            : null
-          }
-        </View>
-
-        <View style={styles.sliderHadding}>
-          <Text style={styles.haddingTxt}>Current Issue</Text>
-          <TouchableOpacity style={styles.viewAllBtn} onPress={() => props.navigation.navigate("currentIssue")}>
-            <Text style={styles.viewAllTxt}>View All</Text>
-          </TouchableOpacity>
-        </View>
-        {/* <View style={{ marginLeft: 24 }}>
-          <Swiper
+        <View style={styles.endView} >
+          <Swiper style={{}}
             activeDotStyle={{ backgroundColor: 'transparent', }}
             dotStyle={{ backgroundColor: 'transparent', }}
             autoplay={true}
           >
             {
-              searchTxt && searchTxt != "" ? issuelistSearch?.map((item, index) => {
-                return renderItemIssue({ item, index })
-              }) : issuelist?.map((item, index) => {
-                return renderItemIssue({ item, index })
+              sliderlist?.map((item) => {
+                return (
+                  <TouchableOpacity key={item.id} onPress={item.slider_url ? () => handleOtherSlider(item.slider_url) : null}>
+                    <Image key={item.id} style={styles.endImg} source={{ uri: imageurl + item.image }} />
+                  </TouchableOpacity>
+                )
               })
             }
           </Swiper>
-        </View> */}
+
+        </View>
+
+        <View style={styles.sliderHadding}>
+          <Text style={styles.haddingTxt}>Magazines</Text>
+          <TouchableOpacity style={styles.viewAllBtn} onPress={() => props.navigation.navigate("CurrentIssue")}>
+            <Text style={styles.viewAllTxt}>View All</Text>
+          </TouchableOpacity>
+        </View>
         <FlatList
           data={searchTxt && searchTxt != "" ? issuelistSearch : issuelist}
           renderItem={renderItemIssue}
@@ -285,31 +309,14 @@ const Home = (props, { route }) => {
           showsHorizontalScrollIndicator={false}
           horizontal
         />
+
+        {/* Blogs & Artical */}
         <View style={styles.sliderHadding}>
           <Text style={styles.haddingTxt}>Blogs & Articles</Text>
           <TouchableOpacity style={styles.viewAllBtn} onPress={() => props.navigation.navigate("blogs", { adsense: btmSlider })}>
             <Text style={styles.viewAllTxt}>View All</Text>
           </TouchableOpacity>
         </View>
-        {/* <Carousel
-          loop
-          width={width}
-          height={width / 2}
-          autoPlay={true}
-          data={searchTxt && searchTxt != "" ? blogslistSearch : blogslist}
-          scrollAnimationDuration={1000}
-          onSnapToItem={(index) => console.log('current index:', index)}
-          renderItem={renderItemNewsLetter}
-        /> */}
-        {/* <View style={{marginLeft: 24}}>
-        <Carousel
-              // ref={(c) => { this._carousel = c; }}
-              data={searchTxt && searchTxt != "" ? blogslistSearch : blogslist}
-              renderItem={renderItemNewsLetter}
-              sliderWidth={200}
-              itemWidth={150}
-            />
-        </View> */}
         <FlatList
           data={searchTxt && searchTxt != "" ? blogslistSearch : blogslist}
           // style={{ paddingLeft: 24 }}
@@ -319,6 +326,13 @@ const Home = (props, { route }) => {
           horizontal
         // extraData={selectedId}
         />
+
+
+
+
+
+
+
         <View style={styles.sliderHadding}>
           <Text style={styles.haddingTxt}>Video Library</Text>
           <TouchableOpacity style={styles.viewAllBtn} onPress={() => props.navigation.navigate("Video_Library")}>
@@ -327,13 +341,34 @@ const Home = (props, { route }) => {
         </View>
         {/* <View style={{ paddingHorizontal: 10 }}> */}
         <FlatList
-          data={searchTxt && searchTxt != "" ? videolistSearch : videolist}
+          data={searchTxt && searchTxt != "" ? videolistSearch : videolist.slice(0, 5)}
           // style={{ paddingLeft: 14 }}
           renderItem={renderItemvideo}
           keyExtractor={(item) => item.id}
           showsHorizontalScrollIndicator={false}
           horizontal
         />
+
+        {/* Offers  */}
+
+        <View style={styles.sliderHadding}>
+          <Text style={styles.haddingTxt}>Offers</Text>
+          <TouchableOpacity style={styles.viewAllBtn} onPress={() => props.navigation.navigate("Offers", { adsense: btmSlider })}>
+            <Text style={styles.viewAllTxt}>View All</Text>
+          </TouchableOpacity>
+        </View>
+        <FlatList
+          data={searchTxt && searchTxt != "" ? offerListSearch : offerlist}
+          // style={{ paddingLeft: 24 }}
+          renderItem={renderItemOffers}
+          keyExtractor={(item) => item.id}
+          showsHorizontalScrollIndicator={false}
+          horizontal
+        // extraData={selectedId}
+        />
+
+
+
         {/* </View> */}
         <View style={styles.endView} >
           <Swiper style={{}}
@@ -350,10 +385,7 @@ const Home = (props, { route }) => {
                 )
               })
             }
-            {/* <Image style={styles.endImg} source={require('../../assets/images/home-end.png')} />
-            <Image style={styles.endImg} source={require('../../assets/images/home-end.png')} />
-            <Image style={styles.endImg} source={require('../../assets/images/home-end.png')} />
-            <Image style={styles.endImg} source={require('../../assets/images/home-end.png')} /> */}
+
           </Swiper>
         </View>
 

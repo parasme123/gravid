@@ -50,12 +50,14 @@ const styles = StyleSheet.create({
         marginTop: 25,
         color: '#262626',
         fontSize: 17,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        marginHorizontal:25
     },
     gravidDigestText: {
         fontSize: 16,
         color: '#808080',
-        marginTop: 5
+        marginTop: 5,
+        marginHorizontal:25
     },
     buyIssuesButton: {
         backgroundColor: '#FE887E',

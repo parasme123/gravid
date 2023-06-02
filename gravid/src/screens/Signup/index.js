@@ -23,6 +23,7 @@ const Signup = (props) => {
   const [number, setNumber] = useState('')
   const [email, setEmail] = useState('')
   const [city, setCity] = useState('')
+  const [referral, setReferral] = useState('')
   const [selected, setSelected] = useState("User");
   const [errselect, setErrSelect] = useState("Please Select Option")
   const [errfname, setErrFname] = useState("Enter First name")
@@ -31,10 +32,12 @@ const Signup = (props) => {
   const [numberlength, setNumberLength] = useState('Enter 10 Digit Mobile Number')
   const [errmail, setErrMail] = useState('Enter Email id')
   const [errcity, setErrCity] = useState('Enter City')
+  const [errReferral, setErrreferral] = useState('Enter Referral Code')
   const [errcheck, setErrCheck] = useState('Click the checkbox to proceed')
 
 
   const [term, setTerm] = useState(false)
+  // const [loader, setLoader] = useState(true)
   const handleTerm = () => {
     setTerm(!term)
   }
@@ -73,6 +76,8 @@ const Signup = (props) => {
       Toast.show(errmail, Toast.LONG);
     } else if (city == '') {
       Toast.show(errcity, Toast.LONG);
+    }else if (referral == '') {
+      Toast.show(errReferral, Toast.LONG);
     }
     else if (term == '') {
       Toast.show(errcheck, Toast.LONG);
@@ -88,7 +93,7 @@ const Signup = (props) => {
         city: city,
         user_type: useType,
         countryCode: '+91',
-        referral_code: "",
+        referral_code: referral,
         updated_at: "2023-01-24T08:55:06.000000Z",
         created_at: "2023-01-24T08:55:06.000000Z",
         id: 10,
@@ -98,6 +103,7 @@ const Signup = (props) => {
           console.log('============Signup:', json.data);
           if (json.status == true) {
             await auth().signInWithPhoneNumber("+91" + number).then(async (confirmation) => {
+              console.log("confirmation",confirmation)
               props.navigation.navigate("otpverify", {
                 type: 'signup',
                 Temp_Id: json.data.id,
@@ -105,6 +111,7 @@ const Signup = (props) => {
                 Country_Code: json.data.country_code,
                 confirmation
               })
+              // setLoader(false)
             }).catch((err) => {
               console.log("Error : ", err);
               Toast.show("Something Went wrong", Toast.LONG)
@@ -180,6 +187,15 @@ const Signup = (props) => {
               placeholder="City"
               style={styles.signupInput}
               onChangeText={(text) => setCity(text)}
+
+            />
+          </View>
+          <View style={styles.formInputView}>
+            <Image style={styles.managementImage} source={require('../../assets/images/referal.png')} />
+            <TextInput
+              placeholder="Referral Code"
+              style={styles.signupInput}
+              onChangeText={(text) => setReferral(text)}
 
             />
           </View>

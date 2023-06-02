@@ -32,6 +32,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginVertical: 8
   },
+  managementImage:{
+    width:20,
+    height:20,
+    resizeMode:"contain",
+
+  },
   dropinput: {
     fontSize: 17,
     fontFamily: fonts.OptimaBold,

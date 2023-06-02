@@ -18,7 +18,6 @@ isIfSC = code =>{
     console.log('valuevalue', code)
     var regex = new RegExp( "^[A-Z]{4}0[A-Z0-9]{6}$");
     return regex.test(code)
-   
 },
 isSpace = value => {
     let regex =  /^\S{3,}$/;

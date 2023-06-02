@@ -55,7 +55,8 @@ const styles = StyleSheet.create({
     width: width / 2 - 21,
     height: 170,
     borderTopRightRadius: 5,
-    borderTopLeftRadius: 5
+    borderTopLeftRadius: 5,
+    resizeMode:'contain'
   },
   bkmrkBtn: {
     flexDirection: "row",
@@ -91,6 +92,19 @@ const styles = StyleSheet.create({
     fontSize: 10,
     // lineHeight: 16,
 
+  },
+  isFreeView: {
+    backgroundColor: colors.themeColor,
+    paddingVertical: 5,
+    paddingHorizontal: 12,
+    borderRadius: 13,
+    alignSelf: "flex-start",
+    marginTop:5
+  },
+  isFree: {
+    fontFamily: fonts.OptimaRegular,
+    color: colors.black,
+    fontSize: 10,
   },
 
 });

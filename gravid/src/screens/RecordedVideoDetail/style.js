@@ -28,6 +28,14 @@ const styles = StyleSheet.create({
         backgroundColor: "white",
         marginTop: -30,
     },
+    backgroundVideo: {
+        borderWidth:5,
+        borderColor:"black",
+        height:250,
+        width:"100%",
+        alignSelf:"center",
+       
+        },
     // backicon: {
     //     height: 32, width: 32, resizeMode: 'contain'
     // },

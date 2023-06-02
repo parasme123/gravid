@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Dimensions } from 'react-native';
 import { fonts, colors } from "@common";
+import { refresh } from '@react-native-community/netinfo';
 const { width } = Dimensions.get('window');
 const styles = StyleSheet.create({
   container: {
@@ -87,7 +88,8 @@ const styles = StyleSheet.create({
   endImg: {
     width: "100%",
     height: 180,
-    borderRadius: 10
+    borderRadius: 10,
+    resizeMode:"contain",
   },
 });
 

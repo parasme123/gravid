@@ -8,9 +8,9 @@ const { width, height } = Dimensions.get('window')
 import { imageurl } from '../../Services/constants';
 
 const RecentBlogsDetail = (props) => {
+    
     const BlogDetail = props?.route?.params?.item
     // const [delail, setDetail] = useState();
-
     // useEffect(() => {
     //     HomePagedata();
     // }, [])
